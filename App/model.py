@@ -94,6 +94,9 @@ def addConnection(analyzer, origen, destino, distancia):
     """
     Adiciona un arco entre dos landing points.
     """
+    if origen == destino:
+        distancia = 0.1
+    
     arco = gr.getEdge(analyzer['landingPoints'], origen, destino)
 
     if arco is None:
