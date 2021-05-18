@@ -47,10 +47,11 @@ def loadConnectionsCSV(analyzer):
     input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
 
     # lastLandingPoint ??
+    centinela = True
 
     for landingPoint in input_file:
         # origin,destination,cable_name,cable_id,cable_length,cable_rfs,owners,capacityTBPS
-      
+
         filtered_dict = {
             'origin': landingPoint['origin'],
             'destination': landingPoint['destination'],
@@ -65,9 +66,13 @@ def loadConnectionsCSV(analyzer):
         else:
             filtered_dict['cable_length'] = float((landingPoint['cable_length'].replace(' km', '')).replace(',', ''))
 
+        if centinela:
+            first = filtered_dict
+            centinela = False
+
         model.addLandingPointConnection(analyzer, filtered_dict)
 
-    return analyzer
+    return first
 
 
 
@@ -99,16 +104,17 @@ def loadCountries(analyzer):
         if filtered_dict['CountryName'] is not '':
             model.addCountry(analyzer, filtered_dict)
             model.addCapitalLandingPoint(analyzer, filtered_dict)
-      
-    return analyzer
 
 
 
 
-def loadLandingPoints(analyzer):
+
+def loadLandingPoints(analyzer, firstDestiny):
     landingPointsFile = cf.data_dir + 'landing_points.csv'
 
     input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
+
+    centinela = True
 
     for landingPoint in input_file:
         # landing_point_id,id,name,latitude,longitude
@@ -119,9 +125,14 @@ def loadLandingPoints(analyzer):
             'latitude': float(landingPoint['latitude']),
             'longitude': float(landingPoint['longitude'])
         }
-        
+        if float(firstDestiny) == float(landingPoint['landing_point_id']) and centinela:
+            firstLatitude = float(landingPoint['latitude'])
+            firstLongitude = float(landingPoint['longitude'])
+            centinela = False
+
         model.addMapLandingPoint(analyzer, filtered)
-    return analyzer
+
+    return (firstLatitude, firstLongitude)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
