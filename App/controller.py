@@ -105,6 +105,10 @@ def loadCountries(analyzer):
             model.addCountry(analyzer, filtered_dict)
             model.addCapitalLandingPoint(analyzer, filtered_dict)
 
+    resultado = model.lastCountry(analyzer, analyzer['orderedCountries'])
+
+    return resultado
+
 
 
 

@@ -55,6 +55,8 @@ def newAnalyzer():
 
     analyzer['infoLandingPoints'] = mp.newMap(numelements=1283, maptype='PROBING')
 
+    analyzer['orderedCountries'] = lt.newList('ARRAY_LIST')
+
     return analyzer
 # Funciones para agregar informacion al catalogo
 
@@ -182,11 +184,18 @@ def addCountry(analyzer, filtered_dict):
 
     if not mp.contains(analyzer['countries'], filtered_dict['CountryName']) and (filtered_dict['CountryName'] is not ''):
         mp.put(analyzer['countries'], filtered_dict['CountryName'], filtered_dict)
+        lt.addLast(analyzer['orderedCountries'], filtered_dict['CountryName'])
 
     return analyzer
 
 
+def lastCountry(analyzer, lista):
 
+    pais = lt.lastElement(lista)
+
+    valores = mp.get(analyzer['countries'], pais)
+
+    return valores
 
 def addMapLandingPoint(analyzer, filtered_dict):
     '''
