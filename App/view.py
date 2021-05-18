@@ -61,8 +61,9 @@ while True:
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         analyzer = controller.init()
-        controller.loadLandingPoints(analyzer)
+        controller.loadConnectionsCSV(analyzer)
         controller.loadCountries(analyzer)
+        controller.loadLandingPoints(analyzer)
 
         # Prints
 

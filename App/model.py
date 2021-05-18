@@ -45,12 +45,15 @@ def newAnalyzer():
 
     analyzer = {
         'landingPoints': None,
-        'countries': None
+        'countries': None,
+        'infoLandingPoints': None
     }
 
     analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
 
     analyzer['countries'] = mp.newMap(numelements=239, maptype='PROBING')
+
+    analyzer['infoLandingPoints'] = mp.newMap(numelements=1283, maptype='PROBING')
 
     return analyzer
 # Funciones para agregar informacion al catalogo
@@ -62,8 +65,8 @@ def addLandingPointConnection(analyzer, filtered_dict):
     '''
 
     # Origen, destino, distancia
-    origen = filtered_dict['origin'] + filtered_dict['cable_name']
-    destino = filtered_dict['destination'] + filtered_dict['cable_name']
+    origen = filtered_dict['origin'] + '-' + filtered_dict['cable_name']
+    destino = filtered_dict['destination'] + '-' + filtered_dict['cable_name']
     distancia = filtered_dict['cable_length']
 
     # Agregar vértices
@@ -76,7 +79,17 @@ def addLandingPointConnection(analyzer, filtered_dict):
 
     return analyzer
 
-    
+
+
+def addCapitalLandingPoint(analyzer, filtered_dict):
+
+    # nombre: Capital-Country
+
+    origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
+
+    addLandingPoint(analyzer, origen)
+
+    addCapitalConnections(analyzer, origen)
 
 
 def addLandingPoint(analyzer, landingPoint)->dict:
@@ -106,6 +119,11 @@ def addConnection(analyzer, origen, destino, distancia):
 
 
 
+def addCapitalConnections(analyzer, landingPoint):
+
+    pass
+
+
 def addCountry(analyzer, filtered_dict):
     """
     Agrega un país al mapa.
@@ -113,6 +131,17 @@ def addCountry(analyzer, filtered_dict):
 
     if not mp.contains(analyzer['countries'], filtered_dict['CountryName']) and (filtered_dict['CountryName'] is not ''):
         mp.put(analyzer['countries'], filtered_dict['CountryName'], filtered_dict)
+
+    return analyzer
+
+
+def addMapLandingPoint(analyzer, filtered_dict):
+    '''
+    Agrega info de cada Landing Point único (Sin cable).
+    '''
+
+    if not mp.contains(analyzer['infoLandingPoints'], filtered_dict['landing_point_id']) and (filtered_dict['landing_point_id'] is not ''):
+        mp.put(analyzer['infoLandingPoints'], filtered_dict['landing_point_id'], filtered_dict)
 
     return analyzer
 
