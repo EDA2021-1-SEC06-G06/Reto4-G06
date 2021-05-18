@@ -27,6 +27,7 @@
 
 import config as cf
 from DISClib.ADT import list as lt
+from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -39,12 +40,93 @@ los mismos.
 
 # Construccion de modelos
 
+def newAnalyzer():
+
+
+    analyzer = {
+        'landingPoints': None,
+        'countries': None
+    }
+
+    analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
+
+    analyzer['countries'] = mp.newMap(numelements=239, maptype='PROBING')
+
+    return analyzer
 # Funciones para agregar informacion al catalogo
+
+
+def addLandingPointConnection(analyzer, filtered_dict):
+    '''
+    Adiciona...
+    '''
+
+    # Origen, destino, distancia
+    origen = filtered_dict['origin'] + filtered_dict['cable_name']
+    destino = filtered_dict['destination'] + filtered_dict['cable_name']
+    distancia = filtered_dict['cable_length']
+
+    # Agregar vértices
+    addLandingPoint(analyzer, origen)
+    addLandingPoint(analyzer, destino)
+
+    # Agregar conexión/arco
+
+    addConnection(analyzer, origen, destino, distancia)
+
+    return analyzer
+
+    
+
+
+def addLandingPoint(analyzer, landingPoint)->dict:
+    """
+    Adiciona un landing point al grafo.
+    """
+    if not gr.containsVertex(analyzer['landingPoints'], landingPoint):
+        gr.insertVertex(analyzer['landingPoints'], landingPoint)
+
+    return analyzer
+
+
+
+def addConnection(analyzer, origen, destino, distancia):
+    """
+    Adiciona un arco entre dos landing points.
+    """
+    arco = gr.getEdge(analyzer['landingPoints'], origen, destino)
+
+    if arco is None:
+        gr.addEdge(analyzer['landingPoints'], origen, destino, distancia)
+
+    return analyzer
+
+
+
+def addCountry(analyzer, filtered_dict):
+    """
+    Agrega un país al mapa.
+    """
+
+    if not mp.contains(analyzer['countries'], filtered_dict['CountryName']) and (filtered_dict['CountryName'] is not ''):
+        mp.put(analyzer['countries'], filtered_dict['CountryName'], filtered_dict)
+
+    return analyzer
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+def cmpLandingPoint(l1, l2):
+
+    l2 = l2['key']
+    if l1 == l2:
+        return 0
+    elif l1 > l2:
+        return 1
+    else:
+        return -1
 
 # Funciones de ordenamiento

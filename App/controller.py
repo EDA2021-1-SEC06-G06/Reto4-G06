@@ -31,7 +31,64 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
+def init():
+    """
+    Llama la funcion de inicializacion  del modelo.
+    """
+    # analyzer es utilizado para interactuar con el modelo
+    analyzer = model.newAnalyzer()
+    return analyzer
+
 # Funciones para la carga de datos
+
+def loadLandingPoints(analyzer):
+    landingPointsFile = cf.data_dir + 'connections.csv'
+    input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
+
+    # lastLandingPoint ??
+
+    for landingPoint in input_file:
+        # origin,destination,cable_name,cable_id,cable_length,cable_rfs,owners,capacityTBPS
+      
+        filtered_dict = {
+            'origin': landingPoint['origin'],
+            'destination': landingPoint['destination'],
+            'cable_name': landingPoint['cable_name'],
+            'cable_id': landingPoint['cable_id'],
+            'cable_length': landingPoint['cable_length'],
+            'capacityTBPS': landingPoint['capacityTBPS']
+        }
+
+        if filtered_dict['cable_length'] == 'n.a.':
+            filtered_dict['cable_length'] = 0
+        else:
+            filtered_dict['cable_length'] = float((landingPoint['cable_length'].replace(' km', '')).replace(',', ''))
+
+        model.addLandingPointConnection(analyzer, filtered_dict)
+
+    return analyzer
+
+
+def loadCountries(analyzer):
+    countriesFile = cf.data_dir + 'countries.csv'
+    input_file = csv.DictReader(open(countriesFile, encoding='utf-8-sig'), delimiter=',')
+
+
+    for country in input_file:
+        # CountryName,CapitalName,CapitalLatitude,CapitalLongitude,CountryCode,ContinentName,Population,Internet users
+        filtered_dict = {
+            'CountryName': country['CountryName'],
+            'CapitalName': country['CapitalName'],
+            'CapitalLatitude': country['CapitalLatitude'],
+            'CapitalLongitude': country['CapitalLongitude'],
+            'CountryCode': country['CountryCode'],
+            'ContinentName': country['ContinentName'],
+            'Population': float(country['Population'].replace('.','')),
+            'Internet users': float(country['Internet users'].replace('.',''))
+        }
+        model.addCountry(analyzer, filtered_dict)
+      
+    return analyzer
 
 # Funciones de ordenamiento
 

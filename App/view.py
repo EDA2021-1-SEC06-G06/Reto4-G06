@@ -24,6 +24,8 @@ import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
+from DISClib.ADT.graph import gr
+from DISClib.ADT import map as mp
 assert cf
 
 
@@ -36,7 +38,7 @@ operación solicitada
 
 
 def printMenu():
-    print("Bienvenido")
+    print("\nBienvenido")
     print("1- Cargar información en el catálogo")
     print("2- REQ 1: Identificar los clústeres de comunicación")
     print("3- REQ 2: Identificar los puntos de conexión críticos de la red")
@@ -48,7 +50,7 @@ def printMenu():
     print("9- REQ 8: REQ. 8: Graficando los Grafos")
 
 
-catalog = None
+analyzer = None
 
 """
 Menu principal
@@ -58,6 +60,18 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
+        analyzer = controller.init()
+        controller.loadLandingPoints(analyzer)
+        controller.loadCountries(analyzer)
+
+        # Prints
+
+        print(f"\nTotal de landing points: {gr.numVertices(analyzer['landingPoints'])}")
+        print(f"\nTotal de conexiones: {gr.numEdges(analyzer['landingPoints'])}")
+        print(f"\nTotal de paises: {mp.size(analyzer['countries'])}")
+
+        # print("Info. del último país cargado:\nNombre: {0} Población: {1} Usuarios de Internet: {2}".format(ultimoCountry['CountryName'], ultimoCountry['Population'], ultimoCountry['Internet users']))
+        
 
     elif int(inputs[0]) == 2:
         pass
