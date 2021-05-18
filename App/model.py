@@ -24,7 +24,7 @@
  * Dario Correal - Version inicial
  """
 
-
+import haversine as hs
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
@@ -87,9 +87,28 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
 
     origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
 
-    addLandingPoint(analyzer, origen)
+    pais = filtered_dict['CountryName']
 
-    addCapitalConnections(analyzer, origen)
+    
+    addLandingPoint(analyzer, origen)  # Landing point de la capital.
+
+
+    # Conexiones con los del mismo país
+    listaMismoPais = listaLandingsMismoPais(analyzer, pais)
+
+    if lt.size(listaMismoPais) == 0:
+        pass
+
+    for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
+
+        for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
+
+            if landing in vertice:
+                distancia = getDistance(analyzer, pais, landing)
+                
+                addConnection(analyzer, origen, vertice, distancia)
+        
+    return analyzer
 
 
 def addLandingPoint(analyzer, landingPoint)->dict:
@@ -119,9 +138,25 @@ def addConnection(analyzer, origen, destino, distancia):
 
 
 
-def addCapitalConnections(analyzer, landingPoint):
+def listaLandingsMismoPais(analyzer, pais):
+    '''
+    Retorna un ARRAY_LIST con los landing points en el mismo país de landingPoint
+    '''
 
-    pass
+    listaMismoPais = lt.newList("ARRAY_LIST")
+   
+    for uniqueLanding in (lt.iterator(mp.keySet(analyzer['infoLandingPoints']))):
+        
+        # get del mapa para la llave
+        
+        landing = mp.get(analyzer['infoLandingPoints'], uniqueLanding)['value']  # landing_point_id,id,name,latitude,longitude
+       
+        if pais in landing['name']:
+
+            lt.addLast(listaMismoPais, uniqueLanding)  # Agrega el nombre del LandingPoint del país
+    
+    return listaMismoPais
+            
 
 
 def addCountry(analyzer, filtered_dict):
@@ -146,6 +181,24 @@ def addMapLandingPoint(analyzer, filtered_dict):
     return analyzer
 
 # Funciones para creacion de datos
+
+
+def getDistance(analyzer, pais, destino):
+    '''
+    Calcula la distancia entre dos lugares.
+    '''
+    dictOrigen = mp.get(analyzer['countries'], pais)['value']
+    dictDestino = mp.get(analyzer['infoLandingPoints'], destino)['value']
+
+    
+    location1 = (dictOrigen['CapitalLatitude'], dictOrigen['CapitalLongitude'])
+
+    
+
+    location2 = (dictDestino['latitude'], dictDestino['longitude'])
+
+    return hs.haversine(location1, location2)
+    
 
 # Funciones de consulta
 

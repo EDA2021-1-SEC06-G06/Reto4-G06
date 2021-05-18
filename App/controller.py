@@ -92,7 +92,10 @@ def loadCountries(analyzer):
 
         if filtered_dict['CapitalLongitude'] is not '':
             filtered_dict['CapitalLongitude'] = float(filtered_dict['CapitalLongitude'])
-        model.addCountry(analyzer, filtered_dict)
+
+        if filtered_dict['CountryName'] is not '':
+            model.addCountry(analyzer, filtered_dict)
+            model.addCapitalLandingPoint(analyzer, filtered_dict)
       
     return analyzer
 
@@ -113,6 +116,7 @@ def loadLandingPoints(analyzer):
             'latitude': float(landingPoint['latitude']),
             'longitude': float(landingPoint['longitude'])
         }
+        
         model.addMapLandingPoint(analyzer, filtered)
     return analyzer
 # Funciones de ordenamiento

@@ -62,15 +62,16 @@ while True:
         print("Cargando información de los archivos ....")
         analyzer = controller.init()
         controller.loadConnectionsCSV(analyzer)
-        controller.loadCountries(analyzer)
         controller.loadLandingPoints(analyzer)
+        controller.loadCountries(analyzer)
+        
 
         # Prints
 
         print(f"\nTotal de landing points: {gr.numVertices(analyzer['landingPoints'])}")
         print(f"\nTotal de conexiones: {gr.numEdges(analyzer['landingPoints'])}")
         print(f"\nTotal de paises: {mp.size(analyzer['countries'])}")
-
+        
         # print("Info. del último país cargado:\nNombre: {0} Población: {1} Usuarios de Internet: {2}".format(ultimoCountry['CountryName'], ultimoCountry['Population'], ultimoCountry['Internet users']))
         
 
