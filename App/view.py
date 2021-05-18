@@ -61,6 +61,8 @@ while True:
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         analyzer = controller.init()
+
+        # Carga de Datos
         controller.loadConnectionsCSV(analyzer)
         controller.loadLandingPoints(analyzer)
         controller.loadCountries(analyzer)
@@ -71,7 +73,7 @@ while True:
         print(f"\nTotal de landing points: {gr.numVertices(analyzer['landingPoints'])}")
         print(f"\nTotal de conexiones: {gr.numEdges(analyzer['landingPoints'])}")
         print(f"\nTotal de paises: {mp.size(analyzer['countries'])}")
-        
+        #TODO: Los dos prints
         # print("Info. del último país cargado:\nNombre: {0} Población: {1} Usuarios de Internet: {2}".format(ultimoCountry['CountryName'], ultimoCountry['Population'], ultimoCountry['Internet users']))
         
 

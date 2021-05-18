@@ -59,6 +59,7 @@ def newAnalyzer():
 # Funciones para agregar informacion al catalogo
 
 
+
 def addLandingPointConnection(analyzer, filtered_dict):
     '''
     Adiciona...
@@ -81,6 +82,7 @@ def addLandingPointConnection(analyzer, filtered_dict):
 
 
 
+
 def addCapitalLandingPoint(analyzer, filtered_dict):
 
     # nombre: Capital-Country
@@ -97,18 +99,29 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
     listaMismoPais = listaLandingsMismoPais(analyzer, pais)
 
     if lt.size(listaMismoPais) == 0:
-        pass
 
-    for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
+        masCercano, distancia = findClosest(analyzer, pais)
 
-        for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
+        for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
 
-            if landing in vertice:
-                distancia = getDistance(analyzer, pais, landing)
-                
+            if masCercano in vertice:
+
                 addConnection(analyzer, origen, vertice, distancia)
-        
+                
+            # ---------- ELSE -------------
+    else:
+        for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
+
+            for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
+
+                if landing in vertice:
+                    distancia = getDistance(analyzer, pais, landing)
+                    
+                    addConnection(analyzer, origen, vertice, distancia)
+            
     return analyzer
+
+
 
 
 def addLandingPoint(analyzer, landingPoint)->dict:
@@ -119,6 +132,7 @@ def addLandingPoint(analyzer, landingPoint)->dict:
         gr.insertVertex(analyzer['landingPoints'], landingPoint)
 
     return analyzer
+
 
 
 
@@ -135,6 +149,7 @@ def addConnection(analyzer, origen, destino, distancia):
         gr.addEdge(analyzer['landingPoints'], origen, destino, distancia)
 
     return analyzer
+
 
 
 
@@ -156,7 +171,8 @@ def listaLandingsMismoPais(analyzer, pais):
             lt.addLast(listaMismoPais, uniqueLanding)  # Agrega el nombre del LandingPoint del país
     
     return listaMismoPais
-            
+
+
 
 
 def addCountry(analyzer, filtered_dict):
@@ -168,6 +184,8 @@ def addCountry(analyzer, filtered_dict):
         mp.put(analyzer['countries'], filtered_dict['CountryName'], filtered_dict)
 
     return analyzer
+
+
 
 
 def addMapLandingPoint(analyzer, filtered_dict):
@@ -198,7 +216,32 @@ def getDistance(analyzer, pais, destino):
     location2 = (dictDestino['latitude'], dictDestino['longitude'])
 
     return hs.haversine(location1, location2)
+
+
     
+
+def findClosest(analyzer, pais):
+    dictOrigen = mp.get(analyzer['countries'], pais)['value']
+    location1 = (dictOrigen['CapitalLatitude'], dictOrigen['CapitalLongitude'])
+
+
+    menor = None
+    menorValor = 999999999
+
+    for landingPoint in lt.iterator(mp.keySet(analyzer['infoLandingPoints'])):
+
+        dictDestino = mp.get(analyzer['infoLandingPoints'], landingPoint)['value']
+        location2 = (dictDestino['latitude'], dictDestino['longitude'])
+
+
+        if hs.haversine(location1, location2) < menorValor:
+            menorValor = hs.haversine(location1, location2)
+
+            menor = landingPoint # str
+
+    return menor, menorValor
+            
+        
 
 # Funciones de consulta
 

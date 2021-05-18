@@ -41,6 +41,7 @@ def init():
 
 # Funciones para la carga de datos
 
+
 def loadConnectionsCSV(analyzer):
     landingPointsFile = cf.data_dir + 'connections.csv'
     input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
@@ -67,6 +68,8 @@ def loadConnectionsCSV(analyzer):
         model.addLandingPointConnection(analyzer, filtered_dict)
 
     return analyzer
+
+
 
 
 def loadCountries(analyzer):
