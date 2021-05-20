@@ -65,6 +65,7 @@ while True:
         # Carga de Datos
         resultado = controller.loadLandingPoints(analyzer)
         loadConnections = controller.loadConnectionsCSV(analyzer)
+        controller.loadTBPSRepetidos(analyzer)   # TBPS
         pais = controller.loadCountries(analyzer)['value']
 
         # Prints
@@ -74,10 +75,8 @@ while True:
         print(f"\nTotal de paises: {mp.size(analyzer['countries'])}")
         print("\nPrimer landing point cargado: ID: {0}, Nombre: {1}, Latitud: {2}, Longitud: {3}".format(loadConnections["cable_id"], loadConnections["cable_name"], resultado[0], resultado[1]))
         print("\nÚtilmo país cargado: Nombre: {0}, Población: {1}, Número de habitantes: {2}".format(pais["CountryName"], pais["Population"], pais["Internet users"]))
-        #TODO: Los dos prints
-        # print("Info. del último país cargado:\nNombre: {0} Población: {1} Usuarios de Internet: {2}".format(ultimoCountry['CountryName'], ultimoCountry['Population'], ultimoCountry['Internet users']))
 
-
+        
     elif int(inputs[0]) == 2:
         pass
 

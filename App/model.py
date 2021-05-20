@@ -24,8 +24,8 @@
  * Dario Correal - Version inicial
  """
 
+from typing import Dict
 import haversine as hs
-import config as cf
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
@@ -40,16 +40,24 @@ los mismos.
 
 # Construccion de modelos
 
-def newAnalyzer():
+def newAnalyzer()->dict:
+    """Crea el analyzer.
 
+    Returns:
+        analyzer: dict
+    """
 
     analyzer = {
         'landingPoints': None,
         'countries': None,
-        'infoLandingPoints': None
+        'infoLandingPoints': None,
+        'capacity': None,
+        'lista': None
     }
 
     analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
+
+    analyzer['capacity'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
 
     analyzer['countries'] = mp.newMap(numelements=239, maptype='PROBING')
 
@@ -57,13 +65,16 @@ def newAnalyzer():
 
     analyzer['orderedCountries'] = lt.newList('ARRAY_LIST')
 
+    analyzer['lista'] = lt.newList('ARRAY_LIST')  # lista con los landingpoints que se dirigen a ellos mismos.
+
     return analyzer
 # Funciones para agregar informacion al catalogo
 
 
 
-def addLandingPointConnection(analyzer, filtered_dict):
-    """Agrega al grafo los datos de connections.csv
+def addLandingPointConnection(analyzer, filtered_dict)->dict:
+    """
+    Agrega al grafo los datos de connections.csv
 
     Args:
         analyzer
@@ -88,6 +99,34 @@ def addLandingPointConnection(analyzer, filtered_dict):
 
     return analyzer
 
+
+
+def addCapacityTBPSConnection(analyzer, filtered_dict: dict)->dict:
+    """
+    Agrega al grafo los datos de connections.csv. PESO = CAPACIDAD TBPS
+
+    Args:
+        analyzer
+        filtered_dict
+
+    Returns:
+        Analyzer
+    """
+    # Origen, destino, distancia
+    origen = filtered_dict['origin'] + '-' + filtered_dict['cable_name']
+    destino = filtered_dict['destination'] + '-' + filtered_dict['cable_name']
+
+    anchoDeBanda = filtered_dict['capacityTBPS']
+
+    # Agregar vértices
+    addLandingPointTBPS(analyzer, origen)
+    addLandingPointTBPS(analyzer, destino)
+
+    # Agregar conexión/arco
+
+    addConnectionTBPS(analyzer, origen, destino, anchoDeBanda)
+
+    return analyzer
 
 
 
@@ -132,12 +171,69 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
 
 
 
+def addCapitalLandingPointTBPS(analyzer, filtered_dict):
+
+    # nombre: Capital-Country
+
+    origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
+
+    pais = filtered_dict['CountryName']
+
+    
+    addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
+
+
+    # Conexiones con los del mismo país
+    listaMismoPais = listaLandingsMismoPais(analyzer, pais)
+
+    if lt.size(listaMismoPais) == 0:
+
+        masCercano, distancia = findClosest(analyzer, pais)
+
+
+        for vertice in lt.iterator(gr.vertices(analyzer['capacity'])):
+            
+            if masCercano in vertice:
+
+                menor = menorBandaAncha(analyzer, vertice)
+
+                addConnectionTBPS(analyzer, origen, vertice, menor)
+                
+            # ---------- ELSE -------------
+    else:
+
+        
+        for vertice in lt.iterator(gr.vertices(analyzer['capacity'])):
+
+            for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
+
+                if landing in vertice:
+                    
+                    menor = menorBandaAncha(analyzer, vertice)
+                    addConnectionTBPS(analyzer, origen, vertice, menor)
+                    
+    listaVerticesCercanos = None    
+    return analyzer
+
+
+
+
 def addLandingPoint(analyzer, landingPoint)->dict:
     """
     Adiciona un landing point al grafo.
     """
     if not gr.containsVertex(analyzer['landingPoints'], landingPoint):
         gr.insertVertex(analyzer['landingPoints'], landingPoint)
+
+    return analyzer
+
+
+def addLandingPointTBPS(analyzer, landingPoint)->dict:
+    """ 
+    Adiciona un landing point al grafo capacity.
+    """
+    if not gr.containsVertex(analyzer['capacity'], landingPoint):
+        gr.insertVertex(analyzer['capacity'], landingPoint)
 
     return analyzer
 
@@ -158,6 +254,27 @@ def addConnection(analyzer, origen, destino, distancia):
 
     return analyzer
 
+
+
+
+def addConnectionTBPS(analyzer, origen, destino, capacidad):
+    '''
+    Adiciona un arco entre dos landing points al grafo capacity
+    '''
+    lista = analyzer['lista']
+
+    if origen == destino:
+        lt.addLast(lista, origen)
+        
+    
+    else:
+        arco = gr.getEdge(analyzer['capacity'], origen, destino)
+
+        if arco is None:
+            gr.addEdge(analyzer['capacity'], origen, destino, capacidad)
+
+        return analyzer
+    
 
 
 
@@ -195,6 +312,8 @@ def addCountry(analyzer, filtered_dict):
     return analyzer
 
 
+
+
 def lastCountry(analyzer, lista):
 
     pais = lt.lastElement(lista)
@@ -202,6 +321,9 @@ def lastCountry(analyzer, lista):
     valores = mp.get(analyzer['countries'], pais)
 
     return valores
+
+
+
 
 def addMapLandingPoint(analyzer, filtered_dict):
     '''
@@ -212,6 +334,48 @@ def addMapLandingPoint(analyzer, filtered_dict):
         mp.put(analyzer['infoLandingPoints'], filtered_dict['landing_point_id'], filtered_dict)
 
     return analyzer
+
+
+
+
+def loadTBPSRepetidos(analyzer)->None:
+    """Función para agregar un arco al landingpoing que se repita en el grafo de conectivity.
+
+    Args:
+        analyzer: El analyzer.
+    """
+
+    lista = analyzer['lista']
+    
+    for landingPoint in lt.iterator(lista):
+
+        for arco in lt.iterator(gr.adjacentEdges(analyzer['capacity'], landingPoint)):
+
+            minimo = 99999999
+            
+            if arco['weight'] < minimo:  # Menor de los arcos adjacentes al vértice.
+                minimo = arco['weight']
+
+        gr.addEdge(analyzer['capacity'], landingPoint, landingPoint, minimo)
+
+
+
+def menorBandaAncha(analyzer, vertice)->float:
+    """Retorna la menor banda ancha de los vértices más cercanos.
+
+
+    Returns:
+        float: Menor valor.
+    """
+    menor = 999999
+
+    for arco in lt.iterator(gr.adjacentEdges(analyzer['capacity'], vertice)):
+
+        if arco['weight'] < menor:
+            menor = arco['weight']
+
+    return menor
+        
 
 # Funciones para creacion de datos
 

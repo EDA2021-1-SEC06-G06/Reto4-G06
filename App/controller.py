@@ -70,7 +70,11 @@ def loadConnectionsCSV(analyzer):
             first = filtered_dict
             centinela = False
 
-        model.addLandingPointConnection(analyzer, filtered_dict)
+        if filtered_dict['capacityTBPS'] is not '':
+            filtered_dict['capacityTBPS'] = float(filtered_dict['capacityTBPS'])
+
+            model.addLandingPointConnection(analyzer, filtered_dict)
+            model.addCapacityTBPSConnection(analyzer, filtered_dict)
 
     return first
 
@@ -104,9 +108,10 @@ def loadCountries(analyzer):
         if filtered_dict['CountryName'] is not '':
             model.addCountry(analyzer, filtered_dict)
             model.addCapitalLandingPoint(analyzer, filtered_dict)
+            model.addCapitalLandingPointTBPS(analyzer, filtered_dict)
 
     resultado = model.lastCountry(analyzer, analyzer['orderedCountries'])
-
+    analyzer['orderedCountries'] = None # Somos fancy y nos gusta el espacio en memoria
     return resultado
 
 
@@ -137,6 +142,13 @@ def loadLandingPoints(analyzer):
         model.addMapLandingPoint(analyzer, filtered)
 
     return (firstLatitude, firstLongitude)
+
+
+
+
+def loadTBPSRepetidos(analyzer):
+
+    model.loadTBPSRepetidos(analyzer)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
