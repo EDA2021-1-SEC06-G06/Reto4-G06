@@ -63,9 +63,8 @@ while True:
         analyzer = controller.init()
 
         # Carga de Datos
+        resultado = controller.loadLandingPoints(analyzer)
         loadConnections = controller.loadConnectionsCSV(analyzer)
-        firstDestiny = loadConnections["destination"]
-        resultado = controller.loadLandingPoints(analyzer, firstDestiny)
         pais = controller.loadCountries(analyzer)['value']
 
         # Prints

@@ -63,14 +63,20 @@ def newAnalyzer():
 
 
 def addLandingPointConnection(analyzer, filtered_dict):
-    '''
-    Adiciona...
-    '''
+    """Agrega al grafo los datos de connections.csv
+
+    Args:
+        analyzer
+        filtered_dict
+
+    Returns:
+        Analyzer
+    """
 
     # Origen, destino, distancia
     origen = filtered_dict['origin'] + '-' + filtered_dict['cable_name']
     destino = filtered_dict['destination'] + '-' + filtered_dict['cable_name']
-    distancia = filtered_dict['cable_length']
+    distancia = getDistance(analyzer, filtered_dict['origin'], filtered_dict['destination'])
 
     # Agregar vértices
     addLandingPoint(analyzer, origen)
@@ -117,7 +123,7 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
             for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
 
                 if landing in vertice:
-                    distancia = getDistance(analyzer, pais, landing)
+                    distancia = getDistanceCapital(analyzer, pais, landing)
                     
                     addConnection(analyzer, origen, vertice, distancia)
             
@@ -210,9 +216,9 @@ def addMapLandingPoint(analyzer, filtered_dict):
 # Funciones para creacion de datos
 
 
-def getDistance(analyzer, pais, destino):
+def getDistanceCapital(analyzer, pais, destino):
     '''
-    Calcula la distancia entre dos lugares.
+    Calcula la distancia entre la capital de un país y otro destino.
     '''
     dictOrigen = mp.get(analyzer['countries'], pais)['value']
     dictDestino = mp.get(analyzer['infoLandingPoints'], destino)['value']
@@ -226,6 +232,29 @@ def getDistance(analyzer, pais, destino):
 
     return hs.haversine(location1, location2)
 
+
+def getDistance(analyzer, origen, destino):
+    """Calcula la distancia entre dos Landing Points.
+
+    Args:
+        analyzer: [description]
+        origen : [description]
+        destino : [description]
+
+    Returns:
+        float: La distancia.
+    """
+
+    dictOrigen = mp.get(analyzer['infoLandingPoints'], origen)['value']
+    dictDestino = mp.get(analyzer['infoLandingPoints'], destino)['value']
+
+
+    location1 = (dictOrigen['latitude'], dictOrigen['longitude'])
+
+    location2 = (dictDestino['latitude'], dictDestino['longitude'])
+
+    return hs.haversine(location1, location2)
+    
 
     
 

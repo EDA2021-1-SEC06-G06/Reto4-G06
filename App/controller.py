@@ -113,7 +113,7 @@ def loadCountries(analyzer):
 
 
 
-def loadLandingPoints(analyzer, firstDestiny):
+def loadLandingPoints(analyzer):
     landingPointsFile = cf.data_dir + 'landing_points.csv'
 
     input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
@@ -129,7 +129,7 @@ def loadLandingPoints(analyzer, firstDestiny):
             'latitude': float(landingPoint['latitude']),
             'longitude': float(landingPoint['longitude'])
         }
-        if float(firstDestiny) == float(landingPoint['landing_point_id']) and centinela:
+        if centinela:
             firstLatitude = float(landingPoint['latitude'])
             firstLongitude = float(landingPoint['longitude'])
             centinela = False
