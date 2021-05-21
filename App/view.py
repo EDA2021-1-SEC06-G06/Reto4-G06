@@ -20,13 +20,12 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-import config as cf
 import sys
 import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
-assert cf
+
 
 
 """
@@ -51,6 +50,7 @@ def printMenu():
 
 
 analyzer = None
+sys.setrecursionlimit(1000*1000)
 
 """
 Menu principal
