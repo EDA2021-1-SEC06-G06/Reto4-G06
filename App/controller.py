@@ -152,3 +152,12 @@ def loadTBPSRepetidos(analyzer):
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+
+
+def connectedComponents(analyzer)->int:
+    """
+    Calcula los componentes conectados del grafo
+    Se utiliza el algoritmo de Kosaraju
+    """
+    return model.connectedComponents(analyzer=analyzer)

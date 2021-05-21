@@ -68,6 +68,7 @@ while True:
         controller.loadTBPSRepetidos(analyzer)   # TBPS
         pais = controller.loadCountries(analyzer)['value']
 
+        
         # Prints
 
         print(f"\nTotal de landing points: {gr.numVertices(analyzer['landingPoints'])}")
@@ -76,9 +77,10 @@ while True:
         print("\nPrimer landing point cargado: ID: {0}, Nombre: {1}, Latitud: {2}, Longitud: {3}".format(loadConnections["cable_id"], loadConnections["cable_name"], resultado[0], resultado[1]))
         print("\nÚtilmo país cargado: Nombre: {0}, Población: {1}, Número de habitantes: {2}".format(pais["CountryName"], pais["Population"], pais["Internet users"]))
 
+        cantidadConnectedComponents = controller.connectedComponents(analyzer)  # REQ1
         
     elif int(inputs[0]) == 2:
-        pass
+        print(f"Total de clústeres en el grafo: {cantidadConnectedComponents}")
 
     elif int(inputs[0]) == 3:
         pass

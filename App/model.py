@@ -28,7 +28,8 @@ import haversine as hs
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
-
+from DISClib.Algorithms.Graphs import scc
+from DISClib.Algorithms.Graphs import dijsktra
 
 
 """
@@ -50,7 +51,8 @@ def newAnalyzer()->dict:
         'countries': None,
         'infoLandingPoints': None,
         'capacity': None,
-        'lista': None
+        'lista': None,
+        'connected': None
     }
 
     analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
@@ -99,6 +101,7 @@ def addLandingPointConnection(analyzer, filtered_dict)->dict:
 
 
 
+
 def addCapacityTBPSConnection(analyzer, filtered_dict: dict)->dict:
     """
     Agrega al grafo los datos de connections.csv. PESO = CAPACIDAD TBPS
@@ -128,16 +131,14 @@ def addCapacityTBPSConnection(analyzer, filtered_dict: dict)->dict:
 
 
 
+
 def addCapitalLandingPoint(analyzer, filtered_dict):
 
     # nombre: Capital-Country
 
-    origen = filtered_dict['CapitalName'] + '-'
+    origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
 
     pais = filtered_dict['CountryName']
-
-    
-    
 
 
     # Conexiones con los del mismo país
@@ -150,9 +151,6 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
         for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
 
             if masCercano in vertice:
-                indice = vertice.find('-')
-                origen = origen + vertice[indice+1]
-
                 
                 addLandingPoint(analyzer, origen)  # Landing point de la capital.
                 addConnection(analyzer, origen, vertice, distancia)
@@ -164,8 +162,6 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
             for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
 
                 if landing in vertice:
-                    indice = vertice.find('-')
-                    origen = origen + vertice[indice+1]
 
                 
                     addLandingPoint(analyzer, origen)  # Landing point de la capital.
@@ -182,7 +178,7 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
 
     # nombre: Capital-Country
 
-    origen = filtered_dict['CapitalName'] + '-'
+    origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
 
     pais = filtered_dict['CountryName']
 
@@ -201,10 +197,6 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
             if masCercano in vertice:
 
                 menor = menorBandaAncha(analyzer, vertice)
-
-                indice = vertice.find('-')
-                origen = origen + vertice[indice+1]
-
                 
                 addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
                 
@@ -221,10 +213,6 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
                 if landing in vertice:
                     
                     menor = menorBandaAncha(analyzer, vertice)
-
-                    indice = vertice.find('-')
-                    origen = origen + vertice[indice+1]
-
                 
                     addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
                     
@@ -244,6 +232,8 @@ def addLandingPoint(analyzer, landingPoint)->dict:
         gr.insertVertex(analyzer['landingPoints'], landingPoint)
 
     return analyzer
+
+
 
 
 def addLandingPointTBPS(analyzer, landingPoint)->dict:
@@ -378,6 +368,7 @@ def loadTBPSRepetidos(analyzer)->None:
 
 
 
+
 def menorBandaAncha(analyzer, vertice)->float:
     """Retorna la menor banda ancha de los vértices más cercanos.
 
@@ -393,7 +384,19 @@ def menorBandaAncha(analyzer, vertice)->float:
             menor = arco['weight']
 
     return menor
-        
+
+
+
+
+def connectedComponents(analyzer)->int:
+    """
+    Calcula los componentes conectados del grafo
+    Se utiliza el algoritmo de Kosaraju
+    """
+
+    analyzer['connected'] = scc.KosarajuSCC(analyzer['landingPoints'])
+
+    return scc.connectedComponents(analyzer['connected'])
 
 # Funciones para creacion de datos
 
@@ -413,6 +416,8 @@ def getDistanceCapital(analyzer, pais, destino):
     location2 = (dictDestino['latitude'], dictDestino['longitude'])
 
     return hs.haversine(location1, location2)
+
+
 
 
 def getDistance(analyzer, origen, destino):
