@@ -161,3 +161,9 @@ def connectedComponents(analyzer)->int:
     Se utiliza el algoritmo de Kosaraju
     """
     return model.connectedComponents(analyzer=analyzer)
+
+
+
+def requerimiento1(analyzer, vertexA:str, vertexB:str):
+
+    return model.requerimiento1(analyzer, vertexA, vertexB)

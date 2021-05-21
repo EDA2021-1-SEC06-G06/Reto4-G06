@@ -82,6 +82,17 @@ while True:
     elif int(inputs[0]) == 2:
         print(f"Total de clústeres en el grafo: {cantidadConnectedComponents}")
 
+        
+        vertexA = input("Ingrese el nombre del primer Landing Point(Ej. Redondo Beach):\n~ ")
+        vertexB = input("Ingrese el nombre del segundo Landing Point(Ej. Vung Tau):\n~ ")
+
+        if controller.requerimiento1(analyzer, vertexA, vertexB):
+            print(f"{vertexA} y {vertexB} SÍ están en el mismo Cluster.")
+
+        else:
+            print(f"{vertexA} y {vertexB} NO están en el mismo Cluster.")
+        
+        
     elif int(inputs[0]) == 3:
         pass
 

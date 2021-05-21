@@ -469,6 +469,43 @@ def findClosest(analyzer, pais):
         
 
 # Funciones de consulta
+def requerimiento1(analyzer, vertexA:str, vertexB:str):
+    '''
+    Se desea encontrar la cantidad de clústeres (componentes conectados) dentro de la red de cables submarinos y si dos landing points pertenecen o no al mismo clúster.
+    Para dar respuesta a este requerimiento el equipo de desarrollo debe recibir como entrada la siguiente información:
+        • Nombre del landing point 1
+        • Nombre del landing point 2
+    Y como respuesta debe presentar en consola la siguiente información:
+        • Número total de clústeres presentes en la red
+        • Informar si los dos landing points están en el mismo clúster o no
+    '''
+    datosCluster = analyzer['connected']['idscc']
+
+    valorVertexA = None
+    valorVertexB = None
+
+
+    for landingID in lt.iterator(mp.keySet(analyzer['infoLandingPoints'])):  # Cada número que es el landing point id
+
+        if vertexA in mp.get(analyzer['infoLandingPoints'], landingID)['value']['name']:   # si la ciudad está en el name de landingID
+
+            for vertice in lt.iterator(mp.keySet(datosCluster)):  #Por cada vértice en el grafo con los componentes conectados
+
+                if landingID in vertice:  # si el número está en el nombre del vértice
+                    valorVertexA = mp.get(datosCluster, vertice)['value']
+
+        
+        if vertexB in mp.get(analyzer['infoLandingPoints'], landingID)['value']['name']:  # Lo mismo
+
+            for vertice in lt.iterator(mp.keySet(datosCluster)):
+                if landingID in vertice:
+                    valorVertexB = mp.get(datosCluster, vertice)['value']
+
+        if valorVertexA is not None and valorVertexB is not None:  # Si ambos son None
+    
+            return ((valorVertexA) == (valorVertexB))
+
+    return False
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
