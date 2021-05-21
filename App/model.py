@@ -132,12 +132,12 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
 
     # nombre: Capital-Country
 
-    origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
+    origen = filtered_dict['CapitalName'] + '-'
 
     pais = filtered_dict['CountryName']
 
     
-    addLandingPoint(analyzer, origen)  # Landing point de la capital.
+    
 
 
     # Conexiones con los del mismo país
@@ -150,7 +150,11 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
         for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
 
             if masCercano in vertice:
+                indice = vertice.find('-')
+                origen = origen + vertice[indice+1]
 
+                
+                addLandingPoint(analyzer, origen)  # Landing point de la capital.
                 addConnection(analyzer, origen, vertice, distancia)
                 
             # ---------- ELSE -------------
@@ -160,6 +164,11 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
             for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
 
                 if landing in vertice:
+                    indice = vertice.find('-')
+                    origen = origen + vertice[indice+1]
+
+                
+                    addLandingPoint(analyzer, origen)  # Landing point de la capital.
                     distancia = getDistanceCapital(analyzer, pais, landing)
                     
                     addConnection(analyzer, origen, vertice, distancia)
@@ -173,12 +182,10 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
 
     # nombre: Capital-Country
 
-    origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
+    origen = filtered_dict['CapitalName'] + '-'
 
     pais = filtered_dict['CountryName']
 
-    
-    addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
 
 
     # Conexiones con los del mismo país
@@ -195,6 +202,12 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
 
                 menor = menorBandaAncha(analyzer, vertice)
 
+                indice = vertice.find('-')
+                origen = origen + vertice[indice+1]
+
+                
+                addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
+                
                 addConnectionTBPS(analyzer, origen, vertice, menor)
                 
             # ---------- ELSE -------------
@@ -208,9 +221,16 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
                 if landing in vertice:
                     
                     menor = menorBandaAncha(analyzer, vertice)
+
+                    indice = vertice.find('-')
+                    origen = origen + vertice[indice+1]
+
+                
+                    addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
+                    
                     addConnectionTBPS(analyzer, origen, vertice, menor)
                     
-    listaVerticesCercanos = None    
+      
     return analyzer
 
 
