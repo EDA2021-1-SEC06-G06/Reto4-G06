@@ -61,11 +61,11 @@ def printReq2(analyzer, lista_ordenada):
 
         if vertice['vertice'][0] not in numeros:
             pais = vertice['vertice'].split('-')[1]  # llaves son vertice y size
-            print("Nombre/ID: {0}| País: {1}\n".format(vertice['vertice'], pais))
+            print("Nombre/ID: {0} | País: {1} | Arcos:{2}\n".format(vertice['vertice'], pais, vertice['size']))
 
     else:
         
-        while posicion <= lt.size(lista_ordenada) and lt.getElement(lista_ordenada, posicion)['size'] == lt.getElement(lista_ordenada, posicion + 1)['size']:
+        while posicion < lt.size(lista_ordenada) and lt.getElement(lista_ordenada, posicion)['size'] == lt.getElement(lista_ordenada, posicion + 1)['size']:
 
             verticeDict = lt.getElement(lista_ordenada, posicion)  # llaves son vertice y size
 
@@ -79,7 +79,7 @@ def printReq2(analyzer, lista_ordenada):
 
             pais = mp.get(analyzer['infoLandingPoints'], id_unique)['value']['name'].split(', ')[1]
             
-            print("Nombre: {0}| País: {1}| ID: {2}".format(verticeDict['vertice'], pais, id_unique))
+            print("Nombre: {0} | País: {1} | ID: {2} | Arcos:{3}\n".format(verticeDict['vertice'], pais, id_unique, verticeDict['size']))
 
             posicion += 1
 
