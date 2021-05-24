@@ -175,3 +175,8 @@ def req2(analyzer):
     Retorna una lista ordenada según la cantidad de arcos de cada vértice.
     '''
     return model.req2(analyzer)
+
+
+
+def req3(analyzer, paisA, paisB):
+    return model.req3(analyzer, paisA, paisB)

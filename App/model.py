@@ -53,7 +53,8 @@ def newAnalyzer()->dict:
         'infoLandingPoints': None,
         'capacity': None,
         'lista': None,
-        'connected': None
+        'connected': None,
+        'paths': None
     }
 
     analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
@@ -466,8 +467,21 @@ def findClosest(analyzer, pais):
             menor = landingPoint # str
 
     return menor, menorValor
-            
-        
+
+
+
+def minimumPaths(analyzer, paisA):
+    grafo = analyzer['landingPoints']
+
+    capital = mp.get(analyzer["countries"], paisA)["value"]
+
+    nombre = capital['CapitalName'] + '-' + capital['CountryName']
+
+    analyzer['paths'] = dijsktra.Dijkstra(grafo, nombre)
+
+    print(analyzer['paths'])
+
+
 
 # Funciones de consulta
 def requerimiento1(analyzer, vertexA:str, vertexB:str):
@@ -532,6 +546,21 @@ def req2(analyzer):
             lt.addLast(listaArcos, verticeArcos)
 
     return sortNumEdgesReq2(listaArcos)
+
+
+
+def req3(analyzer, paisA, paisB):
+
+    minimumPaths(analyzer, paisA)
+
+    capital = mp.get(analyzer["countries"], paisB)["value"]
+
+    nombre = capital['CapitalName'] + '-' + capital['CountryName']
+
+    path = dijsktra.distTo(analyzer['paths'], nombre)
+
+    return path
+
         
 # Funciones utilizadas para comparar elementos dentro de una lista
 

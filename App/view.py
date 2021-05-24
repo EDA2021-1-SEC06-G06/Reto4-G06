@@ -126,12 +126,17 @@ while True:
 
         else:
             print(f"{vertexA} y {vertexB} NO están en el mismo Cluster.")
-        
-        
+
+
     elif int(inputs[0]) == 3:
         printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
 
     elif int(inputs[0]) == 4:
+
+        paisA = input("Ingrese el nombre del primer país que desea consultar. Ejemplo: Colombia\n~ ")
+        paisB = input("Ingrese el nombre del segundo país que desea consultar. Ejemplo: Indonesia\n~ ")
+
+        print(controller.req3(analyzer, paisA, paisB))
         pass
 
     elif int(inputs[0]) == 5:
