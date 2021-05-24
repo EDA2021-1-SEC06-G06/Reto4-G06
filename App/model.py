@@ -30,6 +30,7 @@ from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra
+from DISClib.Algorithms.Sorting import mergesort
 
 
 """
@@ -507,6 +508,31 @@ def requerimiento1(analyzer, vertexA:str, vertexB:str):
 
     return False
 
+
+
+
+def req2(analyzer):
+    '''
+    Retorna una lista ordenada según la cantidad de arcos de cada vértice.
+    '''
+    numMayor = 0
+    listaArcos = lt.newList("ARRAY_LIST")
+    
+    for vertex in lt.iterator(gr.vertices(analyzer['landingPoints'])):
+        adyacentes = gr.adjacentEdges(analyzer['landingPoints'], vertex)
+
+        if lt.size(adyacentes) >= numMayor:
+
+            numMayor = lt.size(adyacentes)
+
+            verticeArcos = {
+                'vertice': vertex,
+                'size': numMayor
+            }
+            lt.addLast(listaArcos, verticeArcos)
+
+    return sortNumEdgesReq2(listaArcos)
+        
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def cmpLandingPoint(l1, l2):
@@ -519,4 +545,20 @@ def cmpLandingPoint(l1, l2):
     else:
         return -1
 
+
+
+def cmpNumEdgesReq2(verticeA, verticeB):
+    return (verticeA['size'] > verticeB['size'])
 # Funciones de ordenamiento
+
+
+def sortNumEdgesReq2(listaVerticesArcos):
+    '''
+    Retorna una lista con los vértices ordenados según su cantidad de arcos.
+    '''
+    sub_list = lt.subList(listaVerticesArcos, 1, lt.size(listaVerticesArcos))
+    sub_list = sub_list.copy()
+
+    sorted_list = mergesort.sort(sub_list, cmpNumEdgesReq2)
+
+    return sorted_list

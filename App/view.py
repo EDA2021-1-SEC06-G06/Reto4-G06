@@ -49,6 +49,41 @@ def printMenu():
     print("9- REQ 8: REQ. 8: Graficando los Grafos")
 
 
+
+
+def printReq2(analyzer, lista_ordenada):
+
+    posicion = 1
+    numeros = '0123456789'
+    if lt.getElement(lista_ordenada, posicion)['size'] != lt.getElement(lista_ordenada, posicion + 1)['size']:
+
+        vertice = lt.getElement(lista_ordenada, posicion)
+
+        if vertice['vertice'][0] not in numeros:
+            pais = vertice['vertice'].split('-')[1]  # llaves son vertice y size
+            print("Nombre/ID: {0}| País: {1}\n".format(vertice['vertice'], pais))
+
+    else:
+        
+        while posicion <= lt.size(lista_ordenada) and lt.getElement(lista_ordenada, posicion)['size'] == lt.getElement(lista_ordenada, posicion + 1)['size']:
+
+            verticeDict = lt.getElement(lista_ordenada, posicion)  # llaves son vertice y size
+
+            id_unique = ''
+
+            indice = 0
+
+            while verticeDict['vertice'][indice] in numeros:
+                id_unique = id_unique + verticeDict['vertice'][indice]
+                indice += 1
+
+            pais = mp.get(analyzer['infoLandingPoints'], id_unique)['value']['name'].split(', ')[1]
+            
+            print("Nombre: {0}| País: {1}| ID: {2}".format(verticeDict['vertice'], pais, id_unique))
+
+            posicion += 1
+
+
 analyzer = None
 sys.setrecursionlimit(1000*1000)
 
@@ -94,7 +129,7 @@ while True:
         
         
     elif int(inputs[0]) == 3:
-        pass
+        printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
 
     elif int(inputs[0]) == 4:
         pass

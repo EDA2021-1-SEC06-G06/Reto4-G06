@@ -167,3 +167,11 @@ def connectedComponents(analyzer)->int:
 def requerimiento1(analyzer, vertexA:str, vertexB:str):
 
     return model.requerimiento1(analyzer, vertexA, vertexB)
+
+
+
+def req2(analyzer):
+    '''
+    Retorna una lista ordenada según la cantidad de arcos de cada vértice.
+    '''
+    return model.req2(analyzer)
