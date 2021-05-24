@@ -25,7 +25,7 @@ import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
-
+from DISClib.ADT import stack
 
 
 """
@@ -84,6 +84,17 @@ def printReq2(analyzer, lista_ordenada):
             posicion += 1
 
 
+
+
+def printReq3(analyzer, paisB):
+
+
+    path = controller.minimumCostPath(analyzer, paisB)
+    
+    if path is not None:
+        pathlen = stack.size(path)
+        print(f"El camino es de longitud: {pathlen}")
+
 analyzer = None
 sys.setrecursionlimit(1000*1000)
 
@@ -135,9 +146,12 @@ while True:
 
         paisA = input("Ingrese el nombre del primer país que desea consultar. Ejemplo: Colombia\n~ ")
         paisB = input("Ingrese el nombre del segundo país que desea consultar. Ejemplo: Indonesia\n~ ")
-
-        print(controller.req3(analyzer, paisA, paisB))
-        pass
+        controller.minimumCostPaths(analyzer, paisA)
+        
+        if controller.hasPath(analyzer, paisB):
+            print(True)
+        
+            printReq3(analyzer, paisB)
 
     elif int(inputs[0]) == 5:
         pass

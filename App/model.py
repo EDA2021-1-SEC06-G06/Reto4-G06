@@ -470,16 +470,32 @@ def findClosest(analyzer, pais):
 
 
 
-def minimumPaths(analyzer, paisA):
-    grafo = analyzer['landingPoints']
+def minimumCostPaths(analyzer, paisA):
+    """
+    Calcula los caminos de costo mínimo desde la capital del país A a todos los demás vértices.
+    """
 
-    capital = mp.get(analyzer["countries"], paisA)["value"]
+    capitalPaisA = mp.get(analyzer['countries'], paisA)['value']
 
-    nombre = capital['CapitalName'] + '-' + capital['CountryName']
+    nombrePaisA = capitalPaisA['CapitalName'] + '-' + capitalPaisA['CountryName']
+    
+    analyzer['paths'] = dijsktra.Dijkstra(analyzer['landingPoints'], nombrePaisA)
 
-    analyzer['paths'] = dijsktra.Dijkstra(grafo, nombre)
+    return analyzer
 
-    print(analyzer['paths'])
+
+
+
+def hasPath(analyzer, paisB):
+    """
+    Indica si existe un camino desde el país base a país B.
+    Se debe ejecutar primero la funcion minimumCostPaths
+    """
+
+    capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
+
+    nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
+    return dijsktra.hasPathTo(analyzer['paths'], nombrePaisB)
 
 
 
@@ -549,17 +565,14 @@ def req2(analyzer):
 
 
 
-def req3(analyzer, paisA, paisB):
 
-    minimumPaths(analyzer, paisA)
+def minimumCostPath(analyzer, paisB):
 
-    capital = mp.get(analyzer["countries"], paisB)["value"]
+    capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
 
-    nombre = capital['CapitalName'] + '-' + capital['CountryName']
+    nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
 
-    path = dijsktra.distTo(analyzer['paths'], nombre)
-
-    return path
+    return dijsktra.pathTo(analyzer['paths'], nombrePaisB)
 
         
 # Funciones utilizadas para comparar elementos dentro de una lista

@@ -178,5 +178,17 @@ def req2(analyzer):
 
 
 
-def req3(analyzer, paisA, paisB):
-    return model.req3(analyzer, paisA, paisB)
+def minimumCostPaths(analyzer, paisA):
+
+    return model.minimumCostPaths(analyzer, paisA)
+
+
+
+def hasPath(analyzer, paisB):
+
+    return model.hasPath(analyzer, paisB)
+
+
+
+def minimumCostPath(analyzer, paisB):
+    return model.minimumCostPath(analyzer, paisB)
