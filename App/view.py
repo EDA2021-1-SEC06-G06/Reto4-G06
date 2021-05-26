@@ -26,8 +26,8 @@ from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.ADT import stack
-
-
+from DISClib.Algorithms.Graphs import prim
+from DISClib.ADT import queue
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -124,6 +124,7 @@ while True:
         print("\nÚtilmo país cargado: Nombre: {0}, Población: {1}, Número de habitantes: {2}".format(pais["CountryName"], pais["Population"], pais["Internet users"]))
 
         cantidadConnectedComponents = controller.connectedComponents(analyzer)  # REQ1
+        controller.mstPRIM(analyzer)
         
     elif int(inputs[0]) == 2:
         print(f"Total de clústeres en el grafo: {cantidadConnectedComponents}")
@@ -142,20 +143,33 @@ while True:
     elif int(inputs[0]) == 3:
         printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
 
+
     elif int(inputs[0]) == 4:
 
         paisA = input("Ingrese el nombre del primer país que desea consultar. Ejemplo: Colombia\n~ ")
         paisB = input("Ingrese el nombre del segundo país que desea consultar. Ejemplo: Indonesia\n~ ")
-        controller.minimumCostPaths(analyzer, paisA)
+        controller.minimumCostPaths(analyzer, paisA)  # TODO: Tocaría cambiar la carga de datos, pero eso depende de las instrucciones de los monitores.
         
-        if controller.hasPath(analyzer, paisB):
-            print(True)
-        
-            printReq3(analyzer, paisB)
+        printReq3(analyzer, paisB)
+
 
     elif int(inputs[0]) == 5:
-        pass
+        numNodos = mp.size(analyzer['mst']['distTo'])
+        distanciaTotal = 0
 
+        mayorRecorrido = 0
+       
+        for llaveValor in lt.iterator(mp.keySet(analyzer['mst']['distTo'])):
+            # Ejemplo {'key': '10985-Malaysia-Cambodia-Thailand (MCT) Cable', 'value': 145.54934328686224}
+            verticeValor = mp.get(analyzer['mst']['distTo'], llaveValor)['value']
+
+            if verticeValor is not None:
+                distanciaTotal += verticeValor
+       
+        print(f"Número de nodos conectados en la red de expansión mínima: {numNodos}")
+        print(f"Distancia de la red de expansión mínima: {distanciaTotal} km")
+        print(f"Mayor número de arcos entre la raíz y la hoja: {mayorRecorrido}")
+        
     elif int(inputs[0]) == 6:
         pass
 

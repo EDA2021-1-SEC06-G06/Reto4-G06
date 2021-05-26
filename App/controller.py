@@ -192,3 +192,11 @@ def hasPath(analyzer, paisB):
 
 def minimumCostPath(analyzer, paisB):
     return model.minimumCostPath(analyzer, paisB)
+
+
+
+def mstPRIM(analyzer):
+    '''
+    Crea el MST de analyzer['landingPoints]
+    '''
+    return model.mstPRIM(analyzer)

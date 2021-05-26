@@ -31,7 +31,8 @@ from DISClib.ADT import map as mp
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra
 from DISClib.Algorithms.Sorting import mergesort
-
+from DISClib.Algorithms.Graphs import bellmanford
+from DISClib.Algorithms.Graphs import prim
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -54,7 +55,8 @@ def newAnalyzer()->dict:
         'capacity': None,
         'lista': None,
         'connected': None,
-        'paths': None
+        'paths': None,
+        'mst': None
     }
 
     analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
@@ -479,7 +481,7 @@ def minimumCostPaths(analyzer, paisA):
 
     nombrePaisA = capitalPaisA['CapitalName'] + '-' + capitalPaisA['CountryName']
     
-    analyzer['paths'] = dijsktra.Dijkstra(analyzer['landingPoints'], nombrePaisA)
+    analyzer['paths'] = bellmanford.BellmanFord(analyzer['landingPoints'], nombrePaisA)
 
     return analyzer
 
@@ -495,8 +497,17 @@ def hasPath(analyzer, paisB):
     capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
 
     nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
-    return dijsktra.hasPathTo(analyzer['paths'], nombrePaisB)
+    return bellmanford.hasPathTo(analyzer['paths'], nombrePaisB)
 
+
+
+
+def mstPRIM(analyzer):
+    '''
+    Recibe un grafo como parámetro y retorna
+    '''
+    analyzer['mst'] = prim.PrimMST(analyzer['landingPoints'])
+    
 
 
 # Funciones de consulta
@@ -572,7 +583,7 @@ def minimumCostPath(analyzer, paisB):
 
     nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
 
-    return dijsktra.pathTo(analyzer['paths'], nombrePaisB)
+    return bellmanford.pathTo(analyzer['paths'], nombrePaisB)
 
         
 # Funciones utilizadas para comparar elementos dentro de una lista
