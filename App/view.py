@@ -20,7 +20,6 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-
 import sys
 import controller
 from DISClib.ADT import list as lt
