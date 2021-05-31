@@ -645,7 +645,7 @@ def req4(analyzer):
     return (numNodos, distanciaTotal, mayorRecorrido)
 
 
-def bfsReq4(analyzer):  #TODO: Comentarios
+def bfsReq4(analyzer):
     """Retorna un dict que es la rama más larga con su landing Point final.
 
     Args:
@@ -654,23 +654,23 @@ def bfsReq4(analyzer):  #TODO: Comentarios
     Returns:
         infoRama[dict]: Rama con mayor longitud.
     """
-    bfs = analyzer["BFS"]
+    bfs = analyzer["BFS"]  # BFS del grafo con el vétrtice Bogota-Colombia.
 
-    distanciaMax = 0
+    distanciaMax = 0  # Se inicia la distancia máxima en 0.
 
     infoRama = None
 
-    for element in (bfs['visited']['table']['elements']):
+    for element in (bfs['visited']['table']['elements']):  # Por cada elemento se extrae su valor.
         distancia = element['value']
         
         if distancia is not None:
 
-            if distancia['distTo'] > distanciaMax:
+            if distancia['distTo'] > distanciaMax:  # Se compara la distancua máxima con la del elemento actual.
 
                 distanciaMax = distancia['distTo']
                 infoRama = element['value']
 
-    return infoRama
+    return infoRama  # Se retorna la infromación del LP con mayor distancia de Bogota-Colombia.
 
 
 
