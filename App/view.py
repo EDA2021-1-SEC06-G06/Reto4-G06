@@ -183,7 +183,7 @@ while True:
         # Carga de Datos
         resultado = controller.loadLandingPoints(analyzer)
         loadConnections = controller.loadConnectionsCSV(analyzer)
-        # controller.loadTBPSRepetidos(analyzer)   # TBPS
+        controller.loadTBPSRepetidos(analyzer)   # TBPS
         pais = controller.loadCountries(analyzer)['value']
 
 
@@ -419,8 +419,12 @@ while True:
          
 
 
-    elif int(inputs[0]) == 7:
-        pass
+    elif int(inputs[0]) == 7: ## BONO REQ 6 ##
+        # analyzer['capacity']
+
+        nombrePais = input("Ingrese el nombre del país que le interesa: \n~ ")
+        nombreCable = input("Ingrese el nombre del cable que desea:\n~ ")
+        
 
     elif int(inputs[0]) == 8:
         pass

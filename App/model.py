@@ -62,7 +62,7 @@ def newAnalyzer()->dict:
 
     analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', size=14000, comparefunction=cmpLandingPoint, directed=True)
 
-    analyzer['capacity'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
+    analyzer['capacity'] = gr.newGraph(datastructure='ADJ_LIST', directed=True, size=14000, comparefunction=cmpLandingPoint)
 
     analyzer['countries'] = mp.newMap(numelements=239, maptype='PROBING')
 
@@ -139,9 +139,19 @@ def addCapacityTBPSConnection(analyzer, filtered_dict: dict)->dict:
     addLandingPointTBPS(analyzer, origen)
     addLandingPointTBPS(analyzer, destino)
 
+    #Agregar a la lista
+    valueOrigen = mp.get(analyzer['infoLandingPoints'], filtered_dict['origin'])['value']['lista']
+    lt.addLast(valueOrigen, origen)
+    valueDestino = mp.get(analyzer['infoLandingPoints'], filtered_dict['destination'])['value']['lista']
+    lt.addLast(valueDestino, destino)
+
     # Agregar conexión/arco
 
     addConnectionTBPS(analyzer, origen, destino, anchoDeBanda)
+    addConnectionTBPS(analyzer, destino, origen, anchoDeBanda)
+
+    addMismoConnectionTBPS(analyzer, origen)
+    addMismoConnection(analyzer, destino)
 
     return analyzer
 
@@ -219,6 +229,7 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
                 addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
 
                 addConnectionTBPS(analyzer, origen, vertice, menor)
+                addConnectionTBPS(analyzer, vertice, origen, menor)
 
             # ---------- ELSE -------------
     else:
@@ -235,6 +246,7 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
                     addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
 
                     addConnectionTBPS(analyzer, origen, vertice, menor)
+                    addConnection(analyzer, vertice, origen, menor)
 
 
     return analyzer
@@ -296,6 +308,20 @@ def addMismoConnection(analyzer, nombreLP):
             addConnection(analyzer, nombreLP, lp, 0.1)
             addConnection(analyzer, lp, nombreLP, 0.1)
 
+
+
+
+def addMismoConnectionTBPS(analyzer, nombreLP):
+    id_ = nombreLP.split('-')[0]
+
+
+    for lp in lt.iterator(mp.get(analyzer['infoLandingPoints'], id_)['value']['lista']):
+
+        if lp != nombreLP:
+            menor = menorBandaAncha(analyzer,lp)
+            
+            addConnectionTBPS(analyzer, nombreLP, lp, menor)
+            addConnectionTBPS(analyzer, lp, nombreLP, menor)
 
 
 
