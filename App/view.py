@@ -152,16 +152,17 @@ while True:
         printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
 
 
-    elif int(inputs[0]) == 4:
+    elif int(inputs[0]) == 4:   # Req 3
 
         paisA = input("Ingrese el nombre del primer país que desea consultar. Ejemplo: Colombia\n~ ")
         paisB = input("Ingrese el nombre del segundo país que desea consultar. Ejemplo: Indonesia\n~ ")
-        controller.minimumCostPaths(analyzer, paisA)  # TODO: Tocaría cambiar la carga de datos, pero eso depende de las instrucciones de los monitores.
+        controller.minimumCostPaths(analyzer, paisA)
         
         printReq3(analyzer, paisB)
 
 
     elif int(inputs[0]) == 5:
+        ####
         numNodos = mp.size(analyzer['mst']['distTo'])
         distanciaTotal = 0
 
@@ -173,9 +174,9 @@ while True:
 
             if verticeValor is not None:
                 distanciaTotal += verticeValor
-       
+        ####
         print(f"Número de nodos conectados en la red de expansión mínima: {numNodos}")
-        print(f"Distancia de la red de expansión mínima: {distanciaTotal} km")
+        print(f"Distancia de la red de expansión mínima: {distanciaTotal * 2} km") # Se multiplica x2 puesto que es un grafo dirigido
         print(f"Mayor número de arcos entre la raíz y la hoja: {mayorRecorrido}")
         
     elif int(inputs[0]) == 6:
