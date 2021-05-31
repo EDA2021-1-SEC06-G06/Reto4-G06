@@ -72,7 +72,7 @@ def newAnalyzer()->dict:
 
     analyzer['lista'] = lt.newList('ARRAY_LIST')  # lista con los landingpoints que se dirigen a ellos mismos.
 
-    analyzer['BFS'] = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], 'Bogota-Colombia')
+    analyzer['BFS'] = None
 
     return analyzer
 # Funciones para agregar informacion al catalogo
@@ -553,6 +553,14 @@ def mstPRIM(analyzer):
 
 
 
+
+def loadBFS(analyzer):
+    '''
+    Hace un BFS de analyzer['landingPoints'], desde 'Bogota-Colombia'.
+    '''
+    analyzer['BFS'] = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], 'Bogota-Colombia')
+
+
 # Funciones de consulta
 def requerimiento1(analyzer, vertexA:str, vertexB:str):
     '''
@@ -637,15 +645,22 @@ def req4(analyzer):
     return (numNodos, distanciaTotal, mayorRecorrido)
 
 
-def bfsReq4(analyzer):
+def bfsReq4(analyzer):  #TODO: Comentarios
+    """Retorna un dict que es la rama más larga con su landing Point final.
 
+    Args:
+        analyzer
+
+    Returns:
+        infoRama[dict]: Rama con mayor longitud.
+    """
     bfs = analyzer["BFS"]
 
     distanciaMax = 0
 
     infoRama = None
 
-    for element in (bfs['BFS']['visited']['table']['elements']):
+    for element in (bfs['visited']['table']['elements']):
         distancia = element['value']
         
         if distancia is not None:

@@ -133,6 +133,7 @@ while True:
 
         cantidadConnectedComponents = controller.connectedComponents(analyzer)  # REQ1
         controller.mstPRIM(analyzer)
+        controller.loadBFS(analyzer)
 
     elif int(inputs[0]) == 2:   # Req 1
         print(f"Total de clústeres en el grafo: {cantidadConnectedComponents}")
@@ -166,7 +167,7 @@ while True:
         distanciaMax = controller.bfsReq4(analyzer)
         print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
         print(f"Distancia de la red de expansión mínima: {resultados[1] * 2} km\n")  #Se multiplica x2 puesto que es un grafo dirigido
-        print("La rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene un tamaño de {0} y corresponde al landing point: {1}".format(distanciaMax['distTo'], distanciaMax['edgeTo']))
+        print("La rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene una longitud de {0} y corresponde al landing point: {1}".format(distanciaMax['distTo'], distanciaMax['edgeTo']))
 
     elif int(inputs[0]) == 6:
         pass

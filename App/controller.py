@@ -149,6 +149,14 @@ def loadLandingPoints(analyzer):
 def loadTBPSRepetidos(analyzer):
 
     model.loadTBPSRepetidos(analyzer)
+
+
+
+def loadBFS(analyzer):
+    '''
+    Hace un BFS de analyzer['landingPoints'], desde 'Bogota-Colombia'.
+    '''
+    model.loadBFS(analyzer)
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
@@ -182,6 +190,14 @@ def req4(analyzer):
 
 
 def bfsReq4(analyzer):
+    """Retorna un dict que es la rama más larga con su landing Point final.
+
+    Args:
+        analyzer
+
+    Returns:
+        infoRama[dict]: Rama con mayor longitud.
+    """
     return model.bfsReq4(analyzer)
 
 
