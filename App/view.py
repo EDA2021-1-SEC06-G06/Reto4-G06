@@ -103,6 +103,22 @@ def printReq3(analyzer, paisB):
     else:
         print('No existe un camino.')
 
+
+
+
+def printReq5(sorted_list):
+
+    if lt.size(sorted_list) >= 1:
+        print("\nNúmero de países afectados: {0}".format(lt.size(sorted_list)))
+        for pais in lt.iterator(sorted_list):
+
+            print("\nPaís: {0}\tDistancia: {1}km".format(pais['nombre'], pais['weight']))
+    else:
+        print("No se encontraron países directamente conectados.")
+
+
+
+
 analyzer = None
 sys.setrecursionlimit(1000*1000)
 
@@ -169,8 +185,14 @@ while True:
         print(f"Distancia de la red de expansión mínima: {resultados[1] * 2} km\n")  #Se multiplica x2 puesto que es un grafo dirigido
         print("La rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene una longitud de {0} y corresponde al landing point: {1}".format(distanciaMax['distTo'], distanciaMax['edgeTo']))
 
-    elif int(inputs[0]) == 6:
-        pass
+    elif int(inputs[0]) == 6:  # Req 5
+        #inputLandingPoint = input("Ingrese el Landing Point que le interesa: \n~ ")
+        inputLandingPoint = "5808-San Andres Isla Tolu Submarine Cable (SAIT)"
+        sorted_list = controller.req5(analyzer, inputLandingPoint)
+
+        printReq5(sorted_list)
+         
+
 
     elif int(inputs[0]) == 7:
         pass

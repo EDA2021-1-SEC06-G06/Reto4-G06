@@ -201,6 +201,23 @@ def bfsReq4(analyzer):
     return model.bfsReq4(analyzer)
 
 
+
+
+def req5(analyzer, inputLP):
+    """Recibe un LP de interés. Retorna una lista de los países (adyacentes) ordenados descendentemente según su distancia.
+
+    Args:
+        analyzer
+        inputLP (str): Landing Point de interés del usuario.
+
+    Returns:
+        sorted_list (ARRAY_LIST): Lista ordenada.
+    """
+    return model.req5(analyzer, inputLP)
+
+
+
+
 def minimumCostPaths(analyzer, paisA):
 
     return model.minimumCostPaths(analyzer, paisA)

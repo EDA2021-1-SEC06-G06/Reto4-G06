@@ -24,6 +24,7 @@
  * Dario Correal - Version inicial
  """
 
+from this import d
 import haversine as hs
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
@@ -675,6 +676,40 @@ def bfsReq4(analyzer):  #TODO: Comentarios
 
 
 
+def req5(analyzer, inputLP):
+    """Recibe un LP de interés. Retorna una lista de los países (adyacentes) ordenados descendentemente según su distancia.
+
+    Args:
+        analyzer
+        inputLP (str): Landing Point de interés del usuario.
+
+    Returns:
+        sorted_list (ARRAY_LIST): Lista ordenada.
+    """
+    verticesConectados = gr.adjacents(analyzer['landingPoints'], inputLP)
+
+
+    numeros = '0123456789'
+    
+    listaPaisesAfectados = lt.newList('ARRAY_LIST')
+    
+    for lp in lt.iterator(verticesConectados):
+
+        if lp[0] not in numeros:
+
+            pais = {
+                'nombre': lp.split('-')[1],
+                'weight': gr.getEdge(analyzer['landingPoints'], inputLP, lp)['weight']
+            }
+            
+            lt.addLast(listaPaisesAfectados, pais)
+
+            
+
+    return sortMenorDistancia(listaPaisesAfectados)
+
+
+
         
 # Funciones utilizadas para comparar elementos dentro de una lista
 
@@ -692,6 +727,9 @@ def cmpLandingPoint(l1, l2):
 
 def cmpNumEdgesReq2(verticeA, verticeB):
     return (verticeA['size'] > verticeB['size'])
+
+def cmpMenorDistancia(paisA, paisB):
+    return (paisA['weight'] < paisB['weight'])
 # Funciones de ordenamiento
 
 
@@ -704,4 +742,16 @@ def sortNumEdgesReq2(listaVerticesArcos):
 
     sorted_list = mergesort.sort(sub_list, cmpNumEdgesReq2)
 
+    return sorted_list
+
+
+
+def sortMenorDistancia(listaPaises):
+    '''
+    Retorna una lista de los países según su distancia en orden descendente.
+    '''
+    sub_list = lt.subList(listaPaises, 1, lt.size(listaPaises))
+    sub_list = sub_list.copy()
+
+    sorted_list = mergesort.sort(sub_list, cmpMenorDistancia)
     return sorted_list
