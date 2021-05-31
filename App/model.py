@@ -164,11 +164,11 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
         for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
 
             if masCercano in vertice:
-                
+
                 addLandingPoint(analyzer, origen)  # Landing point de la capital.
                 addConnection(analyzer, origen, vertice, distancia)
                 addConnection(analyzer, vertice, origen, distancia)
-                
+
             # ---------- ELSE -------------
     else:
         for vertice in lt.iterator(gr.vertices(analyzer['landingPoints'])):
@@ -177,13 +177,13 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
 
                 if landing in vertice:
 
-                
+
                     addLandingPoint(analyzer, origen)  # Landing point de la capital.
                     distancia = getDistanceCapital(analyzer, pais, landing)
-                    
+
                     addConnection(analyzer, origen, vertice, distancia)
                     addConnection(analyzer, vertice, origen, distancia)
-            
+
     return analyzer
 
 
@@ -208,32 +208,32 @@ def addCapitalLandingPointTBPS(analyzer, filtered_dict):
 
 
         for vertice in lt.iterator(gr.vertices(analyzer['capacity'])):
-            
+
             if masCercano in vertice:
 
                 menor = menorBandaAncha(analyzer, vertice)
-                
+
                 addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
-                
+
                 addConnectionTBPS(analyzer, origen, vertice, menor)
-                
+
             # ---------- ELSE -------------
     else:
 
-        
+
         for vertice in lt.iterator(gr.vertices(analyzer['capacity'])):
 
             for landing in lt.iterator(listaMismoPais):  # Cada LandingPoint en la lista (mismo país)
 
                 if landing in vertice:
-                    
+
                     menor = menorBandaAncha(analyzer, vertice)
-                
+
                     addLandingPointTBPS(analyzer, origen)  # Landing point de la capital.
-                    
+
                     addConnectionTBPS(analyzer, origen, vertice, menor)
-                    
-      
+
+
     return analyzer
 
 
@@ -251,7 +251,7 @@ def addLandingPoint(analyzer, landingPoint)->dict:
 
 
 
-def addLandingPointTBPS(analyzer, landingPoint)->dict:
+def addLandingPointTBPS(analyzer, landingPoint) -> dict:
     """ 
     Adiciona un landing point al grafo capacity.
     """
@@ -269,7 +269,7 @@ def addConnection(analyzer, origen, destino, distancia):
     """
     if origen == destino:
         distancia = 0.1
-    
+
     arco = gr.getEdge(analyzer['landingPoints'], origen, destino)
 
     if arco is None:
@@ -304,8 +304,8 @@ def addConnectionTBPS(analyzer, origen, destino, capacidad):
 
     if origen == destino:
         lt.addLast(lista, origen)
-        
-    
+
+
     else:
         arco = gr.getEdge(analyzer['capacity'], origen, destino)
 
@@ -313,7 +313,7 @@ def addConnectionTBPS(analyzer, origen, destino, capacidad):
             gr.addEdge(analyzer['capacity'], origen, destino, capacidad)
 
         return analyzer
-    
+
 
 
 
@@ -323,17 +323,17 @@ def listaLandingsMismoPais(analyzer, pais):
     '''
 
     listaMismoPais = lt.newList("ARRAY_LIST")
-   
+
     for uniqueLanding in (lt.iterator(mp.keySet(analyzer['infoLandingPoints']))):
-        
+
         # get del mapa para la llave
-        
+
         landing = mp.get(analyzer['infoLandingPoints'], uniqueLanding)['value']  # landing_point_id,id,name,latitude,longitude
-       
+
         if pais in landing['name']:
 
             lt.addLast(listaMismoPais, uniqueLanding)  # Agrega el nombre del LandingPoint del país
-    
+
     return listaMismoPais
 
 
@@ -386,13 +386,13 @@ def loadTBPSRepetidos(analyzer)->None:
     """
 
     lista = analyzer['lista']
-    
+
     for landingPoint in lt.iterator(lista):
 
         for arco in lt.iterator(gr.adjacentEdges(analyzer['capacity'], landingPoint)):
 
             minimo = 99999999
-            
+
             if arco['weight'] < minimo:  # Menor de los arcos adjacentes al vértice.
                 minimo = arco['weight']
 
@@ -440,10 +440,10 @@ def getDistanceCapital(analyzer, pais, destino):
     dictOrigen = mp.get(analyzer['countries'], pais)['value']
     dictDestino = mp.get(analyzer['infoLandingPoints'], destino)['value']
 
-    
+
     location1 = (dictOrigen['CapitalLatitude'], dictOrigen['CapitalLongitude'])
 
-    
+
 
     location2 = (dictDestino['latitude'], dictDestino['longitude'])
 
@@ -473,9 +473,9 @@ def getDistance(analyzer, origen, destino):
     location2 = (dictDestino['latitude'], dictDestino['longitude'])
 
     return hs.haversine(location1, location2)
-    
 
-    
+
+
 
 def findClosest(analyzer, pais):
     dictOrigen = mp.get(analyzer['countries'], pais)['value']
@@ -509,7 +509,7 @@ def minimumCostPaths(analyzer, paisA):
     capitalPaisA = mp.get(analyzer['countries'], paisA)['value']
 
     nombrePaisA = capitalPaisA['CapitalName'] + '-' + capitalPaisA['CountryName']
-    
+
     analyzer['paths'] = dijsktra.Dijkstra(analyzer['landingPoints'], nombrePaisA)
 
     return analyzer
@@ -547,7 +547,7 @@ def mstPRIM(analyzer):
     Recibe un grafo como parámetro y retorna
     '''
     analyzer['mst'] = prim.PrimMST(analyzer['landingPoints'])
-    
+
 
 
 # Funciones de consulta
@@ -576,7 +576,7 @@ def requerimiento1(analyzer, vertexA:str, vertexB:str):
                 if landingID in vertice:  # si el número está en el nombre del vértice
                     valorVertexA = mp.get(datosCluster, vertice)['value']
 
-        
+
         if vertexB in mp.get(analyzer['infoLandingPoints'], landingID)['value']['name']:  # Lo mismo
 
             for vertice in lt.iterator(mp.keySet(datosCluster)):
@@ -584,7 +584,7 @@ def requerimiento1(analyzer, vertexA:str, vertexB:str):
                     valorVertexB = mp.get(datosCluster, vertice)['value']
 
         if valorVertexA is not None and valorVertexB is not None:  # Si ambos son None
-    
+
             return ((valorVertexA) == (valorVertexB))
 
     return False
@@ -615,6 +615,23 @@ def req2(analyzer):
     return sortNumEdgesReq2(listaArcos)
 
 
+
+
+def req4(analyzer):
+
+    numNodos = mp.size(analyzer['mst']['distTo'])
+    distanciaTotal = 0
+
+    mayorRecorrido = 0
+    
+    for llaveValor in lt.iterator(mp.keySet(analyzer['mst']['distTo'])):
+        # Ejemplo {'key': '10985-Malaysia-Cambodia-Thailand (MCT) Cable', 'value': 145.54934328686224}
+        verticeValor = mp.get(analyzer['mst']['distTo'], llaveValor)['value']
+
+        if verticeValor is not None:
+            distanciaTotal += verticeValor
+
+    return (numNodos, distanciaTotal, mayorRecorrido)
 
         
 # Funciones utilizadas para comparar elementos dentro de una lista

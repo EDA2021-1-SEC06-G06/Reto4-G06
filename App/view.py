@@ -64,7 +64,7 @@ def printReq2(analyzer, lista_ordenada):
             print("Nombre/ID: {0} | País: {1} | Arcos:{2}\n".format(vertice['vertice'], pais, vertice['size']))
 
     else:
-        
+
         while posicion < lt.size(lista_ordenada) and lt.getElement(lista_ordenada, posicion)['size'] == lt.getElement(lista_ordenada, posicion + 1)['size']:
 
             verticeDict = lt.getElement(lista_ordenada, posicion)  # llaves son vertice y size
@@ -78,7 +78,7 @@ def printReq2(analyzer, lista_ordenada):
                 indice += 1
 
             pais = mp.get(analyzer['infoLandingPoints'], id_unique)['value']['name'].split(', ')[1]
-            
+
             print("Nombre: {0} | País: {1} | ID: {2} | Arcos:{3}\n".format(verticeDict['vertice'], pais, id_unique, verticeDict['size']))
 
             posicion += 1
@@ -90,13 +90,13 @@ def printReq3(analyzer, paisB):
 
 
     path = controller.minimumCostPath(analyzer, paisB)
-    
+
     if path is not None:
         distancia = 0
         for relacion in lt.iterator(path):
             print("{0} ==> {1}\tDistancia(km): {2}".format(relacion['vertexA'], relacion['vertexB'], relacion['weight']))
             distancia += relacion['weight']
-            
+
         pathlen = stack.size(path)
         print(f"El camino es de longitud: {pathlen}")
         print(f"La distancia total de la ruta es: {distancia} km.")
@@ -112,7 +112,7 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
-    if int(inputs[0]) == 1:
+    if int(inputs[0]) == 1:    # Construcción analyzer
         print("Cargando información de los archivos ....")
         analyzer = controller.init()
 
@@ -122,7 +122,7 @@ while True:
         # controller.loadTBPSRepetidos(analyzer)   # TBPS
         pais = controller.loadCountries(analyzer)['value']
 
-        
+
         # Prints
 
         print(f"\nTotal de landing points: {gr.numVertices(analyzer['landingPoints'])}")
@@ -133,11 +133,11 @@ while True:
 
         cantidadConnectedComponents = controller.connectedComponents(analyzer)  # REQ1
         controller.mstPRIM(analyzer)
-        
-    elif int(inputs[0]) == 2:
+
+    elif int(inputs[0]) == 2:   # Req 1
         print(f"Total de clústeres en el grafo: {cantidadConnectedComponents}")
 
-        
+
         vertexA = input("Ingrese el nombre del primer Landing Point(Ej. Redondo Beach):\n~ ")
         vertexB = input("Ingrese el nombre del segundo Landing Point(Ej. Vung Tau):\n~ ")
 
@@ -148,7 +148,7 @@ while True:
             print(f"{vertexA} y {vertexB} NO están en el mismo Cluster.")
 
 
-    elif int(inputs[0]) == 3:
+    elif int(inputs[0]) == 3:   # Req 2
         printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
 
 
@@ -157,28 +157,16 @@ while True:
         paisA = input("Ingrese el nombre del primer país que desea consultar. Ejemplo: Colombia\n~ ")
         paisB = input("Ingrese el nombre del segundo país que desea consultar. Ejemplo: Indonesia\n~ ")
         controller.minimumCostPaths(analyzer, paisA)
-        
+
         printReq3(analyzer, paisB)
 
 
-    elif int(inputs[0]) == 5:
-        ####
-        numNodos = mp.size(analyzer['mst']['distTo'])
-        distanciaTotal = 0
+    elif int(inputs[0]) == 5:   # Req 4
+        resultados = controller.req4(analyzer)
+        print(f"Número de nodos conectados en la red de expansión mínima: {resultados[0]}")
+        print(f"Distancia de la red de expansión mínima: {resultados[1] * 2} km")  #Se multiplica x2 puesto que es un grafo dirigido
+        print(f"Mayor número de arcos entre la raíz y la hoja: {resultados[2]}")
 
-        mayorRecorrido = 0
-       
-        for llaveValor in lt.iterator(mp.keySet(analyzer['mst']['distTo'])):
-            # Ejemplo {'key': '10985-Malaysia-Cambodia-Thailand (MCT) Cable', 'value': 145.54934328686224}
-            verticeValor = mp.get(analyzer['mst']['distTo'], llaveValor)['value']
-
-            if verticeValor is not None:
-                distanciaTotal += verticeValor
-        ####
-        print(f"Número de nodos conectados en la red de expansión mínima: {numNodos}")
-        print(f"Distancia de la red de expansión mínima: {distanciaTotal * 2} km") # Se multiplica x2 puesto que es un grafo dirigido
-        print(f"Mayor número de arcos entre la raíz y la hoja: {mayorRecorrido}")
-        
     elif int(inputs[0]) == 6:
         pass
 

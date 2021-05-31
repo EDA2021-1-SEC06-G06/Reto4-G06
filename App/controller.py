@@ -177,6 +177,10 @@ def req2(analyzer):
     return model.req2(analyzer)
 
 
+def req4(analyzer):
+    return model.req4(analyzer)
+
+
 
 def minimumCostPaths(analyzer, paisA):
 
