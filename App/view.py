@@ -92,8 +92,16 @@ def printReq3(analyzer, paisB):
     path = controller.minimumCostPath(analyzer, paisB)
     
     if path is not None:
+        distancia = 0
+        for relacion in lt.iterator(path):
+            print("{0} ==> {1}\tDistancia(km): {2}".format(relacion['vertexA'], relacion['vertexB'], relacion['weight']))
+            distancia += relacion['weight']
+            
         pathlen = stack.size(path)
         print(f"El camino es de longitud: {pathlen}")
+        print(f"La distancia total de la ruta es: {distancia} km.")
+    else:
+        print('No existe un camino.')
 
 analyzer = None
 sys.setrecursionlimit(1000*1000)
@@ -111,7 +119,7 @@ while True:
         # Carga de Datos
         resultado = controller.loadLandingPoints(analyzer)
         loadConnections = controller.loadConnectionsCSV(analyzer)
-        controller.loadTBPSRepetidos(analyzer)   # TBPS
+        # controller.loadTBPSRepetidos(analyzer)   # TBPS
         pais = controller.loadCountries(analyzer)['value']
 
         

@@ -74,7 +74,7 @@ def loadConnectionsCSV(analyzer):
             filtered_dict['capacityTBPS'] = float(filtered_dict['capacityTBPS'])
 
             model.addLandingPointConnection(analyzer, filtered_dict)
-            model.addCapacityTBPSConnection(analyzer, filtered_dict)
+            #model.addCapacityTBPSConnection(analyzer, filtered_dict)
 
     return first
 

@@ -59,7 +59,7 @@ def newAnalyzer()->dict:
         'mst': None
     }
 
-    analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
+    analyzer['landingPoints'] = gr.newGraph(datastructure='ADJ_LIST', size=14000, comparefunction=cmpLandingPoint, directed=True)
 
     analyzer['capacity'] = gr.newGraph(datastructure='ADJ_LIST', directed=False, size=14000, comparefunction=cmpLandingPoint)
 
@@ -97,10 +97,19 @@ def addLandingPointConnection(analyzer, filtered_dict)->dict:
     addLandingPoint(analyzer, origen)
     addLandingPoint(analyzer, destino)
 
+
+    #Agregar a la lista
+    valueOrigen = mp.get(analyzer['infoLandingPoints'], filtered_dict['origin'])['value']['lista']
+    lt.addLast(valueOrigen, origen)
+    valueDestino = mp.get(analyzer['infoLandingPoints'], filtered_dict['destination'])['value']['lista']
+    lt.addLast(valueDestino, destino)
     # Agregar conexión/arco
 
     addConnection(analyzer, origen, destino, distancia)
+    addConnection(analyzer, destino, origen, distancia)
 
+    addMismoConnection(analyzer, origen)
+    addMismoConnection(analyzer, destino)
     return analyzer
 
 
@@ -158,6 +167,7 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
                 
                 addLandingPoint(analyzer, origen)  # Landing point de la capital.
                 addConnection(analyzer, origen, vertice, distancia)
+                addConnection(analyzer, vertice, origen, distancia)
                 
             # ---------- ELSE -------------
     else:
@@ -172,6 +182,7 @@ def addCapitalLandingPoint(analyzer, filtered_dict):
                     distancia = getDistanceCapital(analyzer, pais, landing)
                     
                     addConnection(analyzer, origen, vertice, distancia)
+                    addConnection(analyzer, vertice, origen, distancia)
             
     return analyzer
 
@@ -269,6 +280,22 @@ def addConnection(analyzer, origen, destino, distancia):
 
 
 
+def addMismoConnection(analyzer, nombreLP):
+
+
+    id_ = nombreLP.split('-')[0]
+
+
+    for lp in lt.iterator(mp.get(analyzer['infoLandingPoints'], id_)['value']['lista']):
+
+        if lp != nombreLP:
+
+            addConnection(analyzer, nombreLP, lp, 0.1)
+            addConnection(analyzer, lp, nombreLP, 0.1)
+
+
+
+
 def addConnectionTBPS(analyzer, origen, destino, capacidad):
     '''
     Adiciona un arco entre dos landing points al grafo capacity
@@ -341,6 +368,7 @@ def addMapLandingPoint(analyzer, filtered_dict):
     '''
     Agrega info de cada Landing Point único (Sin cable).
     '''
+    filtered_dict['lista'] = lt.newList('ARRAY_LIST')
 
     if not mp.contains(analyzer['infoLandingPoints'], filtered_dict['landing_point_id']) and (filtered_dict['landing_point_id'] is not ''):
         mp.put(analyzer['infoLandingPoints'], filtered_dict['landing_point_id'], filtered_dict)
@@ -472,6 +500,7 @@ def findClosest(analyzer, pais):
 
 
 
+
 def minimumCostPaths(analyzer, paisA):
     """
     Calcula los caminos de costo mínimo desde la capital del país A a todos los demás vértices.
@@ -481,7 +510,7 @@ def minimumCostPaths(analyzer, paisA):
 
     nombrePaisA = capitalPaisA['CapitalName'] + '-' + capitalPaisA['CountryName']
     
-    analyzer['paths'] = bellmanford.BellmanFord(analyzer['landingPoints'], nombrePaisA)
+    analyzer['paths'] = dijsktra.Dijkstra(analyzer['landingPoints'], nombrePaisA)
 
     return analyzer
 
@@ -497,7 +526,18 @@ def hasPath(analyzer, paisB):
     capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
 
     nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
-    return bellmanford.hasPathTo(analyzer['paths'], nombrePaisB)
+    return dijsktra.hasPathTo(analyzer['paths'], nombrePaisB)
+
+
+
+
+def minimumCostPath(analyzer, paisB):
+
+    capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
+
+    nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
+
+    return dijsktra.pathTo(analyzer['paths'], nombrePaisB)
 
 
 
@@ -575,15 +615,6 @@ def req2(analyzer):
     return sortNumEdgesReq2(listaArcos)
 
 
-
-
-def minimumCostPath(analyzer, paisB):
-
-    capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
-
-    nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
-
-    return bellmanford.pathTo(analyzer['paths'], nombrePaisB)
 
         
 # Funciones utilizadas para comparar elementos dentro de una lista
