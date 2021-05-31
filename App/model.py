@@ -33,6 +33,7 @@ from DISClib.Algorithms.Graphs import dijsktra
 from DISClib.Algorithms.Sorting import mergesort
 from DISClib.Algorithms.Graphs import bellmanford
 from DISClib.Algorithms.Graphs import prim
+from DISClib.Algorithms.Graphs import bfs
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -70,6 +71,8 @@ def newAnalyzer()->dict:
     analyzer['orderedCountries'] = lt.newList('ARRAY_LIST')
 
     analyzer['lista'] = lt.newList('ARRAY_LIST')  # lista con los landingpoints que se dirigen a ellos mismos.
+
+    analyzer['BFS'] = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], 'Bogota-Colombia')
 
     return analyzer
 # Funciones para agregar informacion al catalogo
@@ -632,6 +635,30 @@ def req4(analyzer):
             distanciaTotal += verticeValor
 
     return (numNodos, distanciaTotal, mayorRecorrido)
+
+
+def bfsReq4(analyzer):
+
+    bfs = analyzer["BFS"]
+
+    distanciaMax = 0
+
+    infoRama = None
+
+    for element in (bfs['BFS']['visited']['table']['elements']):
+        distancia = element['value']
+        
+        if distancia is not None:
+
+            if distancia['distTo'] > distanciaMax:
+
+                distanciaMax = distancia['distTo']
+                infoRama = element['value']
+
+    return infoRama
+
+
+
 
         
 # Funciones utilizadas para comparar elementos dentro de una lista

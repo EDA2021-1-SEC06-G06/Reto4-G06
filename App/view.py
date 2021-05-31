@@ -163,9 +163,10 @@ while True:
 
     elif int(inputs[0]) == 5:   # Req 4
         resultados = controller.req4(analyzer)
-        print(f"Número de nodos conectados en la red de expansión mínima: {resultados[0]}")
-        print(f"Distancia de la red de expansión mínima: {resultados[1] * 2} km")  #Se multiplica x2 puesto que es un grafo dirigido
-        print(f"Mayor número de arcos entre la raíz y la hoja: {resultados[2]}")
+        distanciaMax = controller.bfsReq4(analyzer)
+        print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
+        print(f"Distancia de la red de expansión mínima: {resultados[1] * 2} km\n")  #Se multiplica x2 puesto que es un grafo dirigido
+        print("La rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene un tamaño de {0} y corresponde al landing point: {1}".format(distanciaMax['distTo'], distanciaMax['edgeTo']))
 
     elif int(inputs[0]) == 6:
         pass

@@ -181,6 +181,9 @@ def req4(analyzer):
     return model.req4(analyzer)
 
 
+def bfsReq4(analyzer):
+    return model.bfsReq4(analyzer)
+
 
 def minimumCostPaths(analyzer, paisA):
 
