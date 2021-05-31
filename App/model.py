@@ -24,7 +24,7 @@
  * Dario Correal - Version inicial
  """
 
-from this import d
+
 import haversine as hs
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
@@ -32,7 +32,6 @@ from DISClib.ADT import map as mp
 from DISClib.Algorithms.Graphs import scc
 from DISClib.Algorithms.Graphs import dijsktra
 from DISClib.Algorithms.Sorting import mergesort
-from DISClib.Algorithms.Graphs import bellmanford
 from DISClib.Algorithms.Graphs import prim
 from DISClib.Algorithms.Graphs import bfs
 

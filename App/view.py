@@ -26,8 +26,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.ADT import stack
-from DISClib.Algorithms.Graphs import prim
-from DISClib.ADT import queue
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -182,12 +181,12 @@ while True:
         resultados = controller.req4(analyzer)
         distanciaMax = controller.bfsReq4(analyzer)
         print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
-        print(f"Distancia de la red de expansión mínima: {resultados[1] * 2} km\n")  #Se multiplica x2 puesto que es un grafo dirigido
+        print(f"Distancia de la red de expansión mínima: {resultados[1]} km\n") 
         print("La rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene una longitud de {0} y corresponde al landing point: {1}".format(distanciaMax['distTo'], distanciaMax['edgeTo']))
 
     elif int(inputs[0]) == 6:  # Req 5
-        #inputLandingPoint = input("Ingrese el Landing Point que le interesa: \n~ ")
-        inputLandingPoint = "5808-San Andres Isla Tolu Submarine Cable (SAIT)"
+        inputLandingPoint = input("Ingrese el Landing Point que le interesa: \n~ ")
+        
         sorted_list = controller.req5(analyzer, inputLandingPoint)
 
         printReq5(sorted_list)
