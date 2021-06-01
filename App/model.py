@@ -507,13 +507,13 @@ def bfsReq4(analyzer):
     Returns:
         infoRama[dict]: Rama con mayor longitud.
     """
-    bfs = analyzer["BFS"]  # BFS del grafo con el vétrtice Bogota-Colombia.
+    newBFS = analyzer["BFS"]  # BFS del grafo con el vétrtice Bogota-Colombia.
 
     distanciaMax = 0  # Se inicia la distancia máxima en 0.
 
     infoRama = None
 
-    for element in (bfs['visited']['table']['elements']):  # Por cada elemento se extrae su valor.
+    for element in (newBFS['visited']['table']['elements']):  # Por cada elemento se extrae su valor.
         distancia = element['value']
         
         if distancia is not None:
@@ -522,8 +522,10 @@ def bfsReq4(analyzer):
 
                 distanciaMax = distancia['distTo']
                 infoRama = element['value']
+    
+    path = bfs.pathTo(newBFS, infoRama['edgeTo'])
 
-    return infoRama  # Se retorna la infromación del LP con mayor distancia de Bogota-Colombia.
+    return (infoRama, path)  # Se retorna la infromación del LP con mayor distancia de Bogota-Colombia.
 
 
 
@@ -616,8 +618,26 @@ def req7(ip1, ip2, analyzer):
 
 
     varBFS = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], lp1)
+    
+    if bfs.hasPathTo(varBFS, lp2) is True:
+        distancia  = rutaReq7(varBFS, lp2)
+        path = bfs.pathTo(varBFS, lp2)
+        return (distancia['distTo'], path)
 
-    return #TODO: Ruta y num Saltos.
+    else:
+        return False
+
+
+def rutaReq7(bfs, lp2):
+    infoRama = None
+
+    for element in (bfs['visited']['table']['elements']):  # Por cada elemento se extrae su valor.
+        landingPoint = element['key']
+
+        if (element['value'] is not None) and (element['value']['edgeTo'] == lp2):
+            infoRama = element['value']
+    
+    return (infoRama)
 
 
 

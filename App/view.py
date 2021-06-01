@@ -165,6 +165,14 @@ def printReq6(analyzer, lista, anchoDeBanda):
 
 
 
+
+def printReq4andReq7(list):
+    for item in lt.iterator(list):
+        if item != None:
+            print("=>",item)
+
+
+
 analyzer = None
 sys.setrecursionlimit(1000*1000)
 
@@ -384,7 +392,9 @@ while True:
 
         print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
         print(f"Distancia de la red de expansión mínima: {resultados[1]} km\n")
-        print("La rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene una longitud de {0} y corresponde al landing point: {1}".format(distanciaMax['distTo'], distanciaMax['edgeTo']))
+        print("\nLa rama más larga que hace parte de la red de expansión mínima desde 'Bogotá-Colombia' tiene una longitud de {0} y corresponde al landing point: {1}".format(distanciaMax[0]['distTo'], distanciaMax[0]['edgeTo']))
+        print("\nEl recorrido desde 'Bogotá-Colombia' hasta {0} es el siguiente:\n".format(distanciaMax[0]['edgeTo']))
+        printReq4andReq7(distanciaMax[1])
 
         # INICIO
         print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
@@ -445,7 +455,16 @@ while True:
         ip1 = input("\nIngrese la primera dirección de IP. Ejemplo: 8.8.8.8\n~")  # Primera dirección de IP
         ip2 = input("\nIngrese la segunda dirección de IP. Ejemplo: 165.132.67.89\n~")  # Segunda dirección de IP
         resultado = controller.req7(ip1, ip2, analyzer)
-        print(resultado)
+
+        if resultado is not False:
+            print("\nExiste un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
+            print("\nEste camino tiene {0} saltos y la ruta es la siguiente:\n".format(resultado[0]))
+            printReq4andReq7(resultado[1])
+
+        else: 
+            print("\nNO existe un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
+
+
     elif int(inputs[0]) == 9:
         pass
 
