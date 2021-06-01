@@ -31,6 +31,9 @@ El controlador se encarga de mediar entre la vista y el modelo.
 
 # Inicialización del Catálogo de libros
 
+
+
+
 def init():
     """
     Llama la funcion de inicializacion  del modelo.
@@ -39,7 +42,12 @@ def init():
     analyzer = model.newAnalyzer()
     return analyzer
 
+
+
+
 # Funciones para la carga de datos
+
+
 
 
 def loadConnectionsCSV(analyzer):
@@ -116,7 +124,6 @@ def loadCountries(analyzer):
 
 
 
-
 def loadLandingPoints(analyzer):
     landingPointsFile = cf.data_dir + 'landing_points.csv'
 
@@ -150,9 +157,17 @@ def loadBFS(analyzer):
     Hace un BFS de analyzer['landingPoints'], desde 'Bogota-Colombia'.
     '''
     model.loadBFS(analyzer)
+
+
+
+    
 # Funciones de ordenamiento
 
+
+
+
 # Funciones de consulta sobre el catálogo
+
 
 
 
@@ -165,9 +180,11 @@ def connectedComponents(analyzer)->int:
 
 
 
+
 def requerimiento1(analyzer, vertexA:str, vertexB:str):
 
     return model.requerimiento1(analyzer, vertexA, vertexB)
+
 
 
 
@@ -178,8 +195,12 @@ def req2(analyzer):
     return model.req2(analyzer)
 
 
+
+
 def req4(analyzer):
     return model.req4(analyzer)
+
+
 
 
 def bfsReq4(analyzer):
@@ -210,6 +231,7 @@ def req5(analyzer, inputLP):
 
 
 
+
 def req6(analyzer, nombrePais, nombreCable)->tuple:
     """Realiza las operaciones del req6 para obtener los países y el ancho de banda del cable.
 
@@ -224,6 +246,8 @@ def req6(analyzer, nombrePais, nombreCable)->tuple:
     return model.req6(analyzer, nombrePais, nombreCable)
 
 
+
+
 def req7(ip1, ip2, analyzer):
     """Encuentra si existe un path entre ip1 e ip2
 
@@ -235,9 +259,12 @@ def req7(ip1, ip2, analyzer):
     return model.req7(ip1, ip2, analyzer)
 
 
+
+
 def minimumCostPaths(analyzer, paisA):
 
     return model.minimumCostPaths(analyzer, paisA)
+
 
 
 
@@ -247,8 +274,10 @@ def hasPath(analyzer, paisB):
 
 
 
+
 def minimumCostPath(analyzer, paisB):
     return model.minimumCostPath(analyzer, paisB)
+
 
 
 

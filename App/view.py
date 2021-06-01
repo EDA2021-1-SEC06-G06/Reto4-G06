@@ -38,6 +38,8 @@ operación solicitada
 """
 
 
+
+
 def printMenu():
     print("\nBienvenido")
     print("1- Cargar información en el catálogo")
@@ -51,7 +53,12 @@ def printMenu():
     print("9- REQ 8: REQ. 8: Graficando los Grafos")
 
 
+
+
 # Funciones para contar tiempo y memoria:
+
+
+
 
 def getTime():
     """
@@ -60,11 +67,15 @@ def getTime():
     return float(time.perf_counter() * 1000)
 
 
+
+
 def getMemory():
     """
     toma una muestra de la memoria alocada en instante de tiempo
     """
     return tracemalloc.take_snapshot()
+
+
 
 
 def deltaMemory(start_memory, stop_memory):
@@ -82,7 +93,12 @@ def deltaMemory(start_memory, stop_memory):
     delta_memory = delta_memory / 1024.0
     return delta_memory
 
+
+
+
 # Final de las funciones para borrar despues.
+
+
 
 
 def printReq2(analyzer, lista_ordenada):
@@ -173,8 +189,12 @@ def printReq4andReq7(list):
 
 
 
+
 analyzer = None
 sys.setrecursionlimit(1000*1000)
+
+
+
 
 """
 Menu principal
@@ -237,6 +257,9 @@ while True:
         print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "")
         # FIN
 
+
+
+
     elif int(inputs[0]) == 2:   # Req 1
         print(f"\nTotal de clústeres en el grafo: {cantidadConnectedComponents}")
 
@@ -282,6 +305,8 @@ while True:
             print(f"\n{vertexA} y {vertexB} NO están en el mismo Cluster.")
 
 
+
+
     elif int(inputs[0]) == 3:   # Req 2
         # INICIO
         # respuesta por defecto
@@ -315,6 +340,8 @@ while True:
         # INICIO
         print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
         # FIN
+
+
 
 
     elif int(inputs[0]) == 4:   # Req 3
@@ -356,6 +383,8 @@ while True:
         # INICIO
         print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
         # FIN
+
+
 
 
     elif int(inputs[0]) == 5:   # Req 4
@@ -400,6 +429,9 @@ while True:
         print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
         # FIN
 
+
+
+
     elif int(inputs[0]) == 6:  # Req 5
         inputLandingPoint = input("\nIngrese el Landing Point que le interesa. Ejemplo: 5808-San Andres Isla Tolu Submarine Cable (SAIT)\n~ ")
 
@@ -437,7 +469,8 @@ while True:
         # INICIO
         print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
         # FIN
-         
+
+      
 
 
     elif int(inputs[0]) == 7: ## BONO REQ 6 ##
@@ -448,6 +481,7 @@ while True:
         listaPaises, anchoDeBanda = controller.req6(analyzer, nombrePais, nombreCable)
 
         printReq6(analyzer, listaPaises, anchoDeBanda)
+
 
 
 
@@ -463,6 +497,8 @@ while True:
 
         else: 
             print("\nNO existe un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
+
+
 
 
     elif int(inputs[0]) == 9:

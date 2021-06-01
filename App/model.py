@@ -43,6 +43,9 @@ los mismos.
 
 # Construccion de modelos
 
+
+
+
 def newAnalyzer()->dict:
     """Crea el analyzer.
 
@@ -75,7 +78,12 @@ def newAnalyzer()->dict:
     analyzer['AnchoBanda'] = mp.newMap(numelements=1283, maptype='PROBING')
 
     return analyzer
+
+
+
+
 # Funciones para agregar informacion al catalogo
+
 
 
 
@@ -278,7 +286,12 @@ def connectedComponents(analyzer)->int:
 
     return scc.connectedComponents(analyzer['connected'])
 
+
+
+
 # Funciones para creacion de datos
+
+
 
 
 def getDistanceCapital(analyzer, pais, destino):
@@ -328,7 +341,6 @@ def getDistance(analyzer, origen, destino):
 def haversine(tupla1, tupla2):
 
     return hs.haversine(tupla1, tupla2)
-
 
 
 
@@ -414,7 +426,13 @@ def loadBFS(analyzer):
     analyzer['BFS'] = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], 'Bogota-Colombia')
 
 
+
+
 # Funciones de consulta
+
+
+
+
 def requerimiento1(analyzer, vertexA:str, vertexB:str):
     '''
     Se desea encontrar la cantidad de clústeres (componentes conectados) dentro de la red de cables submarinos y si dos landing points pertenecen o no al mismo clúster.
@@ -498,6 +516,8 @@ def req4(analyzer):
     return (numNodos, distanciaTotal, mayorRecorrido)
 
 
+
+
 def bfsReq4(analyzer):
     """Retorna un dict que es la rama más larga con su landing Point final.
 
@@ -561,6 +581,7 @@ def req5(analyzer, inputLP):
             
 
     return sortMenorDistancia(listaPaisesAfectados)
+
 
 
 
@@ -628,6 +649,8 @@ def req7(ip1, ip2, analyzer):
         return False
 
 
+
+
 def rutaReq7(bfs, lp2):
     infoRama = None
 
@@ -638,6 +661,7 @@ def rutaReq7(bfs, lp2):
             infoRama = element['value']
     
     return (infoRama)
+
 
 
 
@@ -660,7 +684,6 @@ def lpMasCercano(analyzer, latitud, longitud):
             menor = mp.get(analyzer['infoLandingPoints'], lp)['key']
 
     return menorDistancia, menor
-
 
 
 
@@ -690,12 +713,17 @@ def recursiva(analyzer, vertex, cable, lista, mapa, original)->None:
 
 
 
-
-
 def mapaAnchodeBanda(analyzer, cable, anchodeBanda):
 
     mp.put(analyzer['AnchoBanda'], cable, anchodeBanda)
+
+
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+
+
 
 def cmpLandingPoint(l1, l2):
 
@@ -709,12 +737,21 @@ def cmpLandingPoint(l1, l2):
 
 
 
+
 def cmpNumEdgesReq2(verticeA, verticeB):
     return (verticeA['size'] > verticeB['size'])
 
+
+
+
 def cmpMenorDistancia(paisA, paisB):
     return (paisA['weight'] < paisB['weight'])
+
+
+
+
 # Funciones de ordenamiento
+
 
 
 def sortNumEdgesReq2(listaVerticesArcos):
@@ -727,6 +764,7 @@ def sortNumEdgesReq2(listaVerticesArcos):
     sorted_list = mergesort.sort(sub_list, cmpNumEdgesReq2)
 
     return sorted_list
+
 
 
 
