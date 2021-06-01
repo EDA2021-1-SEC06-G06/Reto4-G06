@@ -195,7 +195,6 @@ while True:
         # Carga de Datos
         resultado = controller.loadLandingPoints(analyzer)
         loadConnections = controller.loadConnectionsCSV(analyzer)
-        controller.loadTBPSRepetidos(analyzer)   # TBPS
         pais = controller.loadCountries(analyzer)['value']
 
 

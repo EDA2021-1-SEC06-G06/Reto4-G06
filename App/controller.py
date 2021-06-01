@@ -74,7 +74,6 @@ def loadConnectionsCSV(analyzer):
             filtered_dict['capacityTBPS'] = float(filtered_dict['capacityTBPS'])
 
             model.addLandingPointConnection(analyzer, filtered_dict)
-            model.addCapacityTBPSConnection(analyzer, filtered_dict)
             model.mapaAnchodeBanda(analyzer, filtered_dict['cable_name'], filtered_dict['capacityTBPS'])
 
     return first
@@ -109,7 +108,6 @@ def loadCountries(analyzer):
         if filtered_dict['CountryName'] is not '':
             model.addCountry(analyzer, filtered_dict)
             model.addCapitalLandingPoint(analyzer, filtered_dict)
-            model.addCapitalLandingPointTBPS(analyzer, filtered_dict)
 
     resultado = model.lastCountry(analyzer, analyzer['orderedCountries'])
     analyzer['orderedCountries'] = None # Somos fancy y nos gusta el espacio en memoria
@@ -144,12 +142,6 @@ def loadLandingPoints(analyzer):
 
     return (firstLatitude, firstLongitude)
 
-
-
-
-def loadTBPSRepetidos(analyzer):
-
-    model.loadTBPSRepetidos(analyzer)
 
 
 
