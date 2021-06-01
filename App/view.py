@@ -430,7 +430,7 @@ while True:
         ip1 = input("\nIngrese la primera dirección de IP. Ejemplo: 8.8.8.8\n~")  # Primera dirección de IP
         ip2 = input("\nIngrese la segunda dirección de IP. Ejemplo: 165.132.67.89\n~")  # Segunda dirección de IP
         resultado = controller.req7(ip1, ip2, analyzer)
-
+        print(resultado)
     elif int(inputs[0]) == 9:
         pass
 

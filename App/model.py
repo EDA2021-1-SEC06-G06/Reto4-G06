@@ -26,7 +26,6 @@
 
 
 import haversine as hs
-import ipapi as IP2  # Librería para obtener el nombre del país por medio de IP
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
@@ -508,6 +507,14 @@ def getDistance(analyzer, origen, destino):
 
 
 
+def haversine(tupla1, tupla2):
+
+    return hs.haversine(tupla1, tupla2)
+
+
+
+
+
 def findClosest(analyzer, pais):
     dictOrigen = mp.get(analyzer['countries'], pais)['value']
     location1 = (dictOrigen['CapitalLatitude'], dictOrigen['CapitalLongitude'])
@@ -753,9 +760,45 @@ def req7(ip1, ip2, analyzer):
     latitudeIP2 = responseip2.latitude    # Se obtiene la latitud de ip2
     longitudeIP2 = responseip2.longitude  # Se obtiene la longitud de ip2
 
-    paisIP1 = (IP2.location(ip1))['country_name']  # Se obtiene el nombre del país de ip1
-    paisIP2 = (IP2.location(ip2))['country_name']  # Se obtiene el nombre del país de ip2
+    masCercano_1 = lpMasCercano(analyzer, latitudeIP1, longitudeIP1)[1]
 
+    
+    lp1 = lt.getElement(mp.get(analyzer['infoLandingPoints'], masCercano_1)['value']['lista'], 1)
+    
+    
+    masCercano_2 = lpMasCercano(analyzer, latitudeIP2, longitudeIP2)[1]
+    lp2 = lt.getElement(mp.get(analyzer['infoLandingPoints'], masCercano_2)['value']['lista'], 1)
+
+
+    varBFS = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], lp1)
+
+    return #TODO: Ruta y num Saltos.
+    
+
+
+def lpMasCercano(analyzer, latitud, longitud):
+    '''
+    Retorna (menorDistancia, menorLP)
+    '''
+
+    menorDistancia = 999999999
+    menor = None
+    for lp in lt.iterator(mp.keySet(analyzer['infoLandingPoints'])):
+        #{'key': '4219', 'value': {'landing_point_id': '4219', 'id': 'kingstown-saint-vincent-and-the-grenadines', 'name': 'Kingstown, Saint Vincent and the Grenadines', 'latitude': 13.145437, 'longitude': -61.208256, 'lista': {'elements': ['4219-Caribbean Regional Communications Infrastructure Program (CARCIP)',
+        valorLP = mp.get(analyzer['infoLandingPoints'], lp)['value']
+
+        distancia = haversine((latitud, longitud), (valorLP['latitude'], valorLP['longitude']))
+
+        if menorDistancia > distancia:
+
+            menorDistancia = distancia
+            menor = mp.get(analyzer['infoLandingPoints'], lp)['key']
+
+    return menorDistancia, menor
+
+        
+        
+        
         
 # Funciones utilizadas para comparar elementos dentro de una lista
 
