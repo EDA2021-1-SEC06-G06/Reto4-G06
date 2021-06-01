@@ -75,6 +75,7 @@ def loadConnectionsCSV(analyzer):
 
             model.addLandingPointConnection(analyzer, filtered_dict)
             model.addCapacityTBPSConnection(analyzer, filtered_dict)
+            model.mapaAnchodeBanda(analyzer, filtered_dict['cable_name'], filtered_dict['capacityTBPS'])
 
     return first
 
@@ -217,7 +218,28 @@ def req5(analyzer, inputLP):
 
 
 
+def req6(analyzer, nombrePais, nombreCable)->tuple:
+    """Realiza las operaciones del req6 para obtener los países y el ancho de banda del cable.
+
+    Args:
+        analyzer ([type]): [description]
+        nombrePais ([type]): [description]
+        nombreCable ([type]): [description]
+
+    Returns:
+        tuple: (listaPaises, anchoDeBanda)
+    """
+    return model.req6(analyzer, nombrePais, nombreCable)
+
+
 def req7(ip1, ip2, analyzer):
+    """Encuentra si existe un path entre ip1 e ip2
+
+    Args:
+        analyzer
+        ip1: Primera dirección de IP
+        ip2: Segunda dirección de IP
+    """
     return model.req7(ip1, ip2, analyzer)
 
 

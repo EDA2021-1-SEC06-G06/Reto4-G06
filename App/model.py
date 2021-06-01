@@ -75,6 +75,8 @@ def newAnalyzer()->dict:
 
     analyzer['BFS'] = None
 
+    analyzer['AnchoBanda'] = mp.newMap(numelements=1283, maptype='PROBING')
+
     return analyzer
 # Funciones para agregar informacion al catalogo
 
@@ -744,6 +746,33 @@ def req5(analyzer, inputLP):
 
 
 
+def req6(analyzer, nombrePais, nombreCable)->tuple:
+    """Realiza las operaciones del req6 para obtener los países y el ancho de banda del cable.
+
+    Args:
+        analyzer ([type]): [description]
+        nombrePais ([type]): [description]
+        nombreCable ([type]): [description]
+
+    Returns:
+        tuple: (listaPaises, anchoDeBanda)
+    """
+
+    nombrePais = mp.get(analyzer['countries'], nombrePais)['value']
+    nombrePais = nombrePais['CapitalName']+'-'+nombrePais['CountryName']  # Nombre del LP del país como aparece en el grafo
+
+    anchoDeBandaCable = mp.get(analyzer['AnchoBanda'], nombreCable)['value']  # Ancho de banda del cable.
+
+    lista = lt.newList("ARRAY_LIST")
+    mapa = mp.newMap(maptype="PROBING", numelements=31)
+
+    recursiva(analyzer, nombrePais, nombreCable, lista, mapa, nombrePais)  # Función recursiva para agregarle los países a la lista "lista"
+
+    return lista, anchoDeBandaCable
+
+
+
+
 def req7(ip1, ip2, analyzer):
     """Encuentra si existe un path entre ip1 e ip2
 
@@ -773,7 +802,7 @@ def req7(ip1, ip2, analyzer):
     varBFS = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], lp1)
 
     return #TODO: Ruta y num Saltos.
-    
+
 
 
 def lpMasCercano(analyzer, latitud, longitud):
@@ -796,10 +825,40 @@ def lpMasCercano(analyzer, latitud, longitud):
 
     return menorDistancia, menor
 
-        
-        
-        
-        
+
+
+
+
+def recursiva(analyzer, vertex, cable, lista, mapa, original)->None:
+    """Función recursiva para encontrar los países del req6.
+
+    Args:
+        analyzer
+        vertex (str): Vértice A
+        cable (str): Nombre del cable.
+        lista (ARRAY_LIST): Lista con los países.
+        mapa (Hash Map): Mapa que contiene los vértices que ya han sido buscados.
+        original (str): Vértice original.
+    """
+
+    for arco in lt.iterator(gr.adjacentEdges(analyzer['landingPoints'], vertex)):
+
+        if arco['vertexB'][0] not in '1234567890' and arco['vertexB'] != original:  # Si no empieza en un número
+
+            lt.addLast(lista, arco['vertexB'])  # Se agrega a la lista que es la que retorna la función "req6"
+
+        if cable in arco['vertexB'] and not mp.contains(mapa, arco['vertexB']):
+            mp.put(mapa, arco['vertexB'], None)
+            recursiva(analyzer, arco['vertexB'], cable, lista, mapa, original)  # Si tiene el cable repite el proceso.
+
+
+
+
+
+
+def mapaAnchodeBanda(analyzer, cable, anchodeBanda):
+
+    mp.put(analyzer['AnchoBanda'], cable, anchodeBanda)
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 def cmpLandingPoint(l1, l2):

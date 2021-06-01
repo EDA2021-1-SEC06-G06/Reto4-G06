@@ -153,6 +153,18 @@ def printReq5(sorted_list):
 
 
 
+def printReq6(analyzer, lista, anchoDeBanda):
+
+    for capitalPais in lt.iterator(lista):
+
+        pais = capitalPais.split('-')[1]
+
+        usuarios = mp.get(analyzer['countries'], pais)['value']['Internet users']
+        
+        print("\nPaís: {0}\tAncho de banda máximo: {1} Mbps".format(pais, (anchoDeBanda / usuarios) * 1000000))
+
+
+
 analyzer = None
 sys.setrecursionlimit(1000*1000)
 
@@ -420,11 +432,15 @@ while True:
 
 
     elif int(inputs[0]) == 7: ## BONO REQ 6 ##
-        # analyzer['capacity']
+ 
+        nombrePais = input("\nIngrese el nombre del país que le interesa (Ejemplo: Cuba):\n~ ")
+        nombreCable = input("\nIngrese el nombre del cable que desea (Ejemplo: ALBA-1):\n~ ")
 
-        nombrePais = input("\nIngrese el nombre del país que le interesa:\n~ ")
-        nombreCable = input("\nIngrese el nombre del cable que desea:\n~ ")
-        
+        listaPaises, anchoDeBanda = controller.req6(analyzer, nombrePais, nombreCable)
+
+        printReq6(analyzer, listaPaises, anchoDeBanda)
+
+
 
     elif int(inputs[0]) == 8:
         ip1 = input("\nIngrese la primera dirección de IP. Ejemplo: 8.8.8.8\n~")  # Primera dirección de IP
