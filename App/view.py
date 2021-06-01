@@ -22,12 +22,10 @@
 
 import sys
 import controller
-import ipapi as IP2  # Librería para obtener el nombre del país por medio de IP
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.ADT import stack
-from ip2geotools.databases.noncommercial import DbIpCity as IP  # Librería para obtener coordenadas de un IP
 # INICIO
 import tracemalloc
 import time
@@ -431,17 +429,7 @@ while True:
     elif int(inputs[0]) == 8:
         ip1 = input("\nIngrese la primera dirección de IP. Ejemplo: 8.8.8.8\n~")  # Primera dirección de IP
         ip2 = input("\nIngrese la segunda dirección de IP. Ejemplo: 165.132.67.89\n~")  # Segunda dirección de IP
-
-        responseip1 = IP.get(ip1, api_key='free')  # Se obtiene la información de ip1
-        responseip2 = IP.get(ip2, api_key='free')  # Se obtiene la información de ip2
-
-        latitudeIP1 = responseip1.latitude   # Se obtiene la latitud de ip1
-        longitudeIP1 = responseip1.longitude    # Se obtiene la longitud de ip1
-        latitudeIP2 = responseip2.latitude    # Se obtiene la latitud de ip2
-        longitudeIP2 = responseip2.longitude  # Se obtiene la longitud de ip2
-
-        paisIP1 = (IP2.location(ip1))['country_name']  # Se obtiene el nombre del país de ip1
-        paisIP2 = (IP2.location(ip2))['country_name']  # Se obtiene el nombre del país de ip2
+        resultado = controller.req7(ip1, ip2, analyzer)
 
     elif int(inputs[0]) == 9:
         pass

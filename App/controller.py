@@ -217,6 +217,9 @@ def req5(analyzer, inputLP):
 
 
 
+def req7(ip1, ip2, analyzer):
+    return model.req7(ip1, ip2, analyzer)
+
 
 def minimumCostPaths(analyzer, paisA):
 

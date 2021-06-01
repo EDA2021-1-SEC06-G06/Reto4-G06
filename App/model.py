@@ -26,6 +26,7 @@
 
 
 import haversine as hs
+import ipapi as IP2  # Librería para obtener el nombre del país por medio de IP
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
@@ -34,6 +35,7 @@ from DISClib.Algorithms.Graphs import dijsktra
 from DISClib.Algorithms.Sorting import mergesort
 from DISClib.Algorithms.Graphs import prim
 from DISClib.Algorithms.Graphs import bfs
+from ip2geotools.databases.noncommercial import DbIpCity as IP  # Librería para obtener coordenadas de un IP
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -734,6 +736,25 @@ def req5(analyzer, inputLP):
     return sortMenorDistancia(listaPaisesAfectados)
 
 
+
+def req7(ip1, ip2, analyzer):
+    """Encuentra si existe un path entre ip1 e ip2
+
+    Args:
+        analyzer
+        ip1: Primera dirección de IP
+        ip2: Segunda dirección de IP
+    """
+    responseip1 = IP.get(ip1, api_key='free')  # Se obtiene la información de ip1
+    responseip2 = IP.get(ip2, api_key='free')  # Se obtiene la información de ip2
+
+    latitudeIP1 = responseip1.latitude   # Se obtiene la latitud de ip1
+    longitudeIP1 = responseip1.longitude    # Se obtiene la longitud de ip1
+    latitudeIP2 = responseip2.latitude    # Se obtiene la latitud de ip2
+    longitudeIP2 = responseip2.longitude  # Se obtiene la longitud de ip2
+
+    paisIP1 = (IP2.location(ip1))['country_name']  # Se obtiene el nombre del país de ip1
+    paisIP2 = (IP2.location(ip2))['country_name']  # Se obtiene el nombre del país de ip2
 
         
 # Funciones utilizadas para comparar elementos dentro de una lista
