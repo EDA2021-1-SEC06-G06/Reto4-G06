@@ -475,7 +475,52 @@ while True:
         url4 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ4.html"
         nuevo=2
         webbrowser.open(url4, new=nuevo)
+        
 
+
+
+        """ 
+        REQ5 
+        """
+
+
+        baseReq5 = Figure(width=750, height=550)
+        mapaReq5= folium.Map(
+            location=[0,0],
+            tiles='cartodbpositron',
+            zoom_start= 3
+        )
+
+        grupoCaminos5 = folium.FeatureGroup("Req 5")
+
+        valorPaisPrincipal = mp.get(analyzer['countries'], inputLandingPoint)['value']
+
+        coordenadasPrincipal = [valorPaisPrincipal['CapitalLatitude'], valorPaisPrincipal['CapitalLongitude']]
+
+        for pais in lt.iterator(sorted_list):
+
+            nombre = pais.split('-')[1]
+            paisValue = mp.get(analyzer['countries'], nombre)['value']
+
+            coordenadas = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]
+
+            markerPais = folium.Marker(coordenadas, popup="pais")
+            markerPais.add_to(mapaReq5)
+
+            camino = folium.vector_layers.PolyLine([coordenadasPrincipal, coordenadas], color='orange', weight=2)
+            camino.add_to(grupoCaminos5)
+
+
+        grupoCaminos5.add_to(mapaReq5)
+        folium.LayerControl().add_to(mapaReq4)
+        baseReq5.add_child(mapaReq5)
+
+        mapaReq5.save('REQ5.html')
+        url5 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ5.html"
+        nuevo=2
+        webbrowser.open(url5, new=nuevo)
+            
+            
 
         
     else:
