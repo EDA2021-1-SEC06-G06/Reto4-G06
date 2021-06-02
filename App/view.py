@@ -235,7 +235,7 @@ while True:
 
         resultados = controller.req4(analyzer)
         distanciaMax = controller.bfsReq4(analyzer)
-
+        print(distanciaMax[1])
 
         print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
         print(f"Distancia de la red de expansión mínima: {resultados[1]} km\n")
@@ -414,6 +414,69 @@ while True:
         url3 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ3.html"
         nuevo=2
         webbrowser.open(url3, new=nuevo)
+
+
+
+        """ 
+        REQ 4
+        """
+        """
+        {'first': {'info': 'Bogota-Colombia', 'next': {'info': '4315-South America-1 (SAm-1)', 'next': 
+            {'info': '5800-South America-1 (SAm-1)', 'next': {'info': 'Santiago-Chile', 'next': {'info': '16012-Segunda FOS Canal de Chacao', 'next': {'info': 'Beijing-China', 'next': {'info': '6007-Asia Africa Europe-1 (AAE-1)', 'next': {'info': '5723-Asia Africa Europe-1 (AAE-1)', 'next': {'info': '5723-MedNautilus Submarine System', 'next': {'info': '3905-MedNautilus Submarine System', 'next': {'info': '3221-MedNautilus Submarine System', 'next': {'info': '3221-KAFOS', 'next': {'info': '6059-KAFOS', 'next': {'info': '5356-KAFOS', 'next': None}}}}}}}}}}}}}}, 'last': {'info': '5356-KAFOS', 'next': None},
+         'size': 14, 'key': None, 'type': 'SINGLE_LINKED', 'cmpfunction': <function defaultfunction at 0x000001C1A4847B88>}
+        """
+
+        baseReq4 = Figure(width=750, height=550)
+        mapaReq4= folium.Map(
+            location=[0,0],
+            tiles='cartodbpositron',
+            zoom_start= 3
+        )
+
+        grupoCaminos4 = folium.FeatureGroup("Req 4")
+
+
+        distanciaMax = distanciaMax[1] # Es el path y un linked list
+
+        coordREQ3 = []
+
+        for vertice in lt.iterator(distanciaMax):
+
+            if vertice[0] not in "1234567890":
+
+                pais = vertice.split("-")[1]
+                paisValue = mp.get(analyzer['countries'], pais)['value']
+
+                coordenadasA = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]
+
+                marker3 = folium.Marker(coordenadasA, popup=vertice)
+                marker3.add_to(mapaReq4)
+                coordREQ3.append(coordenadasA)
+
+            else:
+                id_vertice = vertice.split('-')[0]
+                infoVertice = mp.get(analyzer['infoLandingPoints'], id_vertice)
+
+                if infoVertice is not None:
+                    coordenadasA = [infoVertice['value']['latitude'], infoVertice['value']['longitude']]
+
+                    marker3 = folium.Marker(coordenadasA, popup=vertice)
+                    marker3.add_to(mapaReq4)
+                    coordREQ3.append(coordenadasA)
+        caminoREQ4 = folium.vector_layers.PolyLine(coordREQ3, color='red', weight=2)
+        caminoREQ4.add_to(grupoCaminos4)
+
+        grupoCaminos4.add_to(mapaReq4)
+        folium.LayerControl().add_to(mapaReq4)
+
+        baseReq4.add_child(mapaReq4)
+        mapaReq4.save("REQ4.html")
+
+        url4 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ4.html"
+        nuevo=2
+        webbrowser.open(url4, new=nuevo)
+
+
         
     else:
         sys.exit(0)
