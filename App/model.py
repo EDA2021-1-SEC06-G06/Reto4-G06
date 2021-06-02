@@ -479,7 +479,7 @@ def req2(analyzer):
     Retorna una lista ordenada según la cantidad de arcos de cada vértice.
     '''
     numMayor = 0
-    listaArcos = lt.newList("ARRAY_LIST")
+    listaArcos = lt.newList("ARRAY_LIST")  # Lista para sacar el vértice con más arcos, puesto que es necesario recorrer todos.
     
     for vertex in lt.iterator(gr.vertices(analyzer['landingPoints'])):
         adyacentes = gr.adjacentEdges(analyzer['landingPoints'], vertex)
@@ -505,7 +505,7 @@ def req4(analyzer):
     distanciaTotal = 0
 
     mayorRecorrido = 0
-    
+
     for llaveValor in lt.iterator(mp.keySet(analyzer['mst']['distTo'])):
         # Ejemplo {'key': '10985-Malaysia-Cambodia-Thailand (MCT) Cable', 'value': 145.54934328686224}
         verticeValor = mp.get(analyzer['mst']['distTo'], llaveValor)['value']

@@ -19,6 +19,11 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
+import folium
+from branca.element import Figure
+import webbrowser
+
+
 
 import sys
 import controller
@@ -502,8 +507,53 @@ while True:
 
 
     elif int(inputs[0]) == 9:
-        pass
+         ##### REQ 1 #####
+        baseReq1 = Figure(width=750, height=550)
+        mapaReq1= folium.Map(
+            location=[0, 0],
+            tiles='cartodbpositron',
+            zoom_start=2
+        )
 
+        for lp in lt.iterator(gr.edges(analyzer['landingPoints'])):
+            
+            if lp['vertexA'][0] in '1234567890':
+                
+                # 8833 {'landing_point_id': '8833', 'id': 'kourou-french-guiana', 'name': 'Kourou, French Guiana', 'latitude': 5.168299, 'longitude': -52.645555, 'lista': {'elements': ['8833-Kanawa', '8833-Kanawa'], 'size': 2, 'type': 'ARRAY_LIST', 'cmpfunction': <function defaultfunction at 0x0000024E3D050048>, 'key': None}}
+                id_ld = lp['vertexA'].split('-')[0]
+                
+                valorLP = mp.get(analyzer['infoLandingPoints'], id_ld)['value']
+
+                coordenadas = [valorLP['latitude'], valorLP['longitude']]
+                
+                markerLP = folium.Marker(coordenadas, popup="{0}-{1}".format(valorLP['landing_point_id'], valorLP['name']))
+
+                markerLP.add_to(mapaReq1)
+
+            else:
+
+                pais = lp['vertexA'].split('-')[1]
+
+                valorPais = mp.get(analyzer['countries'], pais)
+                
+                if valorPais is not None:
+                    # {'key': 'Barbados', 'value': {'CountryName': 'Barbados', 'CapitalName': 'Bridgetown', 'CapitalLatitude': 13.1, 'CapitalLongitude': -59.616667, 'CountryCode': 'BB', 'ContinentName': 'North America', 'Population': 285719.0, 'Internet users': 233604.0}}
+
+                    coordenadas = [valorPais['value']['CapitalLatitude'], valorPais['value']['CapitalLongitude']]
+
+                    markerCapital = folium.Marker(coordenadas, popup=lp['vertexA'])
+                    markerCapital.add_to(mapaReq1)
+
+        baseReq1.add_child(mapaReq1)
+
+        mapaReq1.save("C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\App\\REQ1.html")
+
+        url = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\App\\REQ1.html"
+        nuevo=2
+        webbrowser.open(url, new=nuevo)
+
+        datosCluster = analyzer['connected']['idscc']
+        # print(datosCluster)
     else:
         sys.exit(0)
 sys.exit(0)
