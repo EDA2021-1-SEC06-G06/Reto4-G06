@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2c66fe3b33b7472a84afceb70f0ec916 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_2c66fe3b33b7472a84afceb70f0ec916" ></div>
+        
+</body>
+<script>    
+    
+            var map_2c66fe3b33b7472a84afceb70f0ec916 = L.map(
+                "map_2c66fe3b33b7472a84afceb70f0ec916",
+                {
+                    center: [0.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 3,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ab7acfad1ab74dcd915ec67e57cb663a = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+            var marker_76e3db320f1f4e548373e0bc7b473420 = L.marker(
+                [4.6, -74.083333],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_766fd1fda5694a7ab0b40ce69aa2df8d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2e8bd5a56cb643df8e58844fc48d1711 = $(`<div id="html_2e8bd5a56cb643df8e58844fc48d1711" style="width: 100.0%; height: 100.0%;">Bogota-Colombia</div>`)[0];
+            popup_766fd1fda5694a7ab0b40ce69aa2df8d.setContent(html_2e8bd5a56cb643df8e58844fc48d1711);
+        
+
+        marker_76e3db320f1f4e548373e0bc7b473420.bindPopup(popup_766fd1fda5694a7ab0b40ce69aa2df8d)
+        ;
+
+        
+    
+    
+            var marker_95727801858d4f24a1a6accbaab6ae15 = L.marker(
+                [11.482909, -72.952706],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_8ac3d5e8cf6c4c8685dce377492f0c5f = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d3d808283a6c4811b4a7131b4d2dab81 = $(`<div id="html_d3d808283a6c4811b4a7131b4d2dab81" style="width: 100.0%; height: 100.0%;">5807-ARCOS</div>`)[0];
+            popup_8ac3d5e8cf6c4c8685dce377492f0c5f.setContent(html_d3d808283a6c4811b4a7131b4d2dab81);
+        
+
+        marker_95727801858d4f24a1a6accbaab6ae15.bindPopup(popup_8ac3d5e8cf6c4c8685dce377492f0c5f)
+        ;
+
+        
+    
+    
+            var marker_e13578960e764e9e8c6d630f50e76039 = L.marker(
+                [11.482909, -72.952706],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_e267dc4cd9ae4b97b11aa9a125027475 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_e44a1513216f4c8da95035fef0c65889 = $(`<div id="html_e44a1513216f4c8da95035fef0c65889" style="width: 100.0%; height: 100.0%;">5807-ARCOS</div>`)[0];
+            popup_e267dc4cd9ae4b97b11aa9a125027475.setContent(html_e44a1513216f4c8da95035fef0c65889);
+        
+
+        marker_e13578960e764e9e8c6d630f50e76039.bindPopup(popup_e267dc4cd9ae4b97b11aa9a125027475)
+        ;
+
+        
+    
+    
+            var marker_5f22fcd7425a49c9adc7a06cc4fbb0de = L.marker(
+                [11.708793, -70.204258],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_3b093d1304834d9b96500924e747991b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b2e8d6fb68704d2b9b260406e3f6202a = $(`<div id="html_b2e8d6fb68704d2b9b260406e3f6202a" style="width: 100.0%; height: 100.0%;">5965-ARCOS</div>`)[0];
+            popup_3b093d1304834d9b96500924e747991b.setContent(html_b2e8d6fb68704d2b9b260406e3f6202a);
+        
+
+        marker_5f22fcd7425a49c9adc7a06cc4fbb0de.bindPopup(popup_3b093d1304834d9b96500924e747991b)
+        ;
+
+        
+    
+    
+            var marker_9fcc4c1a1cb84c348a6bff73ccec3d73 = L.marker(
+                [11.708793, -70.204258],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_b28d98cc0f984f46a08ba10b1bf3df95 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_f0aae5de727d4582809ef405dfae6e25 = $(`<div id="html_f0aae5de727d4582809ef405dfae6e25" style="width: 100.0%; height: 100.0%;">5965-ARCOS</div>`)[0];
+            popup_b28d98cc0f984f46a08ba10b1bf3df95.setContent(html_f0aae5de727d4582809ef405dfae6e25);
+        
+
+        marker_9fcc4c1a1cb84c348a6bff73ccec3d73.bindPopup(popup_b28d98cc0f984f46a08ba10b1bf3df95)
+        ;
+
+        
+    
+    
+            var marker_97a3862cf8c64a1ca70046abc2622cd7 = L.marker(
+                [10.483333333333333, -66.866667],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_0237e83a09804f70b30c7b38bfc85686 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fcf4f1eef0fa433db50deaa6cf2c8413 = $(`<div id="html_fcf4f1eef0fa433db50deaa6cf2c8413" style="width: 100.0%; height: 100.0%;">Caracas-Venezuela</div>`)[0];
+            popup_0237e83a09804f70b30c7b38bfc85686.setContent(html_fcf4f1eef0fa433db50deaa6cf2c8413);
+        
+
+        marker_97a3862cf8c64a1ca70046abc2622cd7.bindPopup(popup_0237e83a09804f70b30c7b38bfc85686)
+        ;
+
+        
+    
+    
+            var marker_a9c74ff40bc54daa8dec7e27381322d2 = L.marker(
+                [10.483333333333333, -66.866667],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_a149cb6f60a54f1a9635808c27b57f6e = L.popup({"maxWidth": "100%"});
+
+        
+            var html_441882c583df4e20aaa709bf837c14cd = $(`<div id="html_441882c583df4e20aaa709bf837c14cd" style="width: 100.0%; height: 100.0%;">Caracas-Venezuela</div>`)[0];
+            popup_a149cb6f60a54f1a9635808c27b57f6e.setContent(html_441882c583df4e20aaa709bf837c14cd);
+        
+
+        marker_a9c74ff40bc54daa8dec7e27381322d2.bindPopup(popup_a149cb6f60a54f1a9635808c27b57f6e)
+        ;
+
+        
+    
+    
+            var marker_2b36cd46c5c049bb95370dd8fc68a279 = L.marker(
+                [10.599398, -66.960328],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_e9957a0cd38b4b949f04ffab7682675b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_0dc5ad3d8ef344ed9bd6cd9cd7ca5b4c = $(`<div id="html_0dc5ad3d8ef344ed9bd6cd9cd7ca5b4c" style="width: 100.0%; height: 100.0%;">5968-GlobeNet</div>`)[0];
+            popup_e9957a0cd38b4b949f04ffab7682675b.setContent(html_0dc5ad3d8ef344ed9bd6cd9cd7ca5b4c);
+        
+
+        marker_2b36cd46c5c049bb95370dd8fc68a279.bindPopup(popup_e9957a0cd38b4b949f04ffab7682675b)
+        ;
+
+        
+    
+    
+            var marker_202492f4b2724d0aa8a705716049e476 = L.marker(
+                [10.599398, -66.960328],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_fceb4d8f13d14d17bc596548bc08dc58 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_09aec69d2b1f4a7cbfb2e5e9321b92a5 = $(`<div id="html_09aec69d2b1f4a7cbfb2e5e9321b92a5" style="width: 100.0%; height: 100.0%;">5968-GlobeNet</div>`)[0];
+            popup_fceb4d8f13d14d17bc596548bc08dc58.setContent(html_09aec69d2b1f4a7cbfb2e5e9321b92a5);
+        
+
+        marker_202492f4b2724d0aa8a705716049e476.bindPopup(popup_fceb4d8f13d14d17bc596548bc08dc58)
+        ;
+
+        
+    
+    
+            var marker_aa91e8d5e7b14e5ea909738d33b5266d = L.marker(
+                [-3.718834, -38.542965],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_5585dfc6273a4c9f9d32cef26703c5ce = L.popup({"maxWidth": "100%"});
+
+        
+            var html_4563ee0193c34c4ba8ce5187761b51b9 = $(`<div id="html_4563ee0193c34c4ba8ce5187761b51b9" style="width: 100.0%; height: 100.0%;">3347-GlobeNet</div>`)[0];
+            popup_5585dfc6273a4c9f9d32cef26703c5ce.setContent(html_4563ee0193c34c4ba8ce5187761b51b9);
+        
+
+        marker_aa91e8d5e7b14e5ea909738d33b5266d.bindPopup(popup_5585dfc6273a4c9f9d32cef26703c5ce)
+        ;
+
+        
+    
+    
+            var marker_f961ca9c821942faa415b60664e214bc = L.marker(
+                [-3.718834, -38.542965],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_4e372fdd0fb042e0957b1ab128d62c13 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_9d04aefc55f8495db659b7f513ae535e = $(`<div id="html_9d04aefc55f8495db659b7f513ae535e" style="width: 100.0%; height: 100.0%;">3347-GlobeNet</div>`)[0];
+            popup_4e372fdd0fb042e0957b1ab128d62c13.setContent(html_9d04aefc55f8495db659b7f513ae535e);
+        
+
+        marker_f961ca9c821942faa415b60664e214bc.bindPopup(popup_4e372fdd0fb042e0957b1ab128d62c13)
+        ;
+
+        
+    
+    
+            var marker_42d6a5aaadd944cca9dbc8fcccb2fae0 = L.marker(
+                [-15.783333333333331, -47.916667],
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+        var popup_06a74af8e2a0475c8b40d3504373144d = L.popup({"maxWidth": "100%"});
+
+        
+            var html_88d866d27a294d28b47d5d6a10408a99 = $(`<div id="html_88d866d27a294d28b47d5d6a10408a99" style="width: 100.0%; height: 100.0%;">Brasilia-Brazil</div>`)[0];
+            popup_06a74af8e2a0475c8b40d3504373144d.setContent(html_88d866d27a294d28b47d5d6a10408a99);
+        
+
+        marker_42d6a5aaadd944cca9dbc8fcccb2fae0.bindPopup(popup_06a74af8e2a0475c8b40d3504373144d)
+        ;
+
+        
+    
+    
+            var feature_group_d0a5b0d209eb455ab11e385c3192c902 = L.featureGroup(
+                {}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+    
+            var poly_line_b155ae65e0fb4632bd20dfa55a1178e8 = L.polyline(
+                [[4.6, -74.083333], [11.482909, -72.952706]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_d0a5b0d209eb455ab11e385c3192c902);
+        
+    
+        var popup_b423a354e94f4592a0bf7eede2630ae0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_fbed10adbbc44b8a9142585bd535637d = $(`<div id="html_fbed10adbbc44b8a9142585bd535637d" style="width: 100.0%; height: 100.0%;">Bogota-Colombia => 5807-ARCOS</div>`)[0];
+            popup_b423a354e94f4592a0bf7eede2630ae0.setContent(html_fbed10adbbc44b8a9142585bd535637d);
+        
+
+        poly_line_b155ae65e0fb4632bd20dfa55a1178e8.bindPopup(popup_b423a354e94f4592a0bf7eede2630ae0)
+        ;
+
+        
+    
+    
+            var poly_line_5599c69e6b9e4212a34d1ccc0d9b0822 = L.polyline(
+                [[11.482909, -72.952706], [11.708793, -70.204258]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_d0a5b0d209eb455ab11e385c3192c902);
+        
+    
+        var popup_29a851acc6254422bc488f4e20bcd692 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2a6c440ff4384a30b8469e33ecc4eff6 = $(`<div id="html_2a6c440ff4384a30b8469e33ecc4eff6" style="width: 100.0%; height: 100.0%;">5807-ARCOS => 5965-ARCOS</div>`)[0];
+            popup_29a851acc6254422bc488f4e20bcd692.setContent(html_2a6c440ff4384a30b8469e33ecc4eff6);
+        
+
+        poly_line_5599c69e6b9e4212a34d1ccc0d9b0822.bindPopup(popup_29a851acc6254422bc488f4e20bcd692)
+        ;
+
+        
+    
+    
+            var poly_line_67e15a40eb3643159f9cc235aa01c1dc = L.polyline(
+                [[11.708793, -70.204258], [10.483333333333333, -66.866667]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_d0a5b0d209eb455ab11e385c3192c902);
+        
+    
+        var popup_5dac04c37979453aad722c93fd53398b = L.popup({"maxWidth": "100%"});
+
+        
+            var html_ed98f4f7b3fd4740b3c2997d4a044703 = $(`<div id="html_ed98f4f7b3fd4740b3c2997d4a044703" style="width: 100.0%; height: 100.0%;">5965-ARCOS => Caracas-Venezuela</div>`)[0];
+            popup_5dac04c37979453aad722c93fd53398b.setContent(html_ed98f4f7b3fd4740b3c2997d4a044703);
+        
+
+        poly_line_67e15a40eb3643159f9cc235aa01c1dc.bindPopup(popup_5dac04c37979453aad722c93fd53398b)
+        ;
+
+        
+    
+    
+            var poly_line_2e04289fbd904aeaa8b8f6e5272ac93c = L.polyline(
+                [[10.483333333333333, -66.866667], [10.599398, -66.960328]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_d0a5b0d209eb455ab11e385c3192c902);
+        
+    
+        var popup_36f8b0715188476e9b1706f8bfbe98aa = L.popup({"maxWidth": "100%"});
+
+        
+            var html_2144fc17ba81480898177ef5bebfe359 = $(`<div id="html_2144fc17ba81480898177ef5bebfe359" style="width: 100.0%; height: 100.0%;">Caracas-Venezuela => 5968-GlobeNet</div>`)[0];
+            popup_36f8b0715188476e9b1706f8bfbe98aa.setContent(html_2144fc17ba81480898177ef5bebfe359);
+        
+
+        poly_line_2e04289fbd904aeaa8b8f6e5272ac93c.bindPopup(popup_36f8b0715188476e9b1706f8bfbe98aa)
+        ;
+
+        
+    
+    
+            var poly_line_7ed6e91b697d4b27ad62c0536ffbca5e = L.polyline(
+                [[10.599398, -66.960328], [-3.718834, -38.542965]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_d0a5b0d209eb455ab11e385c3192c902);
+        
+    
+        var popup_1a2a96d0bc8f46faa38ae17bfb4ff4e0 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_d5af9ab2803a4732803fa29270a32d89 = $(`<div id="html_d5af9ab2803a4732803fa29270a32d89" style="width: 100.0%; height: 100.0%;">5968-GlobeNet => 3347-GlobeNet</div>`)[0];
+            popup_1a2a96d0bc8f46faa38ae17bfb4ff4e0.setContent(html_d5af9ab2803a4732803fa29270a32d89);
+        
+
+        poly_line_7ed6e91b697d4b27ad62c0536ffbca5e.bindPopup(popup_1a2a96d0bc8f46faa38ae17bfb4ff4e0)
+        ;
+
+        
+    
+    
+            var poly_line_553ff2fbeab64878879a9fbe866bc2a7 = L.polyline(
+                [[-3.718834, -38.542965], [-15.783333333333331, -47.916667]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_d0a5b0d209eb455ab11e385c3192c902);
+        
+    
+        var popup_16cae5eccedb4bf8b548620d16f10cf9 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b357aad73a104c4cb29a03e4ddbfb106 = $(`<div id="html_b357aad73a104c4cb29a03e4ddbfb106" style="width: 100.0%; height: 100.0%;">3347-GlobeNet => Brasilia-Brazil</div>`)[0];
+            popup_16cae5eccedb4bf8b548620d16f10cf9.setContent(html_b357aad73a104c4cb29a03e4ddbfb106);
+        
+
+        poly_line_553ff2fbeab64878879a9fbe866bc2a7.bindPopup(popup_16cae5eccedb4bf8b548620d16f10cf9)
+        ;
+
+        
+    
+    
+            var layer_control_4edda4db7dcb4fffa580dceb284f80da = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_ab7acfad1ab74dcd915ec67e57cb663a,
+                },
+                overlays :  {
+                    "Req 3" : feature_group_d0a5b0d209eb455ab11e385c3192c902,
+                },
+            };
+            L.control.layers(
+                layer_control_4edda4db7dcb4fffa580dceb284f80da.base_layers,
+                layer_control_4edda4db7dcb4fffa580dceb284f80da.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_2c66fe3b33b7472a84afceb70f0ec916);
+        
+</script>

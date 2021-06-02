@@ -109,6 +109,8 @@ def printReq3(analyzer, paisB):
         pathlen = stack.size(path)
         print(f"\nEl camino es de longitud: {pathlen}")
         print(f"\nLa distancia total de la ruta es: {distancia} km.")
+
+        return path
     else:
         print('\nNo existe un camino.')
 
@@ -223,7 +225,7 @@ while True:
         controller.minimumCostPaths(analyzer, paisA)
 
 
-        printReq3(analyzer, paisB)
+        pathReq3 = printReq3(analyzer, paisB)
 
 
 
@@ -287,7 +289,7 @@ while True:
     elif int(inputs[0]) == 9:
          ##### REQ 1 #####
 
-
+        
         verticeMasArcosReq2 = verticeMasArcosReq2['vertice']
         pais = verticeMasArcosReq2.split('-')[1]
 
@@ -347,7 +349,72 @@ while True:
         webbrowser.open(url, new=nuevo)
 
 
-    
+
+        """
+        REQ 3 
+        """
+
+
+
+        baseReq3 = Figure(width=750, height=550)
+        mapaReq3= folium.Map(
+            location=[0,0],
+            tiles='cartodbpositron',
+            zoom_start= 3
+        )
+
+        grupoCaminos3 = folium.FeatureGroup("Req 3")
+
+        # (pathReq3) Linked List
+
+        for arco in lt.iterator(pathReq3):
+
+            #{'vertexA': 'Bogota-Colombia', 'vertexB': '5808-Maya-1', 'weight': 568.2484982771667}
+
+            if arco['vertexA'][0] not in '1234567890':
+
+                pais = arco['vertexA'].split('-')[1]
+                paisValue = mp.get(analyzer['countries'], pais)['value']
+
+                coordenadasA = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]
+            else:
+                id_verticeA = arco['vertexA'].split('-')[0]
+                infoVerticeA = mp.get(analyzer['infoLandingPoints'], id_verticeA)
+
+                if infoVerticeA is not None:
+                    coordenadasA = [infoVerticeA['value']['latitude'], infoVerticeA['value']['longitude']]
+            markerA = folium.Marker(coordenadasA, popup=arco['vertexA'])
+            markerA.add_to(mapaReq3)
+            if arco['vertexB'][0] not in '1234567890':
+
+                pais = arco['vertexB'].split('-')[1]
+                paisValue = mp.get(analyzer['countries'], pais)['value']
+
+                coordenadasB = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]
+            else:
+                id_verticeB = arco['vertexB'].split('-')[0]
+                infoVerticeB = mp.get(analyzer['infoLandingPoints'], id_verticeB)
+
+                if infoVerticeB is not None:
+                    coordenadasB = [infoVerticeB['value']['latitude'], infoVerticeB['value']['longitude']]
+
+            markerB = folium.Marker(coordenadasB, popup=arco['vertexB'])
+            markerB.add_to(mapaReq3)
+            camino = folium.vector_layers.PolyLine([coordenadasA, coordenadasB], popup="{0} => {1}".format(arco['vertexA'], arco['vertexB']), color='green', weight=2)
+
+            camino.add_to(grupoCaminos3)
+
+        grupoCaminos3.add_to(mapaReq3)
+        folium.LayerControl().add_to(mapaReq3)
+
+        baseReq3.add_child(mapaReq3)
+        
+        mapaReq3.save("REQ3.html")
+
+        url3 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ3.html"
+        nuevo=2
+        webbrowser.open(url3, new=nuevo)
+        
     else:
         sys.exit(0)
 sys.exit(0)
