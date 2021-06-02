@@ -31,10 +31,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
 from DISClib.ADT import map as mp
 from DISClib.ADT import stack
-# INICIO
-import tracemalloc
-import time
-# FIN
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
@@ -56,53 +53,6 @@ def printMenu():
     print("7- REQ 6: Los mejores canales para transmitir")
     print("8- REQ 7: La mejor ruta paracomunicarme")
     print("9- REQ 8: REQ. 8: Graficando los Grafos")
-
-
-
-
-# Funciones para contar tiempo y memoria:
-
-
-
-
-def getTime():
-    """
-    devuelve el instante tiempo de procesamiento en milisegundos
-    """
-    return float(time.perf_counter() * 1000)
-
-
-
-
-def getMemory():
-    """
-    toma una muestra de la memoria alocada en instante de tiempo
-    """
-    return tracemalloc.take_snapshot()
-
-
-
-
-def deltaMemory(start_memory, stop_memory):
-    """
-    calcula la diferencia en memoria alocada del programa entre dos
-    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
-    """
-    memory_diff = stop_memory.compare_to(start_memory, "filename")
-    delta_memory = 0.0
-
-    # suma de las diferencias en uso de memoria
-    for stat in memory_diff:
-        delta_memory = delta_memory + stat.size_diff
-    # de Byte -> kByte
-    delta_memory = delta_memory / 1024.0
-    return delta_memory
-
-
-
-
-# Final de las funciones para borrar despues.
-
 
 
 
@@ -210,18 +160,6 @@ while True:
     if int(inputs[0]) == 1:    # Construcción analyzer
         print("Cargando información de los archivos ....")
 
-        # INICIO
-        # respuesta por defecto
-        delta_time = -1.0
-        delta_memory = -1.0
-
-        # inicializa el processo para medir memoria
-        tracemalloc.start()
-
-        # toma de tiempo y memoria al inicio del proceso
-        start_time = getTime()
-        start_memory = getMemory()
-        # FIN
 
         analyzer = controller.init()
 
@@ -229,21 +167,6 @@ while True:
         resultado = controller.loadLandingPoints(analyzer)
         loadConnections = controller.loadConnectionsCSV(analyzer)
         pais = controller.loadCountries(analyzer)['value']
-
-
-        # INICIO
-        # toma de tiempo y memoria al final del proceso
-        stop_memory = getMemory()
-        stop_time = getTime()
-
-        # finaliza el procesos para medir memoria
-        tracemalloc.stop()
-
-        # calculando la diferencia de tiempo y memoria
-        delta_time = stop_time - start_time
-        delta_memory = deltaMemory(start_memory, stop_memory)
-
-        # FIN
 
 
         # Prints
@@ -258,10 +181,6 @@ while True:
         controller.mstPRIM(analyzer)
         controller.loadBFS(analyzer)
 
-        # INICIO
-        print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "")
-        # FIN
-
 
 
 
@@ -272,39 +191,11 @@ while True:
         vertexA = input("\nIngrese el nombre del primer Landing Point(Ej. Redondo Beach):\n~ ")
         vertexB = input("\nIngrese el nombre del segundo Landing Point(Ej. Vung Tau):\n~ ")
 
-        # INICIO
-        # respuesta por defecto
-        delta_time = -1.0
-        delta_memory = -1.0
-
-        # inicializa el processo para medir memoria
-        tracemalloc.start()
-
-        # toma de tiempo y memoria al inicio del proceso
-        start_time = getTime()
-        start_memory = getMemory()
-        # FIN
 
         if controller.requerimiento1(analyzer, vertexA, vertexB):
-            # INICIO
-            # toma de tiempo y memoria al final del proceso
-            stop_memory = getMemory()
-            stop_time = getTime()
-
-            # finaliza el procesos para medir memoria
-            tracemalloc.stop()
-
-            # calculando la diferencia de tiempo y memoria
-            delta_time = stop_time - start_time
-            delta_memory = deltaMemory(start_memory, stop_memory)
-
-            # FIN
 
             print(f"\n{vertexA} y {vertexB} SÍ están en el mismo Cluster.")
 
-            # INICIO
-            print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "")
-            # FIN
 
         else:
             print(f"\n{vertexA} y {vertexB} NO están en el mismo Cluster.")
@@ -313,38 +204,8 @@ while True:
 
 
     elif int(inputs[0]) == 3:   # Req 2
-        # INICIO
-        # respuesta por defecto
-        delta_time = -1.0
-        delta_memory = -1.0
-
-        # inicializa el processo para medir memoria
-        tracemalloc.start()
-
-        # toma de tiempo y memoria al inicio del proceso
-        start_time = getTime()
-        start_memory = getMemory()
-        # FIN
 
         printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
-
-        # INICIO
-        # toma de tiempo y memoria al final del proceso
-        stop_memory = getMemory()
-        stop_time = getTime()
-
-        # finaliza el procesos para medir memoria
-        tracemalloc.stop()
-
-        # calculando la diferencia de tiempo y memoria
-        delta_time = stop_time - start_time
-        delta_memory = deltaMemory(start_memory, stop_memory)
-
-        # FIN
-
-        # INICIO
-        print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
-        # FIN
 
 
 
@@ -354,75 +215,21 @@ while True:
         paisA = input("\nIngrese el nombre del primer país que desea consultar. Ejemplo: Colombia\n~ ")
         paisB = input("\nIngrese el nombre del segundo país que desea consultar. Ejemplo: Indonesia\n~ ")
 
-        # INICIO
-        # respuesta por defecto
-        delta_time = -1.0
-        delta_memory = -1.0
-
-        # inicializa el processo para medir memoria
-        tracemalloc.start()
-
-        # toma de tiempo y memoria al inicio del proceso
-        start_time = getTime()
-        start_memory = getMemory()
-        # FIN
 
         controller.minimumCostPaths(analyzer, paisA)
 
-        # INICIO
-        # toma de tiempo y memoria al final del proceso
-        stop_memory = getMemory()
-        stop_time = getTime()
-
-        # finaliza el procesos para medir memoria
-        tracemalloc.stop()
-
-        # calculando la diferencia de tiempo y memoria
-        delta_time = stop_time - start_time
-        delta_memory = deltaMemory(start_memory, stop_memory)
-
-        # FIN
 
         printReq3(analyzer, paisB)
-
-        # INICIO
-        print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
-        # FIN
 
 
 
 
     elif int(inputs[0]) == 5:   # Req 4
 
-        # INICIO
-        # respuesta por defecto
-        delta_time = -1.0
-        delta_memory = -1.0
-
-        # inicializa el processo para medir memoria
-        tracemalloc.start()
-
-        # toma de tiempo y memoria al inicio del proceso
-        start_time = getTime()
-        start_memory = getMemory()
-        # FIN
 
         resultados = controller.req4(analyzer)
         distanciaMax = controller.bfsReq4(analyzer)
 
-        # INICIO
-        # toma de tiempo y memoria al final del proceso
-        stop_memory = getMemory()
-        stop_time = getTime()
-
-        # finaliza el procesos para medir memoria
-        tracemalloc.stop()
-
-        # calculando la diferencia de tiempo y memoria
-        delta_time = stop_time - start_time
-        delta_memory = deltaMemory(start_memory, stop_memory)
-
-        # FIN
 
         print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
         print(f"Distancia de la red de expansión mínima: {resultados[1]} km\n")
@@ -430,50 +237,17 @@ while True:
         print("\nEl recorrido desde 'Bogotá-Colombia' hasta {0} es el siguiente:\n".format(distanciaMax[0]['edgeTo']))
         printReq4andReq7(distanciaMax[1])
 
-        # INICIO
-        print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
-        # FIN
-
 
 
 
     elif int(inputs[0]) == 6:  # Req 5
         inputLandingPoint = input("\nIngrese el Landing Point que le interesa. Ejemplo: 5808-San Andres Isla Tolu Submarine Cable (SAIT)\n~ ")
 
-        # INICIO
-        # respuesta por defecto
-        delta_time = -1.0
-        delta_memory = -1.0
-
-        # inicializa el processo para medir memoria
-        tracemalloc.start()
-
-        # toma de tiempo y memoria al inicio del proceso
-        start_time = getTime()
-        start_memory = getMemory()
-        # FIN
 
         sorted_list = controller.req5(analyzer, inputLandingPoint)
 
-        # INICIO
-        # toma de tiempo y memoria al final del proceso
-        stop_memory = getMemory()
-        stop_time = getTime()
-
-        # finaliza el procesos para medir memoria
-        tracemalloc.stop()
-
-        # calculando la diferencia de tiempo y memoria
-        delta_time = stop_time - start_time
-        delta_memory = deltaMemory(start_memory, stop_memory)
-
-        # FIN
 
         printReq5(sorted_list)
-
-        # INICIO
-        print("\nTiempo [ms]: ", delta_time, "  ||  ", "Memoria [kB]: ", delta_memory, "\n")
-        # FIN
 
       
 
