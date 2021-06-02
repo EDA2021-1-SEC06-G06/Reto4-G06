@@ -26,6 +26,8 @@ import webbrowser
 
 
 import sys
+
+from numpy import info
 import controller
 from DISClib.ADT import list as lt
 from DISClib.ADT.graph import gr
@@ -87,6 +89,8 @@ def printReq2(analyzer, lista_ordenada):
             print("\nNombre: {0} | País: {1} | ID: {2} | Arcos:{3}\n".format(verticeDict['vertice'], pais, id_unique, verticeDict['size']))
 
             posicion += 1
+
+    return vertice
 
 
 
@@ -205,8 +209,8 @@ while True:
 
     elif int(inputs[0]) == 3:   # Req 2
 
-        printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
-
+        verticeMasArcosReq2 = printReq2(analyzer, controller.req2(analyzer))  # Lista ordenada
+        
 
 
 
@@ -282,52 +286,68 @@ while True:
 
     elif int(inputs[0]) == 9:
          ##### REQ 1 #####
-        baseReq1 = Figure(width=750, height=550)
-        mapaReq1= folium.Map(
-            location=[0, 0],
+
+
+        verticeMasArcosReq2 = verticeMasArcosReq2['vertice']
+        pais = verticeMasArcosReq2.split('-')[1]
+
+        paisValue = mp.get(analyzer['countries'], pais)['value']
+
+        coordenadasPais = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]
+
+        baseReq2 = Figure(width=750, height=550)
+        mapaReq2= folium.Map(
+            location=coordenadasPais,
             tiles='cartodbpositron',
-            zoom_start=2
+            zoom_start= 6
         )
 
-        for lp in lt.iterator(gr.edges(analyzer['landingPoints'])):
+        grupoCaminos = folium.FeatureGroup("Req 2")
+
+        for arco in lt.iterator(gr.adjacentEdges(analyzer['landingPoints'], verticeMasArcosReq2)):
+
+            verticeB = arco['vertexB']
+
+            id_verticeB = arco['vertexB'].split('-')[0]
+
+            '''
+            {'key': '4862', 'value': {'landing_point_id': '4862', 'id': 'virginia-beach-va-united-states', 'name': 'Virginia Beach, VA, United States', 'latitude': 36.755008, 'longitude': -76.059198, 
+            'lista': {'elements': ['4862-BRUSA', '4862-BRUSA', '4862-Confluence-1', '4862-Confluence-1', '4862-Confluence-1', '4862-Confluence-1', '4862-Dunant', '4862-Dunant', '4862-MAREA', '4862-MAREA'], 'size': 10, 'type': 'ARRAY_LIST', 'cmpfunction': <function defaultfunction at 0x000001DC70E5EE58>, 'key': None}}}
+            '''
+
+            infoVerticeB = mp.get(analyzer['infoLandingPoints'], id_verticeB)
+
+            if infoVerticeB is not None:
+                coordenadas = [infoVerticeB['value']['latitude'], infoVerticeB['value']['longitude']]
+
+                markerB = folium.Marker(coordenadas, popup="{0}".format(verticeB))
+
+                markerB.add_to(mapaReq2)
+
+                total = [
+                    coordenadasPais,
+                    coordenadas
+                ]
+
+                caminoB = folium.vector_layers.PolyLine(total, popup="{0} => {1}".format(verticeMasArcosReq2, verticeB), color='purple',weight=1)
+
+                caminoB.add_to(grupoCaminos)
+
             
-            if lp['vertexA'][0] in '1234567890':
-                
-                # 8833 {'landing_point_id': '8833', 'id': 'kourou-french-guiana', 'name': 'Kourou, French Guiana', 'latitude': 5.168299, 'longitude': -52.645555, 'lista': {'elements': ['8833-Kanawa', '8833-Kanawa'], 'size': 2, 'type': 'ARRAY_LIST', 'cmpfunction': <function defaultfunction at 0x0000024E3D050048>, 'key': None}}
-                id_ld = lp['vertexA'].split('-')[0]
-                
-                valorLP = mp.get(analyzer['infoLandingPoints'], id_ld)['value']
+        grupoCaminos.add_to(mapaReq2)
+        folium.LayerControl().add_to(mapaReq2)
+        
 
-                coordenadas = [valorLP['latitude'], valorLP['longitude']]
-                
-                markerLP = folium.Marker(coordenadas, popup="{0}-{1}".format(valorLP['landing_point_id'], valorLP['name']))
+        baseReq2.add_child(mapaReq2)
 
-                markerLP.add_to(mapaReq1)
+        mapaReq2.save("REQ2.html")
 
-            else:
-
-                pais = lp['vertexA'].split('-')[1]
-
-                valorPais = mp.get(analyzer['countries'], pais)
-                
-                if valorPais is not None:
-                    # {'key': 'Barbados', 'value': {'CountryName': 'Barbados', 'CapitalName': 'Bridgetown', 'CapitalLatitude': 13.1, 'CapitalLongitude': -59.616667, 'CountryCode': 'BB', 'ContinentName': 'North America', 'Population': 285719.0, 'Internet users': 233604.0}}
-
-                    coordenadas = [valorPais['value']['CapitalLatitude'], valorPais['value']['CapitalLongitude']]
-
-                    markerCapital = folium.Marker(coordenadas, popup=lp['vertexA'])
-                    markerCapital.add_to(mapaReq1)
-
-        baseReq1.add_child(mapaReq1)
-
-        mapaReq1.save("C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\App\\REQ1.html")
-
-        url = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\App\\REQ1.html"
+        url = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ2.html"
         nuevo=2
         webbrowser.open(url, new=nuevo)
 
-        datosCluster = analyzer['connected']['idscc']
-        # print(datosCluster)
+
+    
     else:
         sys.exit(0)
 sys.exit(0)
