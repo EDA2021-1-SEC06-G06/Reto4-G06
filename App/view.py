@@ -268,25 +268,27 @@ while True:
 
 
 
-    elif int(inputs[0]) == 8:
+    elif int(inputs[0]) == 8: ## BONO REQ 7 ## 
         ip1 = input("\nIngrese la primera dirección de IP. Ejemplo: 8.8.8.8\n~")  # Primera dirección de IP
         ip2 = input("\nIngrese la segunda dirección de IP. Ejemplo: 165.132.67.89\n~")  # Segunda dirección de IP
-        resultado = controller.req7(ip1, ip2, analyzer)
+        try:
+            resultado = controller.req7(ip1, ip2, analyzer)
 
-        if resultado is not False:
-            print("\nExiste un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
-            print("\nEste camino tiene {0} saltos y la ruta es la siguiente:\n".format(resultado[0]))
-            printReq4andReq7(resultado[1])
+            if resultado is not False:
+                print("\nExiste un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
+                print("\nEste camino tiene {0} saltos y la ruta es la siguiente:\n".format(resultado[0]))
+                printReq4andReq7(resultado[1])
 
-        else: 
-            print("\nNO existe un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
+            else: 
+                print("\nNO existe un camino entre el landing point más cercano a la dirección IP1: {0} y al landing point más cercano a la dirección IP2 {1}.".format(ip1, ip2))
+        except:
+            print('Direcciones de IP inválidas, intente de nuevo.')
 
 
 
 
-    elif int(inputs[0]) == 9:
-         ##### REQ 1 #####
 
+    elif int(inputs[0]) == 9: ## BONO REQ 8 ##
         
         verticeMasArcosReq2 = verticeMasArcosReq2['vertice']
         pais = verticeMasArcosReq2.split('-')[1]
