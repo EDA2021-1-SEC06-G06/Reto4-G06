@@ -251,8 +251,7 @@ while True:
 
 
         sorted_list = controller.req5(analyzer, inputLandingPoint)
-
-
+        infoVerticeREQ5 = controller.infoVertex(analyzer, inputLandingPoint)
         printReq5(sorted_list)
 
       
@@ -493,13 +492,11 @@ while True:
 
         grupoCaminos5 = folium.FeatureGroup("Req 5")
 
-        valorPaisPrincipal = mp.get(analyzer['countries'], inputLandingPoint)['value']
 
-        coordenadasPrincipal = [valorPaisPrincipal['CapitalLatitude'], valorPaisPrincipal['CapitalLongitude']]
+        coordenadasPrincipal = [infoVerticeREQ5[0], infoVerticeREQ5[1]]
 
         for pais in lt.iterator(sorted_list):
-
-            nombre = pais.split('-')[1]
+            nombre = pais["nombre"]
             paisValue = mp.get(analyzer['countries'], nombre)['value']
 
             coordenadas = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]

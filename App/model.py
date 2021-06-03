@@ -128,6 +128,17 @@ def addLandingPointConnection(analyzer, filtered_dict)->dict:
 
 def addCapitalLandingPoint(analyzer, filtered_dict):
 
+    """
+    Se agrega el nombre de la capital a un landing point
+
+    Args:
+        analyzer
+        filtered_dict
+
+    Returns:
+        Analyzer
+    """
+
     # nombre: Capital-Country
 
     origen = filtered_dict['CapitalName'] + '-' + filtered_dict['CountryName']
@@ -174,7 +185,7 @@ def addLandingPoint(analyzer, landingPoint)->dict:
     """
     Adiciona un landing point al grafo.
     """
-    if not gr.containsVertex(analyzer['landingPoints'], landingPoint):
+    if not gr.containsVertex(analyzer['landingPoints'], landingPoint):  # En caso de que el landing point no esté en el grafo, este se agrega.
         gr.insertVertex(analyzer['landingPoints'], landingPoint)
 
     return analyzer
@@ -192,7 +203,7 @@ def addConnection(analyzer, origen, destino, distancia):
     arco = gr.getEdge(analyzer['landingPoints'], origen, destino)
 
     if arco is None:
-        gr.addEdge(analyzer['landingPoints'], origen, destino, distancia)
+        gr.addEdge(analyzer['landingPoints'], origen, destino, distancia)  # Se agrega la conexión en el grafo, incluyendo los pesos de los arcos.
 
     return analyzer
 
@@ -200,6 +211,14 @@ def addConnection(analyzer, origen, destino, distancia):
 
 
 def addMismoConnection(analyzer, nombreLP):
+
+    """
+    Se agrega un arco de un landing point consigo mismo
+
+    Args:
+        analyzer
+        nombreLP
+    """
 
 
     id_ = nombreLP.split('-')[0]
@@ -210,7 +229,7 @@ def addMismoConnection(analyzer, nombreLP):
         if lp != nombreLP:
 
             addConnection(analyzer, nombreLP, lp, 0.1)
-            addConnection(analyzer, lp, nombreLP, 0.1)
+            addConnection(analyzer, lp, nombreLP, 0.1)  # Se agrega una conexión entre cada LP consigo mismo. 
 
 
 
@@ -242,7 +261,7 @@ def addCountry(analyzer, filtered_dict):
     Agrega un país al mapa.
     """
 
-    if not mp.contains(analyzer['countries'], filtered_dict['CountryName']) and (filtered_dict['CountryName'] is not ''):
+    if not mp.contains(analyzer['countries'], filtered_dict['CountryName']) and (filtered_dict['CountryName'] is not ''):  # Se agrega cada país único a un mapa.
         mp.put(analyzer['countries'], filtered_dict['CountryName'], filtered_dict)
         lt.addLast(analyzer['orderedCountries'], filtered_dict['CountryName'])
 
@@ -253,9 +272,20 @@ def addCountry(analyzer, filtered_dict):
 
 def lastCountry(analyzer, lista):
 
+    """
+    Se agrega el último país que se cargó en el analyzer a una lista
+
+    Args:
+        analyzer
+        lista
+
+    Returns:
+        El último país cargado en el grafo
+    """
+
     pais = lt.lastElement(lista)
 
-    valores = mp.get(analyzer['countries'], pais)
+    valores = mp.get(analyzer['countries'], pais) #  Se obteiene el último país cargado, junto conn su respectiva infromación.
 
     return valores
 
@@ -269,7 +299,7 @@ def addMapLandingPoint(analyzer, filtered_dict):
     filtered_dict['lista'] = lt.newList('ARRAY_LIST')
 
     if not mp.contains(analyzer['infoLandingPoints'], filtered_dict['landing_point_id']) and (filtered_dict['landing_point_id'] is not ''):
-        mp.put(analyzer['infoLandingPoints'], filtered_dict['landing_point_id'], filtered_dict)
+        mp.put(analyzer['infoLandingPoints'], filtered_dict['landing_point_id'], filtered_dict)  # Se agrega la información de cada LP único en el mapa.
 
     return analyzer
 
@@ -282,7 +312,7 @@ def connectedComponents(analyzer)->int:
     Se utiliza el algoritmo de Kosaraju
     """
 
-    analyzer['connected'] = scc.KosarajuSCC(analyzer['landingPoints'])
+    analyzer['connected'] = scc.KosarajuSCC(analyzer['landingPoints'])  # Se utiliza Kosaraju para encontrar los componentes conectados en el grafo.
 
     return scc.connectedComponents(analyzer['connected'])
 
@@ -306,9 +336,9 @@ def getDistanceCapital(analyzer, pais, destino):
 
 
 
-    location2 = (dictDestino['latitude'], dictDestino['longitude'])
+    location2 = (dictDestino['latitude'], dictDestino['longitude'])  # Se obtuvo la latitud y la longitud tanto del origen como del detino.
 
-    return hs.haversine(location1, location2)
+    return hs.haversine(location1, location2)  # Se calcula la distancia entre ambas capitales.
 
 
 
@@ -331,14 +361,17 @@ def getDistance(analyzer, origen, destino):
 
     location1 = (dictOrigen['latitude'], dictOrigen['longitude'])
 
-    location2 = (dictDestino['latitude'], dictDestino['longitude'])
+    location2 = (dictDestino['latitude'], dictDestino['longitude'])  # Se obtuvo la latitud y la longitud tanto del origen como del detino.
 
-    return hs.haversine(location1, location2)
+    return hs.haversine(location1, location2)  # Se calcula la distancia entre ambos LP.
 
 
 
 
 def haversine(tupla1, tupla2):
+    """
+    Calcula la distancia entre dos LP de acuerdo a la latitud y longitud. 
+    """
 
     return hs.haversine(tupla1, tupla2)
 
@@ -346,6 +379,16 @@ def haversine(tupla1, tupla2):
 
 
 def findClosest(analyzer, pais):
+    """
+    Encuentra el landing point más cercano a un país. 
+
+    Args:
+        analyzer
+        país
+
+    Returns:
+        menor menorValor
+    """
     dictOrigen = mp.get(analyzer['countries'], pais)['value']
     location1 = (dictOrigen['CapitalLatitude'], dictOrigen['CapitalLongitude'])
 
@@ -353,7 +396,7 @@ def findClosest(analyzer, pais):
     menor = None
     menorValor = 999999999
 
-    for landingPoint in lt.iterator(mp.keySet(analyzer['infoLandingPoints'])):
+    for landingPoint in lt.iterator(mp.keySet(analyzer['infoLandingPoints'])):  # Se encuentra el LP más cercano al país.
 
         dictDestino = mp.get(analyzer['infoLandingPoints'], landingPoint)['value']
         location2 = (dictDestino['latitude'], dictDestino['longitude'])
@@ -376,9 +419,9 @@ def minimumCostPaths(analyzer, paisA):
 
     capitalPaisA = mp.get(analyzer['countries'], paisA)['value']
 
-    nombrePaisA = capitalPaisA['CapitalName'] + '-' + capitalPaisA['CountryName']
+    nombrePaisA = capitalPaisA['CapitalName'] + '-' + capitalPaisA['CountryName']  # Nombre del LP en el grafo.
 
-    analyzer['paths'] = dijsktra.Dijkstra(analyzer['landingPoints'], nombrePaisA)
+    analyzer['paths'] = dijsktra.Dijkstra(analyzer['landingPoints'], nombrePaisA)  # Se utiliza Dijkstra con el paísA para después encontrar la ruta de menor costo hacia paísB.
 
     return analyzer
 
@@ -394,18 +437,29 @@ def hasPath(analyzer, paisB):
     capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
 
     nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
-    return dijsktra.hasPathTo(analyzer['paths'], nombrePaisB)
+    return dijsktra.hasPathTo(analyzer['paths'], nombrePaisB)  # Se confirma que exista un camnino entre paísA y paísB
 
 
 
 
 def minimumCostPath(analyzer, paisB):
 
+    """
+    Encuentra el camino de costo mínimo entre un país A (previamente cargado )y un país B.
+
+    Args:
+        analyzer
+        paisB
+
+    Returns:
+        El menor camino entre país A y el país B.
+    """
+
     capitalPaisB = mp.get(analyzer["countries"], paisB)["value"]  # PAIS B
 
     nombrePaisB = capitalPaisB['CapitalName'] + '-' + capitalPaisB['CountryName']
 
-    return dijsktra.pathTo(analyzer['paths'], nombrePaisB)
+    return dijsktra.pathTo(analyzer['paths'], nombrePaisB)  # Se obtiene el path entre paísA y paísB
 
 
 
@@ -486,7 +540,7 @@ def req2(analyzer):
 
         if lt.size(adyacentes) >= numMayor:
 
-            numMayor = lt.size(adyacentes)
+            numMayor = lt.size(adyacentes)  # Cuando se encuentra el vértice con más arcos se obtienen sus adyacentes.
 
             verticeArcos = {
                 'vertice': vertex,
@@ -494,14 +548,23 @@ def req2(analyzer):
             }
             lt.addLast(listaArcos, verticeArcos)
 
-    return sortNumEdgesReq2(listaArcos)
+    return sortNumEdgesReq2(listaArcos)   # Se realiza un Merge Sort de los LP con más adyacentes.
 
 
 
 
 def req4(analyzer):
+    """
+    Encuentra el mayor recorrido entre Bogotá-Colombia con los demás LP del grafo
 
-    numNodos = mp.size(analyzer['mst']['distTo'])
+    Args:
+        analyzer
+
+    Returns:
+        numNodos, distanciaTotal, mayorRecorrido
+    """
+
+    numNodos = mp.size(analyzer['mst']['distTo'])  # Se obtiene el número de nodos conectados a la red de expansión mínima.
     distanciaTotal = 0
 
     mayorRecorrido = 0
@@ -511,7 +574,7 @@ def req4(analyzer):
         verticeValor = mp.get(analyzer['mst']['distTo'], llaveValor)['value']
 
         if verticeValor is not None:
-            distanciaTotal += verticeValor
+            distanciaTotal += verticeValor  # Se obtiene el costo total de la red de expansión mínima.
 
     return (numNodos, distanciaTotal, mayorRecorrido)
 
@@ -560,8 +623,7 @@ def req5(analyzer, inputLP):
     Returns:
         sorted_list (ARRAY_LIST): Lista ordenada.
     """
-    verticesConectados = gr.adjacents(analyzer['landingPoints'], inputLP)
-
+    verticesConectados = gr.adjacents(analyzer['landingPoints'], inputLP)  # Se obtienen los adyacentes del LP que entra por parámetro.
 
     numeros = '0123456789'
     
@@ -576,13 +638,18 @@ def req5(analyzer, inputLP):
                 'weight': gr.getEdge(analyzer['landingPoints'], inputLP, lp)['weight']
             }
             
-            lt.addLast(listaPaisesAfectados, pais)
+            lt.addLast(listaPaisesAfectados, pais)  # Se agregan los LP adyacentes en una lista.
 
             
 
     return sortMenorDistancia(listaPaisesAfectados)
 
 
+
+def infoVertex(analyzer, inputLP):
+    id_ = inputLP.split('-')[0]
+    vertice = mp.get(analyzer['infoLandingPoints'],id_)
+    return (vertice['value']["latitude"], vertice['value']["longitude"])
 
 
 def req6(analyzer, nombrePais, nombreCable)->tuple:
@@ -640,22 +707,32 @@ def req7(ip1, ip2, analyzer):
 
     varBFS = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], lp1)
     
-    if bfs.hasPathTo(varBFS, lp2) is True:
+    if bfs.hasPathTo(varBFS, lp2) is True:  # Si existe un path se retorna la distancia entre el LP destino y origen, junto con el path entre estos dos.
         distancia  = rutaReq7(varBFS, lp2)
         path = bfs.pathTo(varBFS, lp2)
         return (distancia['distTo'], path)
 
     else:
-        return False
+        return False  # En caso de que no encuentre un path la función retorna False.
 
 
 
 
 def rutaReq7(bfs, lp2):
+    """
+    Encuentra la ruta entre un landing point 1 (previamente establecido) y el landing point 2.
+
+    Args:
+        bfs
+        lp2
+
+    Returns:
+        infoRama
+    """
+    
     infoRama = None
 
     for element in (bfs['visited']['table']['elements']):  # Por cada elemento se extrae su valor.
-        landingPoint = element['key']
 
         if (element['value'] is not None) and (element['value']['edgeTo'] == lp2):
             infoRama = element['value']
@@ -678,7 +755,7 @@ def lpMasCercano(analyzer, latitud, longitud):
 
         distancia = haversine((latitud, longitud), (valorLP['latitude'], valorLP['longitude']))
 
-        if menorDistancia > distancia:
+        if menorDistancia > distancia:  # Encuentra el LP más cercano y se guarda su información.
 
             menorDistancia = distancia
             menor = mp.get(analyzer['infoLandingPoints'], lp)['key']
@@ -714,6 +791,14 @@ def recursiva(analyzer, vertex, cable, lista, mapa, original)->None:
 
 
 def mapaAnchodeBanda(analyzer, cable, anchodeBanda):
+    """
+    Se agrega a un mapa el ancho de banda de cada cable.
+
+    Args:
+        analyzer
+        cable
+        anchodeBanda
+    """
 
     mp.put(analyzer['AnchoBanda'], cable, anchodeBanda)
 
@@ -726,7 +811,9 @@ def mapaAnchodeBanda(analyzer, cable, anchodeBanda):
 
 
 def cmpLandingPoint(l1, l2):
-
+    """
+    Compara el nombre de dos landing points.
+    """
     l2 = l2['key']
     if l1 == l2:
         return 0
@@ -739,12 +826,18 @@ def cmpLandingPoint(l1, l2):
 
 
 def cmpNumEdgesReq2(verticeA, verticeB):
+    """
+    Compara el número de arcos de dos landing points.
+    """
     return (verticeA['size'] > verticeB['size'])
 
 
 
 
 def cmpMenorDistancia(paisA, paisB):
+    """
+    Compara distancias entre dos países. 
+    """
     return (paisA['weight'] < paisB['weight'])
 
 

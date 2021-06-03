@@ -51,6 +51,9 @@ def init():
 
 
 def loadConnectionsCSV(analyzer):
+    '''
+    Se carga la información del CSV de connections.csv
+    '''
     landingPointsFile = cf.data_dir + 'connections.csv'
     input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
 
@@ -90,6 +93,9 @@ def loadConnectionsCSV(analyzer):
 
 
 def loadCountries(analyzer):
+    '''
+    Se carga la información del CSV de countries.csv
+    '''
     countriesFile = cf.data_dir + 'countries.csv'
     input_file = csv.DictReader(open(countriesFile, encoding='utf-8-sig'), delimiter=',')
 
@@ -125,6 +131,10 @@ def loadCountries(analyzer):
 
 
 def loadLandingPoints(analyzer):
+    '''
+    Se carga la información del CSV de landing_points.csv
+    '''
+    
     landingPointsFile = cf.data_dir + 'landing_points.csv'
 
     input_file = csv.DictReader(open(landingPointsFile, encoding='utf-8-sig'), delimiter=',')
@@ -182,6 +192,15 @@ def connectedComponents(analyzer)->int:
 
 
 def requerimiento1(analyzer, vertexA:str, vertexB:str):
+    '''
+    Se desea encontrar la cantidad de clústeres (componentes conectados) dentro de la red de cables submarinos y si dos landing points pertenecen o no al mismo clúster.
+    Para dar respuesta a este requerimiento el equipo de desarrollo debe recibir como entrada la siguiente información:
+        • Nombre del landing point 1
+        • Nombre del landing point 2
+    Y como respuesta debe presentar en consola la siguiente información:
+        • Número total de clústeres presentes en la red
+        • Informar si los dos landing points están en el mismo clúster o no
+    '''
 
     return model.requerimiento1(analyzer, vertexA, vertexB)
 
@@ -198,6 +217,15 @@ def req2(analyzer):
 
 
 def req4(analyzer):
+    """
+    Encuenntra el mayor recorrido entre Bogotá-Colombia con los demás LP del grafo
+
+    Args:
+        analyzer
+
+    Returns:
+        numNodos, distanciaTotal, mayorRecorrido
+    """
     return model.req4(analyzer)
 
 
@@ -228,6 +256,10 @@ def req5(analyzer, inputLP):
         sorted_list (ARRAY_LIST): Lista ordenada.
     """
     return model.req5(analyzer, inputLP)
+
+
+def infoVertex(analyzer, inputLP):
+    return model.infoVertex(analyzer, inputLP)
 
 
 
@@ -262,6 +294,9 @@ def req7(ip1, ip2, analyzer):
 
 
 def minimumCostPaths(analyzer, paisA):
+    """
+    Calcula los caminos de costo mínimo desde la capital del país A a todos los demás vértices.
+    """
 
     return model.minimumCostPaths(analyzer, paisA)
 
@@ -269,13 +304,26 @@ def minimumCostPaths(analyzer, paisA):
 
 
 def hasPath(analyzer, paisB):
-
+    """
+    Indica si existe un camino desde el país base a país B.
+    Se debe ejecutar primero la funcion minimumCostPaths
+    """
     return model.hasPath(analyzer, paisB)
 
 
 
 
 def minimumCostPath(analyzer, paisB):
+    """
+    Encuentra el camino de costo mínimo entre un país A (previamente cargado )y un país B.
+
+    Args:
+        analyzer
+        paisB
+
+    Returns:
+        El menor camino entre país A y el país B.
+    """
     return model.minimumCostPath(analyzer, paisB)
 
 
