@@ -235,7 +235,6 @@ while True:
 
         resultados = controller.req4(analyzer)
         distanciaMax = controller.bfsReq4(analyzer)
-        print(distanciaMax[1])
 
         print(f"\nNúmero de nodos conectados en la red de expansión mínima: {resultados[0]}\n")
         print(f"Distancia de la red de expansión mínima: {resultados[1]} km\n")

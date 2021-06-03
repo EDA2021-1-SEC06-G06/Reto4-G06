@@ -733,6 +733,7 @@ def rutaReq7(bfs, lp2):
     infoRama = None
 
     for element in (bfs['visited']['table']['elements']):  # Por cada elemento se extrae su valor.
+        landingPoint = element['key']
 
         if (element['value'] is not None) and (element['value']['edgeTo'] == lp2):
             infoRama = element['value']
