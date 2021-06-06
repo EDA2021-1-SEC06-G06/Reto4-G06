@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5fe5748e540e46b3b5601112989b5af2 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_5fe5748e540e46b3b5601112989b5af2" ></div>
+        
+</body>
+<script>    
+    
+            var map_5fe5748e540e46b3b5601112989b5af2 = L.map(
+                "map_5fe5748e540e46b3b5601112989b5af2",
+                {
+                    center: [0.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 3,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7626d2b7d8144823bd2749b45de605f4 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+            var marker_f0bb4db41d054d38b1a3c55962a76240 = L.marker(
+                [33.844472, -118.388025],
+                {}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+        var popup_f89c5c61a1df434aafe18bae10200779 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_70d382b30ea84ef1a778bf1e579ede7c = $(`<div id="html_70d382b30ea84ef1a778bf1e579ede7c" style="width: 100.0%; height: 100.0%;">4992-Unity/EAC-Pacific</div>`)[0];
+            popup_f89c5c61a1df434aafe18bae10200779.setContent(html_70d382b30ea84ef1a778bf1e579ede7c);
+        
+
+        marker_f0bb4db41d054d38b1a3c55962a76240.bindPopup(popup_f89c5c61a1df434aafe18bae10200779)
+        ;
+
+        
+    
+    
+            var marker_1eef7689351043399ea98956e16baa5b = L.marker(
+                [38.883333, -77.0],
+                {}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+        var popup_59ac9c748da1460bb9133633290bdd03 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_cd5c13a133674107beb1484b67f35b0a = $(`<div id="html_cd5c13a133674107beb1484b67f35b0a" style="width: 100.0%; height: 100.0%;">Washington, D.C.-United States</div>`)[0];
+            popup_59ac9c748da1460bb9133633290bdd03.setContent(html_cd5c13a133674107beb1484b67f35b0a);
+        
+
+        marker_1eef7689351043399ea98956e16baa5b.bindPopup(popup_59ac9c748da1460bb9133633290bdd03)
+        ;
+
+        
+    
+    
+            var marker_5f5811ead3284262b14823da58c76d02 = L.marker(
+                [13.549098, 144.809347],
+                {}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+        var popup_e0879b6a3db54aec90bd0c85842631b2 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_b0f6b431ddf94b18b6bbad41f2b21133 = $(`<div id="html_b0f6b431ddf94b18b6bbad41f2b21133" style="width: 100.0%; height: 100.0%;">3251-Asia-America Gateway (AAG) Cable System</div>`)[0];
+            popup_e0879b6a3db54aec90bd0c85842631b2.setContent(html_b0f6b431ddf94b18b6bbad41f2b21133);
+        
+
+        marker_5f5811ead3284262b14823da58c76d02.bindPopup(popup_e0879b6a3db54aec90bd0c85842631b2)
+        ;
+
+        
+    
+    
+            var marker_ce074067faf9430abba9562a259f3f96 = L.marker(
+                [4.926371, 114.885833],
+                {}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+        var popup_6d974a04bbf4405daa64bd61748d0871 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_545129f86b8648e1a1a75ff09d191034 = $(`<div id="html_545129f86b8648e1a1a75ff09d191034" style="width: 100.0%; height: 100.0%;">5970-Asia-America Gateway (AAG) Cable System</div>`)[0];
+            popup_6d974a04bbf4405daa64bd61748d0871.setContent(html_545129f86b8648e1a1a75ff09d191034);
+        
+
+        marker_ce074067faf9430abba9562a259f3f96.bindPopup(popup_6d974a04bbf4405daa64bd61748d0871)
+        ;
+
+        
+    
+    
+            var marker_da6b6f01b437420b8727c27409b8b4a5 = L.marker(
+                [10.341846, 107.079198],
+                {}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+        var popup_13beb20a20124ff2a21d74f3fb2bebf8 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_70c785113bd3425799f4e31d1b9fce70 = $(`<div id="html_70c785113bd3425799f4e31d1b9fce70" style="width: 100.0%; height: 100.0%;">6013-Asia-America Gateway (AAG) Cable System</div>`)[0];
+            popup_13beb20a20124ff2a21d74f3fb2bebf8.setContent(html_70c785113bd3425799f4e31d1b9fce70);
+        
+
+        marker_da6b6f01b437420b8727c27409b8b4a5.bindPopup(popup_13beb20a20124ff2a21d74f3fb2bebf8)
+        ;
+
+        
+    
+    
+            var feature_group_28f31cb5a83044c7b08b21ef212543ff = L.featureGroup(
+                {}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+    
+            var poly_line_8d63e78affa84a2faea1573d471bf5b8 = L.polyline(
+                [[33.844472, -118.388025], [38.883333, -77.0], [13.549098, 144.809347], [4.926371, 114.885833], [10.341846, 107.079198]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(feature_group_28f31cb5a83044c7b08b21ef212543ff);
+        
+    
+            var layer_control_eedf2db8d4e743e6a3a840ff42874de1 = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_7626d2b7d8144823bd2749b45de605f4,
+                },
+                overlays :  {
+                    "Req 1" : feature_group_28f31cb5a83044c7b08b21ef212543ff,
+                },
+            };
+            L.control.layers(
+                layer_control_eedf2db8d4e743e6a3a840ff42874de1.base_layers,
+                layer_control_eedf2db8d4e743e6a3a840ff42874de1.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_5fe5748e540e46b3b5601112989b5af2);
+        
+</script>

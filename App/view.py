@@ -250,7 +250,7 @@ while True:
 
 
     elif int(inputs[0]) == 6:  # Req 5
-        inputLandingPoint = input("\nIngrese el Landing Point que le interesa. Ejemplo: 5808-San Andres Isla Tolu Submarine Cable (SAIT)\n~ ")
+        inputLandingPoint = input("\nIngrese el Landing Point que le interesa. Ejemplo: 3347-America Movil Submarine Cable System-1 (AMX-1)\n~ ")
 
 
         sorted_list = controller.req5(analyzer, inputLandingPoint)
@@ -293,7 +293,7 @@ while True:
 
 
     elif int(inputs[0]) == 9: ## BONO REQ 8 ##
-
+        # ABS_PATH = repr(os.path.dirname(os.path.abspath(__file__)))
 
         if resultadoREQ1[0] is not False:
             """ 
@@ -348,9 +348,9 @@ while True:
             baseReq1.add_child(mapaReq1)
             mapaReq1.save("REQ1.html")
 
-            url1 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ1.html"
+            # url1 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ1.html"
             nuevo=2
-            webbrowser.open(url1, new=nuevo)
+            webbrowser.open("REQ1.html", new=nuevo)
 
 
         """ 
@@ -369,7 +369,7 @@ while True:
         mapaReq2= folium.Map(
             location=coordenadasPais,
             tiles='cartodbpositron',
-            zoom_start= 6
+            zoom_start= 4
         )
 
         grupoCaminos = folium.FeatureGroup("Req 2")
@@ -412,9 +412,9 @@ while True:
 
         mapaReq2.save("REQ2.html")
 
-        url = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ2.html"
+        # url = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ2.html"
         nuevo=2
-        webbrowser.open(url, new=nuevo)
+        webbrowser.open("REQ2.html", new=nuevo)
 
 
 
@@ -479,9 +479,9 @@ while True:
         
         mapaReq3.save("REQ3.html")
 
-        url3 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ3.html"
+        # url3 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ3.html"
         nuevo=2
-        webbrowser.open(url3, new=nuevo)
+        webbrowser.open("REQ3.html", new=nuevo)
 
 
 
@@ -531,7 +531,7 @@ while True:
                     marker3 = folium.Marker(coordenadasA, popup=vertice)
                     marker3.add_to(mapaReq4)
                     coordREQ3.append(coordenadasA)
-        caminoREQ4 = folium.vector_layers.PolyLine(coordREQ3, color='red', weight=2)
+        caminoREQ4 = folium.vector_layers.PolyLine(coordREQ3, color='black', weight=2)
         caminoREQ4.add_to(grupoCaminos4)
 
         grupoCaminos4.add_to(mapaReq4)
@@ -540,9 +540,9 @@ while True:
         baseReq4.add_child(mapaReq4)
         mapaReq4.save("REQ4.html")
 
-        url4 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ4.html"
+        # url4 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ4.html"
         nuevo=2
-        webbrowser.open(url4, new=nuevo)
+        webbrowser.open("REQ4.html", new=nuevo)
         
 
 
@@ -583,9 +583,9 @@ while True:
         baseReq5.add_child(mapaReq5)
 
         mapaReq5.save('REQ5.html')
-        url5 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ5.html"
+        # url5 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ5.html"
         nuevo=2
-        webbrowser.open(url5, new=nuevo)
+        webbrowser.open("REQ5.html", new=nuevo)
             
             
 
