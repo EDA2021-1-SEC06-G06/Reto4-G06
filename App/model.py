@@ -554,6 +554,30 @@ def req2(analyzer):
 
 
 
+def getDistanceREQ3(analyzer, vertex):
+
+
+    infoLP = analyzer['infoLandingPoints']
+
+    infoCapital = analyzer['countries']
+    
+    infoPais = mp.get(infoLP, vertex.split('-')[0])
+
+    if infoPais is not None:
+
+        coordenadas = (infoPais['value']["latitude"], infoPais['value']['longitude'])
+
+        return coordenadas
+
+    else:
+        infoPais = mp.get(infoCapital, vertex.split('-')[1])
+
+        coordenadas = (infoPais['value']['CapitalLatitude'], infoPais['value']['CapitalLongitude'])
+
+        return coordenadas
+        
+
+
 
 def req4(analyzer):
     """

@@ -313,6 +313,10 @@ def minimumCostPaths(analyzer, paisA):
 
 
 
+def getDistanceREQ3(analyzer, vertex):
+
+    return model.getDistanceREQ3(analyzer, vertex)
+
 
 def hasPath(analyzer, paisB):
     """
@@ -321,6 +325,13 @@ def hasPath(analyzer, paisB):
     """
     return model.hasPath(analyzer, paisB)
 
+
+def haversine(tupla1, tupla2):
+    """
+    Calcula la distancia entre dos LP de acuerdo a la latitud y longitud. 
+    """
+
+    return model.haversine(tupla1, tupla2)
 
 
 

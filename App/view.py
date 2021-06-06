@@ -103,8 +103,12 @@ def printReq3(analyzer, paisB):
     if path is not None:
         distancia = 0
         for relacion in lt.iterator(path):
-            print("\n{0} ==> {1}\tDistancia(km): {2}".format(relacion['vertexA'], relacion['vertexB'], relacion['weight']))
-            distancia += relacion['weight']
+                
+            coordenadasVertexA = (controller.getDistanceREQ3(analyzer, relacion['vertexA']))
+            coordenadasVertexB = (controller.getDistanceREQ3(analyzer, relacion['vertexB']))
+            valorDistancia = controller.haversine(coordenadasVertexA, coordenadasVertexB)
+            distancia += valorDistancia
+            print("\n{0} ==> {1}\tDistancia(km): {2}".format(relacion['vertexA'], relacion['vertexB'], valorDistancia))
 
         pathlen = stack.size(path)
         print(f"\nEl camino es de longitud: {pathlen}")
