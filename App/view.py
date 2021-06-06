@@ -495,7 +495,8 @@ while True:
 
 
         coordenadasPrincipal = [infoVerticeREQ5[0], infoVerticeREQ5[1]]
-
+        principal = folium.Marker(coordenadasPrincipal, popup="LP Principal")
+        principal.add_to(mapaReq5)
         for pais in lt.iterator(sorted_list):
             nombre = pais["nombre"]
             paisValue = mp.get(analyzer['countries'], nombre)['value']
