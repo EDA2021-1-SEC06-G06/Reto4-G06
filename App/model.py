@@ -511,6 +511,7 @@ def requerimiento1(analyzer, vertexA:str, vertexB:str):
 
                 if landingID in vertice:  # si el número está en el nombre del vértice
                     valorVertexA = mp.get(datosCluster, vertice)['value']
+                    infoLP1 = vertice
 
 
         if vertexB in mp.get(analyzer['infoLandingPoints'], landingID)['value']['name']:  # Lo mismo
@@ -518,12 +519,13 @@ def requerimiento1(analyzer, vertexA:str, vertexB:str):
             for vertice in lt.iterator(mp.keySet(datosCluster)):
                 if landingID in vertice:
                     valorVertexB = mp.get(datosCluster, vertice)['value']
+                    infoLP2 = vertice
 
         if valorVertexA is not None and valorVertexB is not None:  # Si ambos son None
 
-            return ((valorVertexA) == (valorVertexB))
+            return (((valorVertexA) == (valorVertexB)), (infoLP1, infoLP2))
 
-    return False
+    return (False, False)
 
 
 
@@ -714,6 +716,17 @@ def req7(ip1, ip2, analyzer):
 
     else:
         return False  # En caso de que no encuentre un path la función retorna False.
+
+
+
+
+def path(analyzer, INFOlp1, INFOlp2):
+
+    varBFS = bfs.BreadhtFisrtSearch(analyzer['landingPoints'], INFOlp1)
+    
+    if bfs.hasPathTo(varBFS, INFOlp2) is True:  # Si existe un path se retorna la distancia entre el LP destino y origen, junto con el path entre estos dos.
+        path = bfs.pathTo(varBFS, INFOlp2)
+        return path
 
 
 

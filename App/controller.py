@@ -292,6 +292,17 @@ def req7(ip1, ip2, analyzer):
 
 
 
+def path(analyzer, INFOlp1, INFOlp2):
+    """Encuentra si existe un path entre ip1 e ip2
+
+    Args:
+        analyzer
+        lp1: Nombre del primer LP
+        lp2: Nombre del segundo lP
+    """
+    return model.path(analyzer, INFOlp1, INFOlp2)
+
+
 
 def minimumCostPaths(analyzer, paisA):
     """

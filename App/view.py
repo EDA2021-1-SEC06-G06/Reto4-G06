@@ -54,7 +54,7 @@ def printMenu():
     print("6- REQ 5: Análisis de fallas")
     print("7- REQ 6: Los mejores canales para transmitir")
     print("8- REQ 7: La mejor ruta paracomunicarme")
-    print("9- REQ 8: REQ. 8: Graficando los Grafos")
+    print("9- REQ 8: Graficando los Grafos (NO sleccionar sin haber ejecutado todos los Reqs del 1 al 5)")
 
 
 
@@ -197,10 +197,14 @@ while True:
         vertexA = input("\nIngrese el nombre del primer Landing Point(Ej. Redondo Beach):\n~ ")
         vertexB = input("\nIngrese el nombre del segundo Landing Point(Ej. Vung Tau):\n~ ")
 
-
-        if controller.requerimiento1(analyzer, vertexA, vertexB):
+        resultadoREQ1 = controller.requerimiento1(analyzer, vertexA, vertexB)
+        if (resultadoREQ1)[0]:
 
             print(f"\n{vertexA} y {vertexB} SÍ están en el mismo Cluster.")
+
+            # Para el req 8:
+
+            pathREQ1 = (controller.path(analyzer,resultadoREQ1[1][0], resultadoREQ1[1][1]))
 
 
         else:
@@ -289,6 +293,70 @@ while True:
 
 
     elif int(inputs[0]) == 9: ## BONO REQ 8 ##
+
+
+        if resultadoREQ1[0] is not False:
+            """ 
+            REQ 1
+            """
+            """
+            {'first': {'info': 'Bogota-Colombia', 'next': {'info': '4315-South America-1 (SAm-1)', 'next': 
+                {'info': '5800-South America-1 (SAm-1)', 'next': {'info': 'Santiago-Chile', 'next': {'info': '16012-Segunda FOS Canal de Chacao', 'next': {'info': 'Beijing-China', 'next': {'info': '6007-Asia Africa Europe-1 (AAE-1)', 'next': {'info': '5723-Asia Africa Europe-1 (AAE-1)', 'next': {'info': '5723-MedNautilus Submarine System', 'next': {'info': '3905-MedNautilus Submarine System', 'next': {'info': '3221-MedNautilus Submarine System', 'next': {'info': '3221-KAFOS', 'next': {'info': '6059-KAFOS', 'next': {'info': '5356-KAFOS', 'next': None}}}}}}}}}}}}}}, 'last': {'info': '5356-KAFOS', 'next': None},
+            'size': 14, 'key': None, 'type': 'SINGLE_LINKED', 'cmpfunction': <function defaultfunction at 0x000001C1A4847B88>}
+            """
+
+            baseReq1 = Figure(width=750, height=550)
+            mapaReq1= folium.Map(
+                location=[0,0],
+                tiles='cartodbpositron',
+                zoom_start= 3
+            )
+
+            grupoCaminos1 = folium.FeatureGroup("Req 1")
+
+            coordREQ1 = []
+
+            for vertice in lt.iterator(pathREQ1):
+
+                if vertice[0] not in "1234567890":
+
+                    pais = vertice.split("-")[1]
+                    paisValue = mp.get(analyzer['countries'], pais)['value']
+
+                    coordenadasA = [paisValue['CapitalLatitude'], paisValue['CapitalLongitude']]
+
+                    marker1 = folium.Marker(coordenadasA, popup=vertice)
+                    marker1.add_to(mapaReq1)
+                    coordREQ1.append(coordenadasA)
+
+                else:
+                    id_vertice = vertice.split('-')[0]
+                    infoVertice = mp.get(analyzer['infoLandingPoints'], id_vertice)
+
+                    if infoVertice is not None:
+                        coordenadasA = [infoVertice['value']['latitude'], infoVertice['value']['longitude']]
+
+                        marker1 = folium.Marker(coordenadasA, popup=vertice)
+                        marker1.add_to(mapaReq1)
+                        coordREQ1.append(coordenadasA)
+            caminoREQ1 = folium.vector_layers.PolyLine(coordREQ1, color='red', weight=2)
+            caminoREQ1.add_to(grupoCaminos1)
+
+            grupoCaminos1.add_to(mapaReq1)
+            folium.LayerControl().add_to(mapaReq1)
+
+            baseReq1.add_child(mapaReq1)
+            mapaReq1.save("REQ1.html")
+
+            url1 = "C:\\Users\\juanj\\OneDrive\\Desktop\\Reto 4\\Reto4-G06\\REQ1.html"
+            nuevo=2
+            webbrowser.open(url1, new=nuevo)
+
+
+        """ 
+        REQ 2
+        """
+
         
         verticeMasArcosReq2 = verticeMasArcosReq2['vertice']
         pais = verticeMasArcosReq2.split('-')[1]
